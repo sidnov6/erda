@@ -1,0 +1,23 @@
+# Test fixtures — provenance
+
+Recorded fixtures are real excerpts of live responses; synthetic fixtures are
+labelled per spec §11.3. Never hit the network in tests.
+
+| fixture | provenance |
+|---|---|
+| `fred_observations_sample.json` | SYNTHETIC TEST ARTIFACT (spec §11.3) — shaped like FRED `series/observations` JSON (key-gated endpoint). |
+| `wb_pinksheet_landing_sample.html` | Recorded from https://www.worldbank.org/en/research/commodity-markets on 2026-07-18; trimmed to the downloads table (contains both Monthly and Annual XLSX anchors for scraper tests). |
+| `wb_pinksheet_monthly_sample.xlsx` | Recorded from https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx (rotating hashed path, resolved 2026-07-18); "Monthly Prices" sheet trimmed via openpyxl to header rows 1–6 + first 6 data rows (1960M01–M06, real "…" sentinels) + last 60 data rows (2021M07–2026M06). All 89 columns kept so column-location-by-name is exercised. |
+| `jodi_world_primary_sample.csv` | Recorded from https://www.jodidata.org/_resources/files/downloads/oil-data/world_Primary_CSV.zip on 2026-07-18 (member `NewProcedure_Primary_CSV.csv` of the ~23 MB zip). Trimmed to header + 1450 real rows: US/SA/NO 2025-12+2026-01, AE 2026-01, ZA 2008-12 (CRUDEOIL only). Covers all 4 products, all 5 units, real absence markers `-` (212), `x` (58), `N/A` (20), `..` (90), and negative STATDIFF/STOCKCH values. |
+| `jodi_world_primary_sample.zip` | Same recorded rows as `jodi_world_primary_sample.csv`, re-zipped locally under the real member name `NewProcedure_Primary_CSV.csv` to exercise the zip-extraction path offline. |
+| `baker_hughes_nam_weekly_excerpt.xlsx` | Recorded from https://rigcount.bakerhughes.com/static-files/d28e146b-f462-4769-a061-6ba4eb24a490 on 2026-07-18 (via curl_cffi Chrome impersonation — Akamai TLS gate). "NAM Weekly" sheet trimmed via openpyxl to the last two publish weeks (2026-07-10, 2026-07-17; 401 rows), banner + row-11 header layout preserved; provenance note embedded in cell A3. |
+| `baker_hughes_na_rig_count_page.html` | Recorded from https://rigcount.bakerhughes.com/na-rig-count on 2026-07-18, full page (provenance comment prepended); contains the current 07-17-2026 report anchor plus dated/undated archive anchors for fallback-scraper tests. |
+| `opec_momr_june2026_table5_7.pdf` | Recorded from https://www.opec.org/assets/assetdb/momr-june-2026.pdf on 2026-07-18; trimmed with pypdf to page 66 of 98, which carries Table 5-7 "DoC crude oil production based on secondary sources" — plus the adjacent direct-communication Table 5-8, kept deliberately as a wrong-table trap for the parser. |
+| `opec_momr_june2026_notable.pdf` | Same recorded PDF, trimmed to page 55: mentions "secondary sources" in prose but holds no production table; exercises the table-not-found failure path. |
+| `eia_v2_seriesid_sample.json` | SYNTHETIC TEST ARTIFACT (spec §11.3) — eia_v2 is key-gated, so this mimics the documented `/v2/seriesid/{id}` response shape (see `_comment` inside the file). Includes a string-typed value and a null value for normalize() quirk handling. |
+| `eia_v2_error_403.json` | Recorded from https://api.eia.gov/v2/seriesid/PET.WCESTUS1.W (keyless GET, HTTP 403) on 2026-07-18; error body verbatim. |
+| `comtrade_preview_annual_2023.json` | Recorded from https://comtradeapi.un.org/public/v1/preview/C/A/HS (cmdCode=2709, flowCode=X, period=2023, world-aggregate params) on 2026-07-18; data trimmed from 101 rows to 6, `count` left as returned (see `_fixture_note` inside the file). |
+| `comtrade_preview_capped_2023.json` | Recorded from the same preview endpoint without the partner2/mot/customs params on 2026-07-18; hit the keyless 500-record cap (`count=500` as returned). Trimmed to 4 world-aggregate + 4 breakdown rows that normalize() must filter out. |
+| `gdelt_artlist_sample.json` | SYNTHETIC TEST ARTIFACT (spec §11.3) — mimics the DOC 2.0 artlist JSON shape (per-article fields NOT live-confirmable: endpoint IP-throttled at the 2026-07-18 sweep and at build time); values invented, example.com domains. |
+| `gdelt_throttle_429.txt` | REAL response body, recorded verbatim from https://api.gdeltproject.org/api/v2/doc/doc on 2026-07-18 (HTTP 429 throttle body; no label inside — the file must stay byte-exact). |
+| `yf_curve_fast_info_sample.json` | Recorded via yfinance 1.5.1 `Ticker.fast_info` (finance.yahoo.com) on 2026-07-18 (Saturday; prices are the 2026-07-17 session). All four continuous roots + the 12 dated CL contracts for asof=2026-07-18, trimmed to the fields the connector reads (see `_provenance` inside the file). |

@@ -1,0 +1,52 @@
+{
+  "_comment": "SYNTHETIC TEST ARTIFACT (spec §11.3) — eia_v2 is key-gated, so this mimics the documented EIA v2 /v2/seriesid/{id} response shape (response.data rows with period/value). Values are invented and never enter data/. Includes a string-typed value and a null value to exercise normalize() quirk handling.",
+  "response": {
+    "total": 3,
+    "dateFormat": "YYYY-MM-DD",
+    "frequency": "weekly",
+    "description": "Weekly U.S. Ending Stocks excluding SPR of Crude Oil",
+    "data": [
+      {
+        "period": "2026-06-26",
+        "duoarea": "NUS",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "SAX",
+        "series": "WCESTUS1",
+        "series-description": "Weekly U.S. Ending Stocks excluding SPR of Crude Oil",
+        "value": "415000",
+        "units": "MBBL"
+      },
+      {
+        "period": "2026-07-03",
+        "duoarea": "NUS",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "SAX",
+        "series": "WCESTUS1",
+        "series-description": "Weekly U.S. Ending Stocks excluding SPR of Crude Oil",
+        "value": null,
+        "units": "MBBL"
+      },
+      {
+        "period": "2026-07-10",
+        "duoarea": "NUS",
+        "area-name": "U.S.",
+        "product": "EPC0",
+        "product-name": "Crude Oil",
+        "process": "SAX",
+        "series": "WCESTUS1",
+        "series-description": "Weekly U.S. Ending Stocks excluding SPR of Crude Oil",
+        "value": 416200,
+        "units": "MBBL"
+      }
+    ]
+  },
+  "request": {
+    "command": "/v2/seriesid/PET.WCESTUS1.W",
+    "params": {}
+  },
+  "apiVersion": "2.1.8"
+}

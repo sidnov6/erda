@@ -1,0 +1,7 @@
+{
+  "_comment": "Recorded from https://api.eia.gov/v2/seriesid/PET.WCESTUS1.W (keyless GET, HTTP 403) on 2026-07-18. Error body verbatim, including the double space after the period.",
+  "error": {
+    "code": "API_KEY_MISSING",
+    "message": "No api_key was supplied.  Please register for one at https://www.eia.gov/opendata/register.php"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_comment": "SYNTHETIC TEST ARTIFACT (spec §11.3) — mimics the GDELT DOC 2.0 artlist JSON shape for normalize() tests; values are invented (example.com domains) and never enter data/. Per-article fields were NOT live-confirmed at the 2026-07-18 sweep (endpoint IP-throttled from this egress; the one live build-time attempt on 2026-07-18 also returned the throttle 429 — see gdelt_throttle_429.txt). Shape follows GDELT documentation; edge cases below exercise the defensive parser: missing title, missing/garbled seendate, missing sourcecountry, missing url (dropped), duplicate url (deduped).",
+  "articles": [
+    {
+      "url": "https://news.example.com/hormuz-tanker-delay",
+      "url_mobile": "",
+      "title": "Tanker transit delayed near Strait of Hormuz",
+      "seendate": "20260718T041500Z",
+      "socialimage": "",
+      "domain": "news.example.com",
+      "language": "English",
+      "sourcecountry": "United States"
+    },
+    {
+      "url": "https://energie.example.de/opec-foerderkuerzung",
+      "title": "Ölpreis steigt nach Ankündigung von Förderkürzungen",
+      "seendate": "20260718T053000Z",
+      "domain": "energie.example.de",
+      "language": "German",
+      "sourcecountry": "Germany"
+    },
+    {
+      "url": "https://wire.example.org/pipeline-outage",
+      "seendate": "not-a-date",
+      "domain": "wire.example.org"
+    },
+    {
+      "title": "Article with no url — must be dropped, not imputed",
+      "seendate": "20260718T060000Z",
+      "domain": "ghost.example.net",
+      "sourcecountry": "France"
+    },
+    {
+      "url": "https://news.example.com/hormuz-tanker-delay",
+      "title": "Duplicate URL syndication copy — deduped keep-first",
+      "seendate": "20260718T070000Z",
+      "domain": "news.example.com",
+      "sourcecountry": "United States"
+    },
+    {
+      "url": "https://sea.example.sg/malacca-advisory",
+      "title": "Malacca strait transit advisory issued",
+      "domain": "sea.example.sg",
+      "sourcecountry": "Singapore"
+    }
+  ]
+}

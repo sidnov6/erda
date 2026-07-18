@@ -1,0 +1,43 @@
+# EIA series pins (spec §4) — the eia_v2 connector reads this file and resolves
+# each v1 series ID through the confirmed translation route
+# https://api.eia.gov/v2/seriesid/{series_id} (source_registry.yaml, 2026-07-18).
+#
+# Curated-file rule (spec §7): every entry carries the public EIA data-browser
+# URL it was verified against. All five page titles below were fetched live on
+# 2026-07-18 (no API key needed to read the doc pages) and matched exactly.
+
+series:
+  - series_id: "PET.WCESTUS1.W"
+    metric: crude_stocks_excl_spr_kbbl
+    name: "Weekly U.S. Ending Stocks excluding SPR of Crude Oil"
+    units: thousand_barrels
+    source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W"
+    verified_at: "2026-07-18"
+
+  - series_id: "PET.WGTSTUS1.W"
+    metric: gasoline_stocks_kbbl
+    name: "Weekly U.S. Ending Stocks of Total Gasoline"
+    units: thousand_barrels
+    source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WGTSTUS1&f=W"
+    verified_at: "2026-07-18"
+
+  - series_id: "PET.WDISTUS1.W"
+    metric: distillate_stocks_kbbl
+    name: "Weekly U.S. Ending Stocks of Distillate Fuel Oil"
+    units: thousand_barrels
+    source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WDISTUS1&f=W"
+    verified_at: "2026-07-18"
+
+  - series_id: "PET.WCRFPUS2.W"
+    metric: crude_production_kbd
+    name: "Weekly U.S. Field Production of Crude Oil"
+    units: thousand_barrels_per_day
+    source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCRFPUS2&f=W"
+    verified_at: "2026-07-18"
+
+  - series_id: "PET.WRPUPUS2.W"
+    metric: product_supplied_kbd
+    name: "Weekly U.S. Product Supplied of Petroleum Products"
+    units: thousand_barrels_per_day
+    source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WRPUPUS2&f=W"
+    verified_at: "2026-07-18"

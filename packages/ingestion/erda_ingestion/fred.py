@@ -19,6 +19,7 @@ import os
 import pandas as pd
 import pandera.pandas as pa
 
+from erda_contracts.errors import SourceUnavailable
 from erda_ingestion.base import FetchResult, http_get
 
 SOURCE_ID = "fred"
@@ -46,8 +47,16 @@ SCHEMA = pa.DataFrameSchema(
 
 
 def normalize(series_id: str, payload: dict) -> pd.DataFrame:
-    """FRED observations JSON → tidy frame. '.' marks missing values → dropped."""
-    obs = payload.get("observations", [])
+    """FRED observations JSON → tidy frame. '.' marks missing values → dropped.
+
+    A payload without an ``observations`` key (e.g. a FRED error body such as
+    ``{"error_code": …, "error_message": …}``) is a source failure — it must
+    raise, never normalize into an empty-but-fresh table (§0 rule 4).
+    """
+    if "observations" not in payload:
+        detail = payload.get("error_message") or "payload has no 'observations' key"
+        raise SourceUnavailable(SOURCE_ID, f"{series_id}: {detail}")
+    obs = payload["observations"]
     df = pd.DataFrame(obs, columns=["date", "value"])
     df = df[df["value"] != "."]
     df["date"] = pd.to_datetime(df["date"])
@@ -58,8 +67,6 @@ def normalize(series_id: str, payload: dict) -> pd.DataFrame:
 
 
 def fetch(observation_start: str = "2000-01-01") -> FetchResult:
-    from erda_contracts.errors import SourceUnavailable
-
     key = os.environ.get("FRED_API_KEY")
     if not key:
         raise SourceUnavailable(SOURCE_ID, "FRED_API_KEY not set — register a free key")

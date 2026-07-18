@@ -25,6 +25,14 @@ def test_normalize_drops_missing_and_types():
     assert pd.api.types.is_datetime64_any_dtype(df["date"])
 
 
+def test_normalize_error_body_raises_not_empty_frame():
+    # a payload without "observations" (e.g. a FRED error body) must raise,
+    # never normalize into an empty-but-fresh table
+    payload = {"error_code": 400, "error_message": "Bad Request. Variable api_key is not set."}
+    with pytest.raises(SourceUnavailable, match="api_key is not set"):
+        fred.normalize("DCOILBRENTEU", payload)
+
+
 def test_fetch_without_key_raises(monkeypatch):
     monkeypatch.delenv("FRED_API_KEY", raising=False)
     with pytest.raises(SourceUnavailable, match="FRED_API_KEY"):

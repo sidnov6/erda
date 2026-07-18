@@ -7,7 +7,10 @@ export function EmptyState({ feedNote, feedDetail }: { feedNote: string; feedDet
   return (
     <div className="flex flex-wrap items-center gap-1 px-2 pb-1">
       <span className="chip text-ink-faint">AWAITING FEED</span>
-      <span className="chip border-transparent text-ink-faint/80" title={feedDetail}>
+      <span
+        className="chip max-w-full truncate border-transparent text-ink-faint/80"
+        title={feedDetail ?? feedNote}
+      >
         {feedNote}
       </span>
     </div>

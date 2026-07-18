@@ -6,7 +6,12 @@ import GridLayout, { useContainerWidth } from "react-grid-layout";
 import { EmptyState } from "./EmptyState";
 import { Panel } from "./Panel";
 import { PanelGhost } from "./PanelGhost";
-import { PANELS, type PanelId } from "@/lib/registry";
+import { CurvePanel } from "./panels/CurvePanel";
+import { EventsPanel } from "./panels/EventsPanel";
+import { InventoriesPanel } from "./panels/InventoriesPanel";
+import { OpecPanel } from "./panels/OpecPanel";
+import type { SourceStatus } from "@/lib/api";
+import { PANELS, type PanelDef, type PanelId } from "@/lib/registry";
 
 const LAYOUT = PANELS.map((p) => ({ i: p.id, ...p.layout }));
 
@@ -15,13 +20,39 @@ const ROWS = 16;
 const GAP = 8;
 const PAD = 8;
 
+/** P1: live panel bodies. DISC/RANK/MAP keep their ghosts until P2/P3. */
+const LIVE_PANELS: Partial<Record<PanelId, () => React.ReactNode>> = {
+  crv: () => <CurvePanel />,
+  inv: () => <InventoriesPanel />,
+  opec: () => <OpecPanel />,
+  events: () => <EventsPanel />,
+};
+
+function panelBody(p: PanelDef) {
+  const live = LIVE_PANELS[p.id];
+  if (live) return live();
+  return (
+    <div className="flex h-full flex-col pt-1">
+      <EmptyState feedNote={p.feedNote} feedDetail={p.feedDetail} />
+      <div className="min-h-0 flex-1 pb-1">
+        <PanelGhost def={p} />
+      </div>
+    </div>
+  );
+}
+
 /**
  * Draggable terminal workspace (§13.2). Drag by the panel title bar; resize from
  * the corner. Row height is derived from the viewport so the default layout fills
- * it exactly — a terminal has no dead space below the fold. Layout presets
- * (MARKET / EXPLORE / MEMO / VAL) arrive with real panels in later phases.
+ * it exactly — a terminal has no dead space below the fold.
  */
-export function Workspace({ focused }: { focused: PanelId | null }) {
+export function Workspace({
+  focused,
+  sources,
+}: {
+  focused: PanelId | null;
+  sources: Record<string, SourceStatus> | null;
+}) {
   const { width, containerRef } = useContainerWidth();
   const [height, setHeight] = useState(0);
 
@@ -52,13 +83,8 @@ export function Workspace({ focused }: { focused: PanelId | null }) {
         >
           {PANELS.map((p) => (
             <div key={p.id}>
-              <Panel def={p} active={focused === p.id}>
-                <div className="flex h-full flex-col pt-1">
-                  <EmptyState feedNote={p.feedNote} feedDetail={p.feedDetail} />
-                  <div className="min-h-0 flex-1 pb-1">
-                    <PanelGhost def={p} />
-                  </div>
-                </div>
+              <Panel def={p} active={focused === p.id} sources={sources}>
+                {panelBody(p)}
               </Panel>
             </div>
           ))}

@@ -1,11 +1,33 @@
+"use client";
+
 /**
- * Command bar + ticker tape (§8.1). P0: the ticker carries no values — feeds
- * connect in P1 — so every instrument shows an em-dash, never a made-up number.
- * Instruments are the §8.1 tape plus DXY (fred macro, §4).
+ * Command bar + ticker tape (§8.1). Values come only from /api/panels/ticker
+ * with provenance attached; instruments the API can't serve yet keep an honest
+ * em-dash. Deltas follow the token convention: up = --oil, down = --gas.
+ * "~" marks indicative values from the unofficial yfinance source (§4).
  */
-const TICKER_INSTRUMENTS = ["BRENT", "WTI", "B–W", "3-2-1", "M1–M12", "RIGS", "DXY"];
+
+import { type TickerInstrument, useErda } from "@/lib/api";
+
+const PLACEHOLDER_INSTRUMENTS = ["BRENT", "WTI", "B–W", "3-2-1", "M1–M12", "US RIGS", "USD·BROAD"];
+
+function Delta({ delta }: { delta?: number | null }) {
+  if (delta == null || delta === 0) return null;
+  const up = delta > 0;
+  return (
+    <span className={`numeric text-[11px] ${up ? "text-oil" : "text-gas"}`}>
+      {up ? "▲" : "▼"}
+      {Math.abs(delta) >= 10 ? Math.abs(delta).toFixed(0) : Math.abs(delta).toFixed(2)}
+    </span>
+  );
+}
 
 export function TopBar({ onOpenPalette }: { onOpenPalette: () => void }) {
+  const { data } = useErda<{ available: boolean; instruments?: TickerInstrument[] }>(
+    "panels/ticker"
+  );
+  const instruments = data?.available ? (data.instruments ?? []) : null;
+
   return (
     <header className="flex h-10 shrink-0 items-center gap-3 border-b border-line bg-bg0 px-2">
       <button
@@ -20,13 +42,37 @@ export function TopBar({ onOpenPalette }: { onOpenPalette: () => void }) {
       <span className="chip">⌘K</span>
       <div className="min-w-0 flex-1" />
       <div className="flex items-center gap-4 overflow-hidden whitespace-nowrap">
-        <span className="chip text-ink-faint">FEEDS OFFLINE · P1</span>
-        {TICKER_INSTRUMENTS.map((name) => (
-          <span key={name} className="flex items-baseline gap-1.5">
-            <span className="font-mono text-[11px] text-ink-dim">{name}</span>
-            <span className="numeric text-[12px] text-ink-faint">—</span>
-          </span>
-        ))}
+        {instruments === null && (
+          <span className="chip text-ink-faint">FEEDS OFFLINE · P1</span>
+        )}
+        {instruments === null
+          ? PLACEHOLDER_INSTRUMENTS.map((name) => (
+              <span key={name} className="flex items-baseline gap-1.5">
+                <span className="font-mono text-[11px] text-ink-dim">{name}</span>
+                <span className="numeric text-[12px] text-ink-faint">—</span>
+              </span>
+            ))
+          : instruments.map((inst) => (
+              <span
+                key={inst.label}
+                className="flex items-baseline gap-1.5"
+                title={`${inst.unit} · as of ${inst.asof} · ${inst.provenance.source_id} · ${
+                  inst.provenance.source_url
+                }${inst.indicative ? " · indicative (unofficial source)" : ""}${
+                  inst.note ? ` · ${inst.note}` : ""
+                }`}
+              >
+                <span className="font-mono text-[11px] text-ink-dim">{inst.label}</span>
+                <span className="numeric text-[12px] text-ink">
+                  {inst.indicative ? "~" : ""}
+                  {inst.value.toLocaleString("en-US", {
+                    minimumFractionDigits: inst.unit === "$/bbl" ? 2 : 0,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
+                <Delta delta={inst.delta} />
+              </span>
+            ))}
       </div>
     </header>
   );

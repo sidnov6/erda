@@ -16,6 +16,8 @@ export interface PanelDef {
   feedNote: string;
   /** Optional expansion of feedNote, shown as a tooltip. */
   feedDetail?: string;
+  /** source_ids feeding this panel — drives the freshness badge. */
+  sources?: string[];
   kind: PanelKind;
   /** Future column schema for table panels — schema is honest, values would not be. */
   columns?: string[];
@@ -29,6 +31,7 @@ export const PANELS: PanelDef[] = [
     mnemonic: "CRV",
     title: "Price & curve deck",
     feedNote: "FRED · YF_CURVE — P1",
+    sources: ["fred", "yf_curve"],
     kind: "chart",
     layout: { x: 0, y: 0, w: 3, h: 6, minW: 2, minH: 3 },
   },
@@ -37,6 +40,7 @@ export const PANELS: PanelDef[] = [
     mnemonic: "INV",
     title: "Inventories",
     feedNote: "EIA WPSR · JODI — P1",
+    sources: ["eia_v2"],
     kind: "chart",
     layout: { x: 0, y: 6, w: 3, h: 5, minW: 2, minH: 3 },
   },
@@ -45,6 +49,7 @@ export const PANELS: PanelDef[] = [
     mnemonic: "OPEC",
     title: "OPEC+ compliance",
     feedNote: "OPEC MOMR — P1",
+    sources: ["opec"],
     kind: "table",
     columns: ["COUNTRY", "PLEDGED", "DELIVERED", "COMP %"],
     layout: { x: 0, y: 11, w: 3, h: 5, minW: 2, minH: 3 },
@@ -81,6 +86,7 @@ export const PANELS: PanelDef[] = [
     mnemonic: "EVENTS",
     title: "Event feed",
     feedNote: "GDELT — P1",
+    sources: ["gdelt"],
     kind: "feed",
     layout: { x: 9, y: 11, w: 3, h: 5, minW: 2, minH: 3 },
   },
@@ -93,6 +99,8 @@ export interface CommandDef {
   target?: PanelId;
   /** Phase tag shown when the command has no shell target yet (§14 vocabulary). */
   phase?: string;
+  /** Route to navigate to when the command is a page, not a panel. */
+  href?: string;
   /** Status-line response when there is no target yet. */
   response?: string;
 }
@@ -115,12 +123,7 @@ export const COMMANDS: CommandDef[] = [
     phase: "P5",
     response: "MEMO <block|lat,lon> — committee arrives in P5",
   },
-  {
-    mnemonic: "VAL",
-    name: "Validation report",
-    phase: "P1",
-    response: "VAL — /validation page arrives in P1",
-  },
+  { mnemonic: "VAL", name: "Validation report", href: "/validation" },
   {
     mnemonic: "HELP",
     name: "List commands",

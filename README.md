@@ -10,7 +10,7 @@ block into a cited, EMV-based investment memo.
 > In Wagner's Ring, Erda is the primordial goddess who knows everything that lies
 > beneath the earth. Petroleum in German is literally "Erdöl" — earth oil.
 
-**Status:** Phase 0 — scaffold + terminal shell. See `ERDA_BUILD_SPEC.md` §14 for the
+**Status:** Phase 1 — live market terminal (11 sources, validation report, nightly refresh). See `ERDA_BUILD_SPEC.md` §14 for the
 phase plan and gates.
 
 ## Honest boundaries

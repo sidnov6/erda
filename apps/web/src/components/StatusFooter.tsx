@@ -1,8 +1,20 @@
+"use client";
+
+import { useErda } from "@/lib/api";
+
 /**
- * Status line + honest-boundaries footer (§1: boundaries print in the UI footer;
- * §15: the mode badge tells the truth — P0 has no data plane, so it reads SHELL).
+ * Status line + honest-boundaries footer (§1) + truth badge (§15): the mode
+ * chip reports what the data plane actually holds, never an aspiration.
  */
 export function StatusFooter({ status }: { status: string }) {
+  const { data: mode } = useErda<{ mode: string; tables?: number }>("mode", 120_000);
+
+  const modeText = mode
+    ? mode.mode === "LIVE"
+      ? `LIVE · ${mode.tables} TABLES`
+      : `${mode.mode} · NO DATA`
+    : "SHELL · NO DATA";
+
   return (
     <footer className="flex h-8 shrink-0 items-center gap-3 border-t border-line bg-bg0 px-2">
       <span className="numeric truncate text-[11px] text-ink-dim" role="status">
@@ -13,8 +25,12 @@ export function StatusFooter({ status }: { status: string }) {
         Screening tool — ranks resemblance to historically successful acreage. Not seismic; never
         &ldquo;oil is here.&rdquo;
       </span>
-      <span className="chip shrink-0 text-ink-faint">SHELL · NO DATA</span>
-      <span className="chip shrink-0 text-ink-faint">P0</span>
+      <span
+        className={`chip shrink-0 ${mode?.mode === "LIVE" ? "text-oil" : "text-ink-faint"}`}
+      >
+        {modeText}
+      </span>
+      <span className="chip shrink-0 text-ink-faint">P1</span>
     </footer>
   );
 }

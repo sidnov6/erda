@@ -54,9 +54,7 @@ export function CommandPalette({
                   {cmd.mnemonic}
                 </span>
                 <span className="flex-1 truncate text-[12px] text-ink">{cmd.name}</span>
-                <span className="chip shrink-0 text-ink-faint">
-                  {cmd.target ? "NO FEED" : cmd.phase}
-                </span>
+                {cmd.phase && <span className="chip shrink-0 text-ink-faint">{cmd.phase}</span>}
               </Command.Item>
             ))}
           </Command.List>

@@ -310,3 +310,25 @@ sources:
       1,023 polygons, 939 unique CODEs; fields CODE/NAME/TYPE/REG. Old
       certmapper path is WAF-challenged — use ScienceBase only. Volume fields
       use −9999 sentinels.
+
+  gem_infra:
+    name: "GEM oil/gas pipelines + LNG terminals (GOIT + GGIT-LNG)"
+    access: rest
+    base_url: "https://publicgemdata.nyc3.cdn.digitaloceanspaces.com/interim_maps/"
+    cadence: quarterly
+    sla_days: 400
+    verified_at: "2026-07-19"
+    notes: >-
+      Open bucket, CC BY. Filenames ROTATE by release and old releases linger
+      (goit_map_2025-03 AND goit_map_2026-06 both live) — resolve the latest
+      key per tracker from the S3-style listing (?prefix=interim_maps/) every
+      run, never hardcode. Current: goit_map_2026-06.geojson (211,894,140 B,
+      oil+NGL pipelines) + ggit-lng_map_2025-11.geojson (196,079,995 B, gas
+      pipelines + LNG terminal Points with facility-type import/export; 4
+      Points have blank facility-type — skipped with a pinned tolerance). NO
+      refineries tracker exists in the bucket. Files are huge: stream to
+      data/raw/ then one-shot json.load (~1-2 GB RSS, quarterly batch);
+      pipelines decimated to every 50th vertex + terminus for distance
+      queries. start-year quirks: 5 phased ranges ("2013-2017" → first year)
+      and one "Before 2024" (→ missing). SLA 400 d: releases are per-tracker
+      annual-ish (ggit-lng release already 8 months old at verification).

@@ -1,9 +1,15 @@
 """Narrators: the injected prose layer (§0 rule 3 — narrates, never calculates).
 
 - ClaudeNarrator: the Claude API at temperature 0 (server-side key only, §15).
+- GroqNarrator: DOCUMENTED STACK DEVIATION (owner-authorized 2026-07-19) — the
+  spec stack names the Claude API; the project owner supplied a Groq key
+  instead. OpenAI-compatible endpoint, temperature 0. Memo records carry the
+  narrator class name, so which backend narrated is always auditable.
 - TemplateNarrator: deterministic, offline — used by tests and as the honest
   fallback when no API key exists (its output is clearly labelled machine
   templating, not analysis).
+
+Narration can never change a number: the §11.3 quant hash excludes prose.
 """
 
 from __future__ import annotations
@@ -46,8 +52,55 @@ class ClaudeNarrator:
         return "".join(b.text for b in resp.content if b.type == "text").strip()
 
 
+class GroqNarrator:
+    """Owner-authorized deviation from the Claude-API stack (see module doc).
+    Model verified against /models on 2026-07-19; llama-3.3-70b-versatile is
+    the default, overridable via GROQ_MODEL."""
+
+    DEFAULT_MODEL = "llama-3.3-70b-versatile"
+    API_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+    def __init__(self, api_key: str | None = None, model: str | None = None):
+        key = api_key or os.environ.get("GROQ_API_KEY")
+        if not key:
+            raise RuntimeError("GROQ_API_KEY not set — narration unavailable")
+        self._key = key
+        self._model = model or os.environ.get("GROQ_MODEL", self.DEFAULT_MODEL)
+
+    def __call__(self, system: str, user: str) -> str:
+        import time
+
+        import httpx
+
+        for attempt in range(6):
+            resp = httpx.post(
+                self.API_URL,
+                headers={"Authorization": f"Bearer {self._key}"},
+                json={
+                    "model": self._model,
+                    "temperature": 0.0,
+                    "max_tokens": 700,
+                    "messages": [
+                        {"role": "system", "content": system},
+                        {"role": "user", "content": user},
+                    ],
+                },
+                timeout=60.0,
+            )
+            if resp.status_code == 429:  # free-tier rate limit — honor Retry-After
+                wait = float(resp.headers.get("retry-after", 2 ** (attempt + 1)))
+                time.sleep(min(wait + 0.5, 60.0))
+                continue
+            resp.raise_for_status()
+            return resp.json()["choices"][0]["message"]["content"].strip()
+        raise RuntimeError("Groq rate limit persisted through 6 backoff attempts")
+
+
 def default_narrator():
-    """Claude when a key exists, labelled template otherwise."""
+    """Claude if configured; else the owner-authorized Groq backend; else the
+    labelled template."""
     if os.environ.get("ANTHROPIC_API_KEY"):
         return ClaudeNarrator()
+    if os.environ.get("GROQ_API_KEY"):
+        return GroqNarrator()
     return TemplateNarrator()

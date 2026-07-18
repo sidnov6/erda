@@ -2,11 +2,11 @@
 
 **Verdict: GO** · EMV **461.7 $MM** · P(EMV>0) **88%** · Pg **0.22** (user-supplied (§9.8 — the falsification gate failed; no model Pg ships))
 
-_Generated 2026-07-18T19:16:12.069779+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `bf1e496245916f4b…`_
+_Generated 2026-07-18T19:25:20.035360+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `bf1e496245916f4b…`_
 
 ## Geoscience
 
-[template narration — no LLM key configured] You are the Geoscience member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'model': {'model_status': 'NO MODEL — §9.8 falsification gate failed; no Pg from a model', 'pg_source': 'user-supplied', 'in_scoreable_mask': True, 'gate_reference': 'packages/models/cards/NEGATIVE_RESULT.md', 'source_ids': ['model_eval_gbm', 'usgs_provinces', 'globsed']}, 'offsets': {'radius_km': 100.0, 'n_wells': 210, 'n_labeled': 210, 'n_discoveries': 124, 'offset_success_rate': 0.5
+The geoscience evaluation is hindered by a failed model status, with no predictive model output available due to a falsification gate failure. The basin in question is the Gulf Cenozoic OCS, with a historical success rate and significant exploration history. A data gap exists regarding volumetric maturity, as only count-based maturity is currently available. The nearest wells all have a 'NO_FIELD_LEASE' outcome, indicating a lack of nearby discoveries. Further evaluation is needed to fully assess the prospect.
 
 - **model_status**: NO MODEL — §9.8 falsification gate failed; no Pg from a model _[model_eval_gbm, usgs_provinces, globsed]_
 - **offset_wells_100km**: 210 wells _[boem_bsee, labels_harmonized]_
@@ -16,7 +16,7 @@ _Generated 2026-07-18T19:16:12.069779+00:00 · frozen local snapshot — no live
 
 ## Fiscal
 
-[template narration — no LLM key configured] You are the Fiscal member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'regime': {'iso3': 'USA', 'country': 'United States — Gulf of Mexico / Gulf of America federal OCS', 'regime_type': 'tax_royalty', 'royalty_rate': 0.125, 'royalty_note': 'Rate for NEW leases. The three most recent federal offshore sales (One Big Beautiful Bill Act Lease Sales BBG1, BBG2, BBG3; bids opened Dec 2025 - Aug 2026) all set: "The royalty rate is the minimum allowed by Section
+The fiscal regime in the United States — Gulf of Mexico / Gulf of America federal OCS is a tax-royalty system. The royalty rate for new leases is 12.5%, as set by the One Big Beautiful Bill Act Lease Sales. The federal corporate income tax rate is 21%. A data gap exists regarding special petroleum taxes, as no federal special petroleum profits tax has been identified. Additionally, cost-recovery rules for petroleum, such as depreciation, have not been verified from accessed sources.
 
 - **regime_type**: tax_royalty _[curated_fiscal]_
 - **cit_rate**: 0.21 fraction _[curated_fiscal]_
@@ -24,14 +24,14 @@ _Generated 2026-07-18T19:16:12.069779+00:00 · frozen local snapshot — no live
 
 ## Political Risk
 
-[template narration — no LLM key configured] You are the Political Risk member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'governance': {'data_gap': 'snapshot table missing: wgi_governance'}, 'sanctions': {'data_gap': 'snapshot table missing: sanctions_programs'}}
+The governance and sanctions landscape of the potential investment location is unclear due to a lack of available data. A data gap exists in the World Governance Indicators (WGI) table, which would typically provide insight into the country's governance structure. Additionally, information on sanctions programs is also unavailable due to a missing snapshot table. As a result, the committee cannot fully assess the political risk associated with this investment. Further research is needed to fill these data gaps.
 
 - **governance_gap**: snapshot table missing: wgi_governance _[snapshot]_
 - **sanctions_gap**: snapshot table missing: sanctions_programs _[snapshot]_
 
 ## Infrastructure & Development Concept
 
-[template narration — no LLM key configured] You are the Infrastructure member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'concept': {'water_depth_m': 2097.6, 'host_distance_km': 95.0, 'concept': 'fpso_standalone', 'cost_benchmarks': {'concept': 'fpso_standalone', 'capex_usd_boe_low': '8', 'capex_usd_boe_high': '18', 'opex_usd_bbl_low': '6.28', 'opex_usd_bbl_high': '6.65', 'well_cost_musd_low': '60', 'well_cost_musd_high': '240', 'schedule_years_low': '2.5', 'schedule_years_high': '3.2'}, 'cost_notes': "c
+The concept under consideration is an fpso_standalone, with a water depth of 2097.6 meters and a host distance of 95 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from a low to a high value, and operating expenditure per barrel ranging from a low to a high value. Well costs are also estimated to fall within a specified range, while the project schedule is expected to span several years, derived from cited dates of similar projects. A data gap is not explicitly noted in the provided information.
 
 - **water_depth_m**: 2097.6 m _[etopo2022, curated_costs, erda_engine.concept]_
 - **host_distance_km**: 95.0 km _[etopo2022, curated_costs, erda_engine.concept]_
@@ -39,20 +39,20 @@ _Generated 2026-07-18T19:16:12.069779+00:00 · frozen local snapshot — no live
 
 ## Environment
 
-[template narration — no LLM key configured] You are the environment member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'data_gap': 'wdpa_areas.parquet missing from snapshot'}. The snapshot lacks this data — say so and what it means.
+The environmental screening process is hindered by a data gap, as the 'wdpa_areas.parquet' file is missing from the snapshot. This omission means that we lack access to protected area data, which is a crucial component in assessing potential environmental impacts. As a result, our evaluation is incomplete, and we cannot fully consider the potential risks and consequences of investment. The absence of this data limits our ability to conduct a thorough environmental assessment.
 
 - **data_gap**: wdpa_areas.parquet missing from snapshot _[snapshot]_
 
 ## Financeability
 
-[template narration — no LLM key configured] You are the Financeability member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'institution': 'Societe Generale', 'type': 'bank', 'policy_url': 'https://www.societegenerale.com/site
+All institutions checked have restrictions in place for upstream financing. The institutions, including banks and insurers, have publicly available policies outlining their approach to the oil and gas sector. A data gap exists regarding the specific impact of these restrictions on financing options. Financing may be shifting towards alternative arrangements, such as partnerships with national oil companies, trading-house prepay, or private equity, due to European bank and insurer restrictions.
 
 - **institutions_checked**: 10 institutions _[curated_exclusions]_
 - **restricting_upstream**: 10 institutions _[curated_exclusions]_
 
 ## Economics
 
-[template narration — no LLM key configured] You are the Economist member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'economics': {'pg': 0.22, 'pg_provenance': 'user-supplied (§9.8 — the falsification gate failed; no model Pg ships)', 'npv_success_musd': 2524.26, 'emv_musd': 461.74, 'breakeven_usd_bbl': 38.2, 'government_take': 0.4135, 'payback_year': 4, 'mc': {'emv_mean_musd': 607.37, 'emv_p10_musd': -29.83, 'emv_p50_musd': 461.59, 'emv_p90_musd': 1425.8, 'p_emv_positive': 0.8797, 'n_draws': 10000,
+The project's economics indicate a positive Expected Monetary Value (EMV) with a mean of $607.37 million and a probability of being positive at 87.97%. The project is expected to break even at a price of $38.2 per barrel and has a payback period of 4 years. The Government take is approximately 41.35%. A data gap is noted for the Pg value, which is user-supplied due to the falsification gate failing and no model Pg being available.
 
 - **pg**: 0.22 probability _[user_supplied]_
 - **price_m1**: 82.49 $/bbl _[yf_curve]_
@@ -65,7 +65,7 @@ _Generated 2026-07-18T19:16:12.069779+00:00 · frozen local snapshot — no live
 
 ## Red Team — what would make this wrong
 
-[template narration — no LLM key configured] You are the Red Team of an exploration screening committee. Facts as provided by tools: All tool JSON: {'environment': {'data_gap': 'wdpa_areas.parquet missing from snapshot'}, 'financeability': {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'insti
+This assessment is flawed because it relies on a user-supplied Pg value of 0.22, which lacks a robust provenance due to the failure of the §9.8 falsification gate. Additionally, the cost benchmarks for the fpso_standalone concept are based on limited examples (Liza Ph1 and Ph2) and may not be representative of the entire industry. The opex range is also narrow, citing only Petrobras pre-salt lifting costs, which may not be applicable to all operators. Furthermore, the fiscal model simplifies depreciation and does not account for loss carryforward, which could impact the accuracy of the government take and breakeven price calculations. The price deck is also based on a single indicative curve (M1 settle 2026-07-18) and may not capture potential price volatility. Lastly, data gaps in governance and sanctions information introduce uncertainty into the political risk assessment.
 
 ## Citation appendix
 

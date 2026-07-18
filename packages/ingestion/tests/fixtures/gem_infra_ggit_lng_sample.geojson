@@ -1,0 +1,955 @@
+{
+ "type": "FeatureCollection",
+ "name": "ggit-lng_map_2025-11",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Gryazovets-Volkhov-Slavyanskaya Gas Pipeline",
+    "unit-name": "",
+    "url": "https://www.gem.wiki/Gryazovets-Volkhov-Slavyanskaya_Gas_Pipeline",
+    "project-id": "P3176",
+    "status": "operating",
+    "fuel": "Gas",
+    "country-area1": "Russia",
+    "owner": "Gazprom PJSC [100.00%]",
+    "parent": "Gazprom PJSC [100.00%]",
+    "start-year": "2022",
+    "capacity": 84.2,
+    "subnational": "Vologda Oblast",
+    "region": "Europe",
+    "subnational2": "Leningrad Oblast",
+    "region2": "Europe",
+    "capacity-display": "84.2",
+    "capacity-table": "84.2",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "GGIT",
+    "tracker-display": "Gas pipelines",
+    "units-of-m": "bcm/y of gas",
+    "capacity-scaled": 3031200.0,
+    "status-display": "operating",
+    "name-search": "Gryazovets-Volkhov-Slavyanskaya Gas Pipeline",
+    "owner-search": "Gazprom PJSC [100.00%]",
+    "parent-search": "Gazprom PJSC [100.00%]",
+    "all-countries": "Russia",
+    "location-display": "Vologda Oblast, Russia",
+    "facility-type": "",
+    "Latitude": "",
+    "Longitude": ""
+   },
+   "geometry": {
+    "type": "MultiLineString",
+    "coordinates": [
+     [
+      [
+       40.250152,
+       58.787926
+      ],
+      [
+       40.225886,
+       58.785229
+      ],
+      [
+       40.190835,
+       58.804777
+      ],
+      [
+       40.182072,
+       58.804777
+      ],
+      [
+       40.122081,
+       58.862746
+      ],
+      [
+       40.069505,
+       58.905212
+      ],
+      [
+       40.047261,
+       58.901167
+      ],
+      [
+       39.973114,
+       58.901167
+      ],
+      [
+       39.965026,
+       58.905212
+      ],
+      [
+       39.912449,
+       58.969247
+      ],
+      [
+       39.905709,
+       58.973966
+      ],
+      [
+       39.886835,
+       58.978684
+      ],
+      [
+       39.863917,
+       58.992839
+      ],
+      [
+       39.611292,
+       59.066809
+      ],
+      [
+       39.416722,
+       59.153617
+      ],
+      [
+       39.162464,
+       59.119353
+      ],
+      [
+       39.028441,
+       59.113526
+      ],
+      [
+       39.018243,
+       59.12518
+      ],
+      [
+       38.907528,
+       59.144118
+      ],
+      [
+       38.855084,
+       59.149945
+      ],
+      [
+       38.801297,
+       59.123052
+      ],
+      [
+       38.756986,
+       59.131914
+      ],
+      [
+       38.74517,
+       59.142253
+      ],
+      [
+       38.712676,
+       59.146684
+      ],
+      [
+       38.643257,
+       59.14373
+      ],
+      [
+       38.61667,
+       59.154069
+      ],
+      [
+       38.526573,
+       59.145207
+      ],
+      [
+       38.494079,
+       59.159977
+      ],
+      [
+       38.442383,
+       59.173271
+      ],
+      [
+       38.420228,
+       59.176225
+      ],
+      [
+       38.398073,
+       59.171794
+      ],
+      [
+       38.386257,
+       59.179179
+      ],
+      [
+       38.392165,
+       59.185087
+      ],
+      [
+       38.253326,
+       59.266322
+      ],
+      [
+       38.136642,
+       59.30177
+      ],
+      [
+       38.05836,
+       59.288477
+      ],
+      [
+       38.04359,
+       59.294385
+      ],
+      [
+       37.932815,
+       59.297339
+      ],
+      [
+       37.891458,
+       59.291431
+      ],
+      [
+       37.845671,
+       59.284046
+      ],
+      [
+       37.6832,
+       59.316541
+      ],
+      [
+       37.5547,
+       59.303247
+      ],
+      [
+       37.492184,
+       59.320547
+      ],
+      [
+       37.298659,
+       59.327934
+      ],
+      [
+       37.220362,
+       59.311683
+      ],
+      [
+       37.125815,
+       59.313161
+      ],
+      [
+       37.050473,
+       59.310206
+      ],
+      [
+       36.986949,
+       59.305774
+      ],
+      [
+       36.87172,
+       59.327934
+      ],
+      [
+       36.78456,
+       59.326456
+      ],
+      [
+       36.740241,
+       59.314638
+      ],
+      [
+       36.642739,
+       59.323502
+      ],
+      [
+       36.497692,
+       59.281514
+      ],
+      [
+       36.459768,
+       59.28351
+      ],
+      [
+       36.408871,
+       59.300475
+      ],
+      [
+       36.373942,
+       59.296483
+      ],
+      [
+       36.276139,
+       59.333409
+      ],
+      [
+       36.257177,
+       59.338399
+      ],
+      [
+       36.227238,
+       59.36734
+      ],
+      [
+       36.1963,
+       59.376322
+      ],
+      [
+       36.038464,
+       59.36753
+      ],
+      [
+       35.98634,
+       59.365733
+      ],
+      [
+       35.608891,
+       59.390896
+      ],
+      [
+       35.544185,
+       59.380112
+      ],
+      [
+       35.283565,
+       59.419654
+      ],
+      [
+       35.222455,
+       59.410667
+      ],
+      [
+       34.916901,
+       59.425046
+      ],
+      [
+       34.832424,
+       59.452007
+      ],
+      [
+       34.755137,
+       59.444818
+      ],
+      [
+       34.685039,
+       59.457399
+      ],
+      [
+       34.663471,
+       59.453804
+      ],
+      [
+       34.634713,
+       59.462791
+      ],
+      [
+       34.607752,
+       59.462791
+      ],
+      [
+       34.338727,
+       59.489428
+      ],
+      [
+       34.200958,
+       59.451159
+      ],
+      [
+       33.934167,
+       59.590021
+      ],
+      [
+       33.839041,
+       59.597675
+      ],
+      [
+       33.828107,
+       59.604236
+      ],
+      [
+       33.754849,
+       59.619543
+      ],
+      [
+       33.585371,
+       59.690615
+      ],
+      [
+       33.471657,
+       59.697175
+      ],
+      [
+       33.319674,
+       59.705922
+      ],
+      [
+       33.132655,
+       59.700594
+      ],
+      [
+       33.072518,
+       59.711528
+      ],
+      [
+       32.970831,
+       59.783692
+      ],
+      [
+       32.940216,
+       59.780412
+      ],
+      [
+       32.80682,
+       59.826335
+      ],
+      [
+       32.556431,
+       59.824148
+      ],
+      [
+       32.388653,
+       59.782336
+      ],
+      [
+       32.214382,
+       59.687884
+      ],
+      [
+       32.115939,
+       59.612057
+      ],
+      [
+       32.07603,
+       59.597424
+      ],
+      [
+       31.908411,
+       59.586781
+      ],
+      [
+       31.874115,
+       59.556048
+      ],
+      [
+       31.849477,
+       59.520038
+      ],
+      [
+       31.83621,
+       59.484029
+      ],
+      [
+       31.769877,
+       59.476448
+      ],
+      [
+       31.75282,
+       59.461286
+      ],
+      [
+       31.661848,
+       59.459391
+      ],
+      [
+       31.604991,
+       59.40822
+      ],
+      [
+       31.483697,
+       59.41201
+      ],
+      [
+       31.421154,
+       59.366525
+      ],
+      [
+       31.419259,
+       59.319144
+      ],
+      [
+       31.413573,
+       59.28882
+      ],
+      [
+       31.381354,
+       59.260391
+      ],
+      [
+       31.326392,
+       59.230068
+      ],
+      [
+       31.22784,
+       59.131516
+      ],
+      [
+       31.072431,
+       59.118249
+      ],
+      [
+       30.970088,
+       59.158049
+      ],
+      [
+       30.881012,
+       59.177001
+      ],
+      [
+       30.78246,
+       59.241439
+      ],
+      [
+       30.453397,
+       59.237224
+      ],
+      [
+       30.407902,
+       59.225851
+      ],
+      [
+       30.337765,
+       59.252389
+      ],
+      [
+       30.167161,
+       59.242911
+      ],
+      [
+       30.028782,
+       59.140549
+      ],
+      [
+       29.996557,
+       59.129175
+      ],
+      [
+       29.94348,
+       59.12728
+      ],
+      [
+       29.897986,
+       59.165192
+      ],
+      [
+       29.793728,
+       59.168983
+      ],
+      [
+       29.68947,
+       59.187939
+      ],
+      [
+       29.585212,
+       59.193626
+      ],
+      [
+       29.316037,
+       59.204999
+      ],
+      [
+       29.175763,
+       59.204999
+      ],
+      [
+       28.952207,
+       59.258433
+      ],
+      [
+       28.7399,
+       59.256538
+      ],
+      [
+       28.66218,
+       59.320988
+      ],
+      [
+       28.618582,
+       59.343735
+      ],
+      [
+       28.557922,
+       59.368378
+      ],
+      [
+       28.465038,
+       59.374065
+      ],
+      [
+       28.415752,
+       59.410081
+      ],
+      [
+       28.356989,
+       59.423351
+      ],
+      [
+       28.311494,
+       59.419559
+      ],
+      [
+       28.275478,
+       59.434724
+      ],
+      [
+       28.275482,
+       59.434765
+      ]
+     ],
+     [
+      [
+       28.275482,
+       59.434765
+      ],
+      [
+       28.28306,
+       59.510548
+      ],
+      [
+       28.324764,
+       59.550356
+      ],
+      [
+       28.430917,
+       59.554147
+      ],
+      [
+       28.474516,
+       59.605328
+      ],
+      [
+       28.444186,
+       59.647031
+      ],
+      [
+       28.398692,
+       59.669778
+      ]
+     ],
+     [
+      [
+       28.27549,
+       59.434764
+      ],
+      [
+       28.275482,
+       59.434765
+      ]
+     ],
+     [
+      [
+       28.275482,
+       59.434765
+      ],
+      [
+       28.141928,
+       59.458133
+      ],
+      [
+       28.10993,
+       59.451417
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Incheon LNG Terminal",
+    "unit-name": "",
+    "url": "https://www.gem.wiki/Incheon_LNG_Terminal",
+    "project-id": "T100000130312",
+    "status": "operating",
+    "fuel": "",
+    "country-area1": "South Korea",
+    "owner": "KOGAS Canada Ltd [100%]",
+    "parent": "Korea Gas Corp [100.0%]",
+    "start-year": "1996",
+    "capacity": 54.5,
+    "subnational": "Seoul Capital Area",
+    "region": "Asia",
+    "subnational2": "",
+    "region2": "",
+    "capacity-display": "54.5",
+    "capacity-table": "54.5",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "LNG",
+    "tracker-display": "LNG import terminal",
+    "units-of-m": "mtpa of LNG",
+    "capacity-scaled": 982983.255,
+    "status-display": "operating",
+    "name-search": "Incheon LNG Terminal",
+    "owner-search": "KOGAS Canada Ltd [100%]",
+    "parent-search": "Korea Gas Corp [100.0%]",
+    "all-countries": "South Korea",
+    "location-display": "Seoul Capital Area, South Korea",
+    "facility-type": "import",
+    "Latitude": 37.35124,
+    "Longitude": 126.602
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     126.602,
+     37.35124
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Qatar North Field LNG Terminal",
+    "unit-name": "North Field East (T1-4)",
+    "url": "https://www.gem.wiki/Qatar_North_Field_LNG_Terminal",
+    "project-id": "T100000130817",
+    "status": "construction",
+    "fuel": "",
+    "country-area1": "Qatar",
+    "owner": "Eni SpA [3%]; China Petrochemical Corp [1%]; China National Petroleum Corp [1%]; TotalEnergies SE [6%]; Shell PLC [6%]; ConocoPhillips Corp [3%]; Exxon Mobil Corp [6%]; QatarEnergy [71%]",
+    "parent": "QatarEnergy [71.2%]; Exxon Mobil Corp [6.2%]; Shell PLC [6.2%]; TotalEnergies SE [6.2%]; ConocoPhillips Corp [3.1%]; Eni SpA [3.1%]; China National Petroleum Corp [1.2%]; China Petrochemical Corp [1.2%]",
+    "start-year": "",
+    "capacity": 32.0,
+    "subnational": "Al Khawr",
+    "region": "Asia",
+    "subnational2": "",
+    "region2": "",
+    "capacity-display": "32",
+    "capacity-table": "32",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "LNG",
+    "tracker-display": "LNG export terminal",
+    "units-of-m": "mtpa of LNG",
+    "capacity-scaled": 1403913.6,
+    "status-display": "construction",
+    "name-search": "Qatar North Field LNG Terminal",
+    "owner-search": "Eni SpA [3%]; China Petrochemical Corp [1%]; China National Petroleum Corp [1%]; TotalEnergies SE [6%]; Shell PLC [6%]; ConocoPhillips Corp [3%]; Exxon Mobil Corp [6%]; QatarEnergy [71%]",
+    "parent-search": "QatarEnergy [71.2%]; Exxon Mobil Corp [6.2%]; Shell PLC [6.2%]; TotalEnergies SE [6.2%]; ConocoPhillips Corp [3.1%]; Eni SpA [3.1%]; China National Petroleum Corp [1.2%]; China Petrochemical Corp [1.2%]",
+    "all-countries": "Qatar",
+    "location-display": "Al Khawr, Qatar",
+    "facility-type": "export",
+    "Latitude": 25.9186901,
+    "Longitude": 51.5277023
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     51.5277023,
+     25.9186901
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "North Pars LNG Terminal",
+    "unit-name": "T1-T4",
+    "url": "https://www.gem.wiki/North_Pars_LNG_Terminal",
+    "project-id": "T100000130584",
+    "status": "cancelled",
+    "fuel": "",
+    "country-area1": "Iran",
+    "owner": "QatarEnergy [100%]",
+    "parent": "QatarEnergy [100.0%]",
+    "start-year": "",
+    "capacity": 32.0,
+    "subnational": "Perian Gulf",
+    "region": "Asia",
+    "subnational2": "",
+    "region2": "",
+    "capacity-display": "32",
+    "capacity-table": "32",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "LNG",
+    "tracker-display": "LNG export terminal",
+    "units-of-m": "mtpa of LNG",
+    "capacity-scaled": 1403913.6,
+    "status-display": "cancelled",
+    "name-search": "North Pars LNG Terminal",
+    "owner-search": "QatarEnergy [100%]",
+    "parent-search": "QatarEnergy [100.0%]",
+    "all-countries": "Iran",
+    "location-display": "Perian Gulf, Iran",
+    "facility-type": "export",
+    "Latitude": 26.619125,
+    "Longitude": 52.067964
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     52.067964,
+     26.619125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Power of Siberia 2 Gas Pipeline",
+    "unit-name": "Soyuz Vostok Gas Pipeline",
+    "url": "https://www.gem.wiki/Power_of_Siberia_2_Gas_Pipeline",
+    "project-id": "P5409",
+    "status": "proposed",
+    "fuel": "Gas",
+    "country-area1": "Russia, Mongolia, China",
+    "owner": "Gazprom PJSC [100.00%]",
+    "parent": "Gazprom PJSC [100.00%]",
+    "start-year": "2030",
+    "capacity": 50.0,
+    "subnational": "Republic of Buryatia",
+    "region": "Europe",
+    "subnational2": "Shanghai",
+    "region2": "Asia",
+    "capacity-display": "50.0",
+    "capacity-table": "50.0",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "GGIT",
+    "tracker-display": "Gas pipelines",
+    "units-of-m": "bcm/y of gas",
+    "capacity-scaled": 1800000.0,
+    "status-display": "proposed",
+    "name-search": "Power of Siberia 2 Gas Pipeline",
+    "owner-search": "Gazprom PJSC [100.00%]",
+    "parent-search": "Gazprom PJSC [100.00%]",
+    "all-countries": "Russia; Mongolia; China",
+    "location-display": "Russia; Mongolia; China",
+    "facility-type": "",
+    "Latitude": "",
+    "Longitude": ""
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      121.42922,
+      31.08272
+     ],
+     [
+      114.06087,
+      43.107254
+     ],
+     [
+      113.940199,
+      43.303663
+     ],
+     [
+      113.783474,
+      43.6379
+     ],
+     [
+      113.497852,
+      44.003719
+     ],
+     [
+      113.157481,
+      44.350281
+     ],
+     [
+      112.440041,
+      44.933307
+     ],
+     [
+      111.292785,
+      45.714677
+     ],
+     [
+      109.16982,
+      47.146493
+     ],
+     [
+      107.516019,
+      48.473849
+     ],
+     [
+      105.596171,
+      49.718243
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Shanxi Gas Pipeline Network",
+    "unit-name": "Jincheng\u2013Houma Coalbed Pipeline",
+    "url": "https://www.gem.wiki/Shanxi_Natural_Gas_Pipeline_Network",
+    "project-id": "P5315",
+    "status": "operating",
+    "fuel": "Gas",
+    "country-area1": "China",
+    "owner": "Shanxi Guoxin Energy Corp Ltd [100.00%]",
+    "parent": "Shanxi Guoxin Energy Co Ltd [100.00%]",
+    "start-year": "2013-2017",
+    "capacity": 0.5,
+    "subnational": "Shanxi",
+    "region": "Asia",
+    "subnational2": "Shanxi",
+    "region2": "Asia",
+    "capacity-display": "0.5",
+    "capacity-table": "0.5",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "GGIT",
+    "tracker-display": "Gas pipelines",
+    "units-of-m": "bcm/y of gas",
+    "capacity-scaled": 18000.0,
+    "status-display": "operating",
+    "name-search": "Shanxi Gas Pipeline Network",
+    "owner-search": "Shanxi Guoxin Energy Corp Ltd [100.00%]",
+    "parent-search": "Shanxi Guoxin Energy Co Ltd [100.00%]",
+    "all-countries": "China",
+    "location-display": "Shanxi, China",
+    "facility-type": "",
+    "Latitude": "",
+    "Longitude": ""
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      111.716898,
+      35.739298
+     ],
+     [
+      111.371515,
+      35.618822
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Klaipeda Small-Scale LNG Terminal",
+    "unit-name": "",
+    "url": "https://www.gem.wiki/Klaipeda_Orlen_LNG_Terminal",
+    "project-id": "T100001048134",
+    "status": "operating",
+    "fuel": "",
+    "country-area1": "Lithuania",
+    "owner": "KN Energies AB",
+    "parent": "KN Energies AB",
+    "start-year": "2020",
+    "capacity": "",
+    "subnational": "",
+    "region": "Europe",
+    "subnational2": "",
+    "region2": "",
+    "capacity-display": "unknown",
+    "capacity-table": "",
+    "tracker-custom": "GGIT-LNG",
+    "tracker-acro": "LNG",
+    "tracker-display": "",
+    "units-of-m": "mtpa of LNG",
+    "capacity-scaled": 0.0,
+    "status-display": "operating",
+    "name-search": "Klaipeda Small-Scale LNG Terminal",
+    "owner-search": "KN Energies AB",
+    "parent-search": "KN Energies AB",
+    "all-countries": "Lithuania",
+    "location-display": "Lithuania",
+    "facility-type": "",
+    "Latitude": 55.724078010367755,
+    "Longitude": 21.101124507524457
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     21.101124507524457,
+     55.724078010367755
+    ]
+   }
+  }
+ ]
+}

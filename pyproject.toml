@@ -1,0 +1,65 @@
+[project]
+name = "erda"
+version = "0.1.0"
+description = "ERDA — upstream oil exploration intelligence platform (workspace root)"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "erda-api",
+    "erda-ingestion",
+    "erda-contracts",
+    "erda-geo",
+    "erda-labels",
+    "erda-models",
+    "erda-engine",
+    "erda-agents",
+    "erda-validation",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.8",
+    "httpx>=0.27",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["apps/api", "packages/*"]
+
+[tool.uv.sources]
+erda-api = { workspace = true }
+erda-ingestion = { workspace = true }
+erda-contracts = { workspace = true }
+erda-geo = { workspace = true }
+erda-labels = { workspace = true }
+erda-models = { workspace = true }
+erda-engine = { workspace = true }
+erda-agents = { workspace = true }
+erda-validation = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["apps/api/tests", "packages"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "erda_api",
+    "erda_ingestion",
+    "erda_contracts",
+    "erda_geo",
+    "erda_labels",
+    "erda_models",
+    "erda_engine",
+    "erda_agents",
+    "erda_validation",
+]

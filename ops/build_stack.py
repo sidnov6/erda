@@ -113,12 +113,22 @@ def build_grav_grad() -> None:
               extra={"derived_from": "grav_mgal"})
 
 
+def _wrap_lon_180(lon: np.ndarray, data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """0..360 source longitudes → −180..180, columns reordered to ascending."""
+    if lon.max() <= 180.0:
+        return lon, data
+    wrapped = np.mod(lon + 180.0, 360.0) - 180.0
+    order = np.argsort(wrapped)
+    return wrapped[order], data[:, order]
+
+
 def build_mag() -> None:
     from erda_geo.readers import read_geotiff_grid
 
     path = RAW / "EMAG2_V3_UpCont.tif"
     lat, lon, data = read_geotiff_grid(path)
     data[data == 99999.0] = np.nan  # EMAG2 sentinel (registry)
+    lon, data = _wrap_lon_180(lon, data)  # tif is 0..360 (observed at build)
     full = _to_master(lat, lon, data, "linear").astype(np.float32)
     _finalize("mag_anomaly_nt", full, _prov("emag2", path), "nT",
               extra={"layer": "UpCont 4km continuation (full coverage variant)"})
@@ -279,7 +289,7 @@ def build_provinces() -> None:
     if not extract_dir.exists():
         with zipfile.ZipFile(path) as zf:
             zf.extractall(extract_dir)
-    shp = next(extract_dir.rglob("*.shp"))
+    shp = next(p for p in extract_dir.rglob("*") if p.suffix.lower() == ".shp")
     gdf = gpd.read_file(shp)
     spec = GridSpec()
     transform = from_origin(-180.0, 90.0, spec.res_deg, spec.res_deg)

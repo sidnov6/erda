@@ -3,7 +3,17 @@ name = "erda-models"
 version = "0.1.0"
 description = "Prospectivity models: GBM, patch CNN, calibration, evaluation, model cards."
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+    "erda-contracts",
+    "erda-geo",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "scikit-learn>=1.5",
+    "lightgbm>=4.5",
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "pyarrow>=17",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -11,3 +21,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["erda_models"]
+
+[tool.uv.sources]
+erda-contracts = { workspace = true }
+erda-geo = { workspace = true }

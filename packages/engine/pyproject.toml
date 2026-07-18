@@ -3,7 +3,9 @@ name = "erda-engine"
 version = "0.1.0"
 description = "Deterministic economics engine: DCF, EMV, Monte Carlo, fiscal. DETERMINISTIC CORE."
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+    "numpy>=1.26",
+]
 
 [build-system]
 requires = ["hatchling"]

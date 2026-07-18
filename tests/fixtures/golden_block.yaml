@@ -1,0 +1,92 @@
+# ============================================================================
+# GOLDEN BLOCK — hand-computed economics fixture (spec §11.3)
+# SYNTHETIC TEST ARTIFACT: every number below is invented for verifiability
+# and never enters data/. Every intermediate figure is worked out by hand in
+# the comments; the engine must reproduce them to the stated tolerances.
+#
+# Engine model conventions under test (documented in erda_engine docstrings):
+#   · real terms, flat-real price; discounting to year 0 at rate r
+#   · exploration well cost paid at year 0 (inside NPV_success — the success
+#     branch pays it too; the §10.5 EMV formula then charges the dry branch
+#     (1−Pg)·well_cost)
+#   · development capex per capex_schedule fractions (here: 100% in year 1)
+#   · production starts after schedule_years (here: year 2), profile fractions
+#     of recoverable resource per year
+#   · fiscal: tax/royalty regime — royalty on revenue; CIT on
+#     (revenue − royalty − opex − straight-line depreciation over the
+#     production years); negative taxable income → zero tax (no refund)
+#   · government take = PV(royalty+tax) / PV(revenue − opex − capex − well)
+#   · payback = first year cumulative UNdiscounted net cash flow ≥ 0
+# ============================================================================
+
+inputs:
+  pg: 0.25                     # chance of success (USER-SUPPLIED per §9.8 outcome)
+  resource_mmbbl: 100.0
+  production_profile: [0.20, 0.20, 0.20, 0.20, 0.20]   # 5 equal years
+  schedule_years: 2            # first oil in year 2
+  price_usd_bbl: 70.0          # flat real
+  royalty_rate: 0.10
+  cit_rate: 0.30
+  opex_usd_bbl: 12.0
+  well_cost_musd: 80.0         # exploration well, year 0
+  dev_capex_musd: 500.0
+  capex_schedule: [0.0, 1.0]   # all development capex in year 1
+  discount_rate: 0.10
+
+# ————— hand computation —————
+# Annual production years 2..6: 100 × 0.20 = 20 MMbbl/yr
+#
+# Per production year:
+#   revenue  = 20 × 70                     = 1400.0  $MM
+#   royalty  = 0.10 × 1400                 =  140.0
+#   opex     = 20 × 12                     =  240.0
+#   depreciation = 500 / 5                 =  100.0
+#   taxable  = 1400 − 140 − 240 − 100      =  920.0
+#   tax      = 0.30 × 920                  =  276.0
+#   net cash flow = 1400 − 140 − 240 − 276 =  744.0  $MM
+#
+# Discount factors (r = 0.10):
+#   t2: 1/1.1² = 0.8264463   t3: 0.7513148   t4: 0.6830135
+#   t5: 0.6209213            t6: 0.5644739
+#   Σ(t2..t6) = 3.4461698
+#
+# NPV(success) = −80 − 500/1.1 + 744 × 3.4461698
+#              = −80 − 454.545455 + 2563.950335
+#              = 2029.404881  ≈ 2029.40 $MM
+#
+# EMV = 0.25 × 2029.404881 − 0.75 × 80 = 507.351220 − 60 = 447.351220 $MM
+#
+# Government take:
+#   PV(royalty + tax) = (140 + 276) × 3.4461698 = 416 × 3.4461698 = 1433.606637
+#   PV(revenue − opex) = (1400 − 240) × 3.4461698 = 1160 × 3.4461698
+#                      = 3997.556968
+#   PV(pre-take cash)  = 3997.556968 − 80 − 454.545455 = 3463.011513
+#   take = 1433.606637 / 3463.011513 = 0.413977  ≈ 41.40 %
+#
+# Payback (undiscounted cumulative NCF):
+#   y0: −80 → y1: −580 → y2: −580 + 744 = +164  ⇒ payback_year = 2
+#
+# Breakeven price P (NPV = 0), per production year with depreciation 100:
+#   NCF(P) = 20P − 0.10·20P − 240 − 0.30·(20P − 2P − 240 − 100)
+#          = 18P − 240 − 0.3·(18P − 340) = 12.6P − 138
+#   0 = −80 − 454.545455 + (12.6P − 138) × 3.4461698
+#   12.6P − 138 = 534.545455 / 3.4461698 = 155.112841
+#   P = 293.112841 / 12.6 = 23.263  $/bbl
+# ————————————————————————————————
+
+expected:
+  annual_production_mmbbl: 20.0
+  annual_revenue_musd: 1400.0
+  annual_royalty_musd: 140.0
+  annual_opex_musd: 240.0
+  annual_depreciation_musd: 100.0
+  annual_tax_musd: 276.0
+  annual_ncf_musd: 744.0
+  npv_success_musd: 2029.404881
+  emv_musd: 447.351220
+  government_take: 0.413977
+  payback_year: 2
+  breakeven_usd_bbl: 23.263
+  tolerance: 1.0e-3            # absolute, on monetary $MM figures
+  tolerance_ratio: 1.0e-4      # on take fraction
+  tolerance_price: 1.0e-2      # on breakeven $/bbl

@@ -56,6 +56,23 @@ def test_wow_stock_change():
     assert derived.wow_stock_change(421_000, 425_300) == pytest.approx(-4_300)
 
 
+def test_five_year_band():
+    # weekly Wednesdays across 2020–2026; value = year so band bounds are known:
+    # for asof 2026, window is 2021–2025 → min 2021, max 2025 in every week
+    idx = pd.date_range("2020-01-01", "2026-07-15", freq="W-WED")
+    series = pd.Series(idx.year.astype(float), index=idx)
+    band = derived.five_year_band(series, pd.Timestamp("2026-07-15"))
+    assert (band["band_min"] == 2021.0).all()
+    assert (band["band_max"] == 2025.0).all()
+    assert 1 <= band["week_of_year"].min() and band["week_of_year"].max() <= 53
+
+
+def test_five_year_band_empty_history():
+    idx = pd.date_range("2026-01-01", periods=5, freq="W-WED")
+    band = derived.five_year_band(pd.Series([1.0] * 5, index=idx), pd.Timestamp("2026-07-15"))
+    assert band.empty
+
+
 def test_rigs_production_lead_lag_perfect_lead():
     # production copies rigs shifted 3 months later → correlation peaks at lag 3
     idx = pd.date_range("2020-01-01", periods=24, freq="MS")

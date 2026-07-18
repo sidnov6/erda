@@ -63,6 +63,24 @@ def wow_stock_change(this_week_kbbl: float, last_week_kbbl: float) -> float:
     return this_week_kbbl - last_week_kbbl
 
 
+def five_year_band(weekly: pd.Series, asof: pd.Timestamp) -> pd.DataFrame:
+    """Per week-of-year min/max over the five calendar years before ``asof``'s year.
+
+    Input: weekly series with a DatetimeIndex. Output: [week_of_year, band_min,
+    band_max] for the INV panel's 5-yr range band (§8 panel 4). Weeks with no
+    history in the window are simply absent — never interpolated.
+    """
+    start_year = asof.year - 5
+    window = weekly[
+        (weekly.index.year >= start_year) & (weekly.index.year < asof.year)
+    ]
+    if window.empty:
+        return pd.DataFrame(columns=["week_of_year", "band_min", "band_max"])
+    grouped = window.groupby(window.index.isocalendar().week.astype(int))
+    out = grouped.agg(band_min="min", band_max="max").reset_index()
+    return out.rename(columns={"week": "week_of_year"})
+
+
 def rigs_production_lead_lag(
     rigs: pd.Series, production: pd.Series, max_lag_months: int = 12
 ) -> pd.DataFrame:

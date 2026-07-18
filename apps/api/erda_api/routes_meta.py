@@ -1,0 +1,60 @@
+"""Meta endpoints: validation report, source catalog, data mode.
+
+Honesty rules: a missing report/table returns an explicit "absent" payload —
+the UI renders the truth (NO FEED / stale), never a placeholder number.
+"""
+
+from __future__ import annotations
+
+from datetime import UTC, datetime
+
+from fastapi import APIRouter
+
+from erda_api import data
+from erda_validation import checks
+
+router = APIRouter(prefix="/api")
+
+
+@router.get("/validation")
+def validation_report() -> dict:
+    report = data.read_validation_report()
+    if report is None:
+        return {
+            "available": False,
+            "reason": "no validation report generated yet — run ops/refresh.py",
+        }
+    return {"available": True, "report": report}
+
+
+@router.get("/sources")
+def sources() -> dict:
+    reg = data.registry()
+    latest = data.ledger_latest()
+    fresh = checks.freshness(latest, reg, datetime.now(UTC))
+    freshness_by_source = {row["source_id"]: row for row in fresh.to_dict(orient="records")}
+    return {
+        "sources": [
+            {
+                "source_id": entry.source_id,
+                "name": entry.name,
+                "access": entry.access,
+                "cadence": entry.cadence,
+                "sla_days": entry.sla_days,
+                "requires_key": entry.requires_key,
+                "verified_at": entry.verified_at,
+                "freshness": freshness_by_source.get(entry.source_id),
+            }
+            for entry in reg.values()
+        ]
+    }
+
+
+@router.get("/mode")
+def mode() -> dict:
+    """LIVE vs SNAPSHOT vs SHELL — the badge tells the truth (§15)."""
+    latest = data.ledger_latest()
+    if not latest:
+        return {"mode": "SHELL", "tables": 0}
+    newest = max(e.retrieved_at for e in latest.values())
+    return {"mode": "LIVE", "tables": len(latest), "newest_retrieved_at": newest.isoformat()}

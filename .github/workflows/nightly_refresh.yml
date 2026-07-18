@@ -1,0 +1,33 @@
+name: nightly-refresh
+
+on:
+  schedule:
+    # 05:23 UTC daily — after EIA/FRED business-day publication windows.
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Sync workspace
+        run: uv sync
+      - name: Refresh all sources + build validation report
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          COMTRADE_API_KEY: ${{ secrets.COMTRADE_API_KEY }}
+        # Exits non-zero if any source failed — an honest red run, never silent.
+        run: uv run python ops/refresh.py
+      - name: Upload data snapshot + validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: erda-data-${{ github.run_id }}
+          path: |
+            data/parquet/
+          retention-days: 14

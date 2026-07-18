@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 
 from erda_api import __version__
+from erda_api.routes_meta import router as meta_router
 
 app = FastAPI(title="ERDA API", version=__version__)
+app.include_router(meta_router)
 
 
 @app.get("/health")

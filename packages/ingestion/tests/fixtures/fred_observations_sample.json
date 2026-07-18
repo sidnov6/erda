@@ -1,0 +1,14 @@
+{
+  "_comment": "SYNTHETIC TEST ARTIFACT (spec §11.3) — mimics the FRED /fred/series/observations JSON shape for normalize() tests. Values are invented and never enter data/.",
+  "realtime_start": "2026-07-18",
+  "realtime_end": "2026-07-18",
+  "observation_start": "2026-07-01",
+  "observation_end": "2026-07-03",
+  "units": "lin",
+  "count": 3,
+  "observations": [
+    { "realtime_start": "2026-07-18", "realtime_end": "2026-07-18", "date": "2026-07-01", "value": "74.10" },
+    { "realtime_start": "2026-07-18", "realtime_end": "2026-07-18", "date": "2026-07-02", "value": "." },
+    { "realtime_start": "2026-07-18", "realtime_end": "2026-07-18", "date": "2026-07-03", "value": "75.02" }
+  ]
+}

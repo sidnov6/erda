@@ -3,7 +3,17 @@ name = "erda-ingestion"
 version = "0.1.0"
 description = "Per-source connectors (one module per source_id); writes parquet + provenance."
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+    "erda-contracts",
+    "httpx>=0.27",
+    "pandas>=2.2",
+    "pyarrow>=17",
+    "pandera>=0.20",
+    "pyyaml>=6",
+    "openpyxl>=3.1",
+    "yfinance>=0.2.50",
+    "pdfplumber>=0.11",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -11,3 +21,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["erda_ingestion"]
+
+[tool.uv.sources]
+erda-contracts = { workspace = true }

@@ -10,6 +10,7 @@ dependencies = [
     "erda-validation",
     "erda-ingestion",
     "erda-labels",
+    "erda-agents",
     "pandas>=2.2",
     "pyarrow>=17",
 ]
@@ -26,3 +27,4 @@ erda-contracts = { workspace = true }
 erda-validation = { workspace = true }
 erda-ingestion = { workspace = true }
 erda-labels = { workspace = true }
+erda-agents = { workspace = true }

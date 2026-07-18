@@ -1,0 +1,41 @@
+{
+  "_note": "Showcase memo requests (§14 P5). Pg, resource triples and well cost are USER-SUPPLIED SCENARIO ASSUMPTIONS (§9.8 — no model Pg exists); each carries its rationale and is printed as such in the memo. Coordinates are open-water points chosen so the §10.4 classifier honestly yields fpso_standalone (the one concept with a complete cited cost row — see cost_benchmarks.csv gaps).",
+  "blocks": [
+    {
+      "block_id": "GOM-WR-DEMO",
+      "lat": 26.5,
+      "lon": -91.0,
+      "iso3": "USA",
+      "country_name": "United States",
+      "host_distance_km": 95.0,
+      "pg": 0.22,
+      "resource_p90_p50_p10": [80.0, 150.0, 281.0],
+      "well_cost_musd": 120.0,
+      "_assumptions": "Pg 0.22 ≈ mature-deepwater wildcat scenario; resource triple lognormal-consistent around 150 MMbbl; deepwater GoM well cost mid-range of cited benchmarks. USER-SUPPLIED."
+    },
+    {
+      "block_id": "NOR-VORING-DEMO",
+      "lat": 66.5,
+      "lon": 5.5,
+      "iso3": "NOR",
+      "country_name": "Norway",
+      "host_distance_km": 130.0,
+      "pg": 0.25,
+      "resource_p90_p50_p10": [60.0, 110.0, 202.0],
+      "well_cost_musd": 90.0,
+      "_assumptions": "Pg 0.25 ≈ NCS technical-success neighbourhood (label DB shows 45.6% incl. non-commercial; commercial-scale scenario set lower); Vøring deepwater FPSO case. USER-SUPPLIED."
+    },
+    {
+      "block_id": "NAM-ORANGE-DEMO",
+      "lat": -29.5,
+      "lon": 12.9,
+      "iso3": "NAM",
+      "country_name": "Namibia",
+      "host_distance_km": 250.0,
+      "pg": 0.15,
+      "resource_p90_p50_p10": [150.0, 300.0, 600.0],
+      "well_cost_musd": 150.0,
+      "_assumptions": "Frontier scenario: Pg 0.15 pre-drill frontier wildcat; large lognormal-consistent resource range reflecting Orange Basin scale stories; high deepwater frontier well cost. USER-SUPPLIED."
+    }
+  ]
+}

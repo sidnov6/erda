@@ -120,12 +120,7 @@ export const COMMANDS: CommandDef[] = [
   },
   { mnemonic: "DISC", name: "Discovery monitor", target: "disc" },
   { mnemonic: "MAP", name: "Prospectivity map", target: "map" },
-  {
-    mnemonic: "MEMO",
-    name: "Generate feasibility memo",
-    phase: "P5",
-    response: "MEMO <block|lat,lon> — committee arrives in P5",
-  },
+  { mnemonic: "MEMO", name: "Feasibility memos", href: "/memos" },
   { mnemonic: "VAL", name: "Validation report", href: "/validation" },
   {
     mnemonic: "HELP",

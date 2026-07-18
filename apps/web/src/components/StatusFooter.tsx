@@ -13,10 +13,8 @@ export function StatusFooter({ status }: { status: string }) {
         Screening tool — ranks resemblance to historically successful acreage. Not seismic; never
         &ldquo;oil is here.&rdquo;
       </span>
-      <span className="chip shrink-0 px-1 py-px text-[10px] leading-4 text-ink-faint">
-        SHELL · NO DATA
-      </span>
-      <span className="chip shrink-0 px-1 py-px text-[10px] leading-4 text-ink-faint">P0</span>
+      <span className="chip shrink-0 text-ink-faint">SHELL · NO DATA</span>
+      <span className="chip shrink-0 text-ink-faint">P0</span>
     </footer>
   );
 }

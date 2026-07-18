@@ -40,14 +40,19 @@
   --font-display: var(--font-space-grotesk), sans-serif;
 }
 
+/* html keeps the 16px root so rem-based spacing stays a true 8px grid;
+   the 13px terminal type size is set on body (inheritance, not rem basis). */
 html,
 body {
   height: 100%;
   background: var(--bg0);
   color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
   font-family: var(--font-plex-sans), sans-serif;
   font-size: 13px;
-  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -92,28 +97,29 @@ body {
 }
 
 .chip {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 4px;
   border: 1px solid var(--line);
   border-radius: 2px;
   font-family: var(--font-plex-mono), monospace;
   font-size: 11px;
+  line-height: 1;
   color: var(--ink-dim);
+  white-space: nowrap;
 }
 
-/* Command-line caret. Blink signals input readiness (terminal semantics). */
+/* Command-line caret — the §13.1 signature. Steady: the idle prompt is an
+   affordance, not a focused input, and a blink carries no information (§13.5). */
 .caret {
   display: inline-block;
   width: 7px;
   height: 14px;
   background: var(--gold);
-  animation: caret-blink 1.1s steps(1) infinite;
-}
-
-@keyframes caret-blink {
-  50% { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .caret { animation: none; }
   .react-grid-item { transition: none !important; }
   * { transition-duration: 0ms !important; }
 }

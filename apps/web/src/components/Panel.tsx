@@ -20,10 +20,10 @@ export function Panel({
       aria-label={def.title}
       className={`panel flex h-full flex-col overflow-hidden ${active ? "panel--active" : ""}`}
     >
-      <header className="panel-drag flex cursor-grab select-none items-center justify-between px-2 pt-1.5 pb-1">
+      <header className="panel-drag flex h-6 shrink-0 cursor-grab select-none items-center justify-between px-2">
         <h2 className="panel-title">{def.title}</h2>
         <div className="flex items-center gap-2">
-          <span className="chip px-1 py-px text-[10px] leading-4 text-ink-faint">NO FEED</span>
+          <span className="chip text-ink-faint">NO FEED</span>
           <span className="panel-mnemo text-[11px]">{def.mnemonic}</span>
         </div>
       </header>

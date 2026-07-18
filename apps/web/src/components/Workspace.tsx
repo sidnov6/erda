@@ -5,6 +5,7 @@ import GridLayout, { useContainerWidth } from "react-grid-layout";
 
 import { EmptyState } from "./EmptyState";
 import { Panel } from "./Panel";
+import { PanelGhost } from "./PanelGhost";
 import { PANELS, type PanelId } from "@/lib/registry";
 
 const LAYOUT = PANELS.map((p) => ({ i: p.id, ...p.layout }));
@@ -36,6 +37,9 @@ export function Workspace({ focused }: { focused: PanelId | null }) {
 
   const rowHeight =
     height > 0 ? Math.max(24, Math.floor((height - 2 * PAD - (ROWS - 1) * GAP) / ROWS)) : 40;
+  // Absorb the integer-division remainder into vertical padding so the grid
+  // fills the viewport exactly — no off-grid gutter above the status bar.
+  const padY = height > 0 ? PAD + (height - 2 * PAD - (ROWS - 1) * GAP - ROWS * rowHeight) / 2 : PAD;
 
   return (
     <main ref={containerRef} className="min-h-0 flex-1 overflow-y-auto">
@@ -43,13 +47,18 @@ export function Workspace({ focused }: { focused: PanelId | null }) {
         <GridLayout
           layout={LAYOUT}
           width={width}
-          gridConfig={{ cols: 12, rowHeight, margin: [GAP, GAP], containerPadding: [PAD, PAD] }}
+          gridConfig={{ cols: 12, rowHeight, margin: [GAP, GAP], containerPadding: [PAD, padY] }}
           dragConfig={{ handle: ".panel-drag" }}
         >
           {PANELS.map((p) => (
             <div key={p.id}>
               <Panel def={p} active={focused === p.id}>
-                <EmptyState feedNote={p.feedNote} hero={p.hero} />
+                <div className="flex h-full flex-col pt-1">
+                  <EmptyState feedNote={p.feedNote} feedDetail={p.feedDetail} />
+                  <div className="min-h-0 flex-1 pb-1">
+                    <PanelGhost def={p} />
+                  </div>
+                </div>
               </Panel>
             </div>
           ))}

@@ -1,8 +1,9 @@
 /**
  * Command bar + ticker tape (§8.1). P0: the ticker carries no values — feeds
  * connect in P1 — so every instrument shows an em-dash, never a made-up number.
+ * Instruments are the §8.1 tape plus DXY (fred macro, §4).
  */
-const TICKER_INSTRUMENTS = ["BRENT", "WTI", "B–W", "3-2-1", "M1–M12", "RIGS"];
+const TICKER_INSTRUMENTS = ["BRENT", "WTI", "B–W", "3-2-1", "M1–M12", "RIGS", "DXY"];
 
 export function TopBar({ onOpenPalette }: { onOpenPalette: () => void }) {
   return (
@@ -16,12 +17,10 @@ export function TopBar({ onOpenPalette }: { onOpenPalette: () => void }) {
         ERDA&gt;
         <span className="caret" aria-hidden="true" />
       </button>
-      <span className="chip px-1 py-px text-[10px] leading-4">⌘K</span>
+      <span className="chip">⌘K</span>
       <div className="min-w-0 flex-1" />
       <div className="flex items-center gap-4 overflow-hidden whitespace-nowrap">
-        <span className="chip px-1 py-px text-[10px] leading-4 text-ink-faint">
-          FEEDS OFFLINE · P1
-        </span>
+        <span className="chip text-ink-faint">FEEDS OFFLINE · P1</span>
         {TICKER_INSTRUMENTS.map((name) => (
           <span key={name} className="flex items-baseline gap-1.5">
             <span className="font-mono text-[11px] text-ink-dim">{name}</span>

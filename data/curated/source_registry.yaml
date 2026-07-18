@@ -1,0 +1,136 @@
+# ERDA source registry — written from LIVE VERIFY results, never from memory.
+# Sweep: 2026-07-18, nine parallel agents, every URL below returned a real
+# response that day (or the block is documented). SLAs follow spec §8 where
+# named; others are cadence-derived. Drift notes are load-bearing: connectors
+# implement against them.
+
+sources:
+  eia_v2:
+    name: "EIA Open Data v2"
+    access: rest_key
+    base_url: "https://api.eia.gov/v2/"
+    cadence: weekly
+    sla_days: 8            # §8: WPSR ≤ 8 days
+    requires_key: true
+    key_env: EIA_API_KEY
+    verified_at: "2026-07-18"
+    notes: >-
+      Keyless → 403 API_KEY_MISSING for every route (key check precedes route
+      resolution). api_key as query param. Register: eia.gov/opendata/register.php.
+      v1 series IDs translate via /v2/seriesid/{SERIES_ID} (e.g. PET.WCESTUS1.W
+      for WPSR crude stocks). Exact WPSR child routes verifiable only with a key.
+
+  fred:
+    name: "FRED (St. Louis Fed)"
+    access: rest_key
+    base_url: "https://api.stlouisfed.org/fred/series/observations"
+    cadence: daily
+    sla_days: 5            # daily series + weekend/holiday slack
+    requires_key: true
+    key_env: FRED_API_KEY
+    verified_at: "2026-07-18"
+    notes: >-
+      Official REST needs free key (400 with clean JSON error otherwise);
+      fredgraph.csv is keyless but bot-protected at TLS-fingerprint level —
+      not usable server-side. CSV header drifted to observation_date. DTWEXBGS
+      confirmed as the broad-dollar series (NOT ICE DXY — label accordingly).
+
+  yf_curve:
+    name: "Yahoo Finance futures strip (yfinance)"
+    access: lib
+    base_url: "https://finance.yahoo.com"
+    cadence: daily
+    sla_days: 4
+    verified_at: "2026-07-18"
+    notes: >-
+      yfinance 1.5.1, no key. Continuous: CL=F, BZ=F, RB=F, HO=F. Dated:
+      ROOT+monthCode+YY+".NYM" (CLZ26.NYM verified; 4-digit year and bare forms
+      404). Missing tickers raise KeyError from fast_info, not clean 404 —
+      catch broadly. Unofficial source: label indicative (§4).
+
+  jodi:
+    name: "JODI Oil World Database"
+    access: bulk_csv
+    base_url: "https://www.jodidata.org/_resources/files/downloads/oil-data/world_Primary_CSV.zip"
+    cadence: monthly
+    sla_days: 45           # §8
+    verified_at: "2026-07-18"
+    notes: >-
+      DRIFT: bulk lives on jodidata.org (jodidb.org is only the interactive UI).
+      ~23 MB zip, one CSV: REF_AREA,TIME_PERIOD,ENERGY_PRODUCT,FLOW_BREAKDOWN,
+      UNIT_MEASURE,OBS_VALUE,ASSESSMENT_CODE. OBS_VALUE sentinels '-' (n/a) and
+      'x' (not applicable) — parser must handle. Anonymous GET.
+
+  baker_hughes:
+    name: "Baker Hughes rig counts"
+    access: xlsx
+    base_url: "https://rigcount.bakerhughes.com/"
+    cadence: weekly
+    sla_days: 9            # §8
+    verified_at: "2026-07-18"
+    notes: >-
+      Akamai blocks non-browser TLS fingerprints (plain httpx/curl fail) — fetch
+      with curl_cffi Chrome impersonation. NA weekly XLSX at
+      /static-files/d28e146b-f462-4769-a061-6ba4eb24a490 (UUID stable so far,
+      content replaced weekly; ~7 MB); worldwide monthly at
+      /static-files/30c1d107-938c-4c66-bb40-206588f2f79e. Fallback: scrape
+      /na-rig-count for the anchor. Report format changed Aug 2025; Saudi
+      methodology changed Jan 2024 (site banner).
+
+  opec:
+    name: "OPEC MOMR + ASB"
+    access: pdf
+    base_url: "https://www.opec.org/assets/assetdb/"
+    cadence: monthly
+    sla_days: 35
+    verified_at: "2026-07-18"
+    notes: >-
+      MOMR PDF pattern momr-{month}-{yyyy}.pdf (lowercase month), prior months
+      only — current month gated behind momr.opec.org until next release; current
+      appendix XLSX momr-appendix-{month}-{yyyy}.xlsx IS live. Filenames
+      occasionally irregular (…-1.pdf, abbreviated months) — try candidates,
+      never assume. Extraction via pdfplumber marked extraction=semi_automated
+      (§4). asb.opec.org now redirects to publications.opec.org/asb; bulk ASB
+      Excel is registration-gated; ungated: asb-{yyyy}.pdf. HTML pages are
+      Cloudflare-blocked to curl; asset downloads work with a browser UA.
+
+  wb_pinksheet:
+    name: "World Bank Commodity Markets (Pink Sheet)"
+    access: xlsx
+    base_url: "https://www.worldbank.org/en/research/commodity-markets"
+    cadence: monthly
+    sla_days: 40
+    verified_at: "2026-07-18"
+    notes: >-
+      CMO-Historical-Data-Monthly.xlsx served from thedocs.worldbank.org under a
+      ROTATING hashed path — scrape the landing page for the current href every
+      run, never hardcode. Monthly Prices sheet: names row 5, units row 6, data
+      from row 7, dates "1960M01", missing values "…". Verified through 2026M06.
+
+  comtrade:
+    name: "UN Comtrade"
+    access: rest
+    base_url: "https://comtradeapi.un.org"
+    cadence: monthly
+    sla_days: 70
+    requires_key: false
+    key_env: COMTRADE_API_KEY
+    verified_at: "2026-07-18"
+    notes: >-
+      Keyless /public/v1/preview works but hard-caps 500 records (crude-exports
+      all-reporters query hits the cap — treat as truncated). Free key unlocks
+      /data/v1/get (100k records, 500 calls/day, 1 req/s — throttle). Key via
+      subscription-key param or Ocp-Apim-Subscription-Key header.
+
+  gdelt:
+    name: "GDELT DOC 2.0"
+    access: rest
+    base_url: "https://api.gdeltproject.org/api/v2/doc/doc"
+    cadence: 15min
+    sla_days: 2
+    verified_at: "2026-07-18"
+    notes: >-
+      No key; IP-based limit (1 request / 5 s). BLOCKED from this egress IP at
+      sweep time (persistent 429 with GDELT throttle body) — endpoint alive,
+      per-article JSON fields NOT live-confirmed; parse defensively and treat
+      that exact 429 as retryable. Space requests ≥ 5 s.

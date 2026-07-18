@@ -308,6 +308,8 @@ name = "erda-ingestion"
 version = "0.1.0"
 source = { editable = "packages/ingestion" }
 dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "curl-cffi" },
     { name = "erda-contracts" },
     { name = "httpx" },
     { name = "openpyxl" },
@@ -321,6 +323,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.12" },
+    { name = "curl-cffi", specifier = ">=0.7" },
     { name = "erda-contracts", editable = "packages/contracts" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "openpyxl", specifier = ">=3.1" },

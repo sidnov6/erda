@@ -134,3 +134,179 @@ sources:
       sweep time (persistent 429 with GDELT throttle body) — endpoint alive,
       per-article JSON fields NOT live-confirmed; parse defensively and treat
       that exact 429 as retryable. Space requests ≥ 5 s.
+
+  # ————— Phase 2 label sources (§5) — sweep 2026-07-18 —————
+
+  sodir:
+    name: "Norwegian Offshore Directorate FactPages"
+    access: bulk_csv
+    base_url: "https://factpages.sodir.no/public"
+    cadence: monthly
+    sla_days: 90
+    verified_at: "2026-07-18"
+    notes: >-
+      SSRS CSV export wellbore_exploration_all (literal-ampersand query string;
+      legacy npdfactpages paths 404). 2,197 exploration wellbores, 85 cols.
+      Purpose includes new WILDCAT-CCS/APPRAISAL-CCS variants; content codes far
+      richer than the spec's four (OIL SHOWS, GAS/CONDENSATE, WATER, blanks…).
+      Coords wlbNsDecDeg/wlbEwDecDeg 100% populated but datum column says ED50 —
+      shift vs WGS84 ≈100–200 m, far below the 0.05° grid; documented, not
+      transformed. Spud = wlbEntryDate (DD.MM.YYYY). PK wlbNpdidWellbore.
+
+  nsta:
+    name: "UK NSTA offshore wellbores (ArcGIS Hub)"
+    access: rest
+    base_url: "https://services-eu1.arcgis.com/OZMfUznmLTnWccBc/arcgis/rest/services"
+    cadence: monthly
+    sla_days: 90
+    verified_at: "2026-07-18"
+    notes: >-
+      Top-holes WGS84 layer 0 (item b5752e9f…): 13,374 wellbores, 5,129 E&A via
+      ORIGINTENT. Outcome = FLOWCLASS (Dry Hole / Oil Well / Gas Well / Gas and
+      Condensate Well / Oil Show / Gas Show / Hydrocarbon Indications / Unknown /
+      null). REST query paginates 2000/page; Hub download SAS links expire ~1 h.
+      The "E&A wellbore results (ED50)" layer is a 110-well curated subset — NOT
+      the full set.
+
+  nlog:
+    name: "Netherlands NLOG boreholes (TNO)"
+    access: rest
+    base_url: "https://www.gdngeoservices.nl/geoserver/nlog/ows"
+    cadence: monthly
+    sla_days: 120
+    verified_at: "2026-07-18"
+    notes: >-
+      WFS moved 2025-12 to gdngeoservices.nl (old gdw.nlog.nl dead). GetFeature
+      nlog:gdw_ng_wll_all_utm srsName=EPSG:4326 → 6,728 boreholes, GeoJSON
+      ~10 MB, one GET: type codes (EXP-HC…), result codes (FLR…), ISO spud
+      dates, geometry. REST endpoints are POST-only JSON (GET 404s).
+
+  boem_bsee:
+    name: "BOEM Gulf of Mexico boreholes + field reserves"
+    access: bulk_csv
+    base_url: "https://www.data.boem.gov"
+    cadence: weekly
+    sla_days: 60
+    verified_at: "2026-07-18"
+    notes: >-
+      /Well/Files/BoreholeRawData.zip regenerated daily: 57,446 boreholes,
+      26 cols, WELL_TYPE_CODE E/D, coords, spud M/D/YYYY; filter
+      REGION_CODE='G'. No direct outcome field — discovery proxy derives from
+      lease→field join via FieldReserves mastdatadelimit.zip (no header rows).
+      Documented as proxy in the dataset card.
+
+  nopims:
+    name: "Australia NOPIMS (NOPTA NEATS OData)"
+    access: rest
+    base_url: "https://services.neats.nopta.gov.au/odata/v1/public/nopims"
+    cadence: monthly
+    sla_days: 120
+    verified_at: "2026-07-18"
+    notes: >-
+      DRIFT: spec URL redirects to a GA info page; live system is the NOPTA
+      NEATS portal with open OData v4 (well/PublicNopimsWells, 8,910 boreholes,
+      3,866 offshore, no page cap). Kick_Off_Date = spud; Borehole_Reason =
+      purpose. NO structured outcome and NO lat/lon in the wells entity —
+      connector must join an auxiliary GA source for coordinates/outcomes or
+      document exclusion honestly.
+
+  gem_goget:
+    name: "GEM Global Oil & Gas Extraction Tracker"
+    access: rest
+    base_url: "https://publicgemdata.nyc3.cdn.digitaloceanspaces.com/interim_maps/"
+    cadence: quarterly
+    sla_days: 200
+    verified_at: "2026-07-18"
+    notes: >-
+      March 2026 release. Canonical XLSX (with reserves) is one-shot-form gated —
+      a human submits name/email once per release; presigned URLs ephemeral.
+      Open path: goget_map_2026-03.geojson (12.6 MB, CC BY): discovery-year,
+      status (operating/in-development/discovered/…), coords — no reserves.
+      Filename is release-versioned; poll bucket ?prefix=interim_maps/.
+
+  # ————— Phase 2 raster sources (§6) — static products —————
+
+  grav_sandwell:
+    name: "Sandwell & Smith marine gravity v33.1"
+    access: bulk_csv
+    base_url: "https://topex.ucsd.edu/pub/global_grav_1min/grav_33.1.nc"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      v33.1 (2026-01-02), 1-arcmin netCDF, 599 MB, lat ±80 only, mGal. Marine
+      validity — land pixels carry filler values, masked in the stack. Newer
+      experimental SWOT series exists (grav_SWOT_05); pinned to the stable line.
+
+  emag2:
+    name: "EMAG2 v3 magnetic anomaly (NCEI)"
+    access: bulk_csv
+    base_url: "https://www.ngdc.noaa.gov/geomag/data/EMAG2/EMAG2_V3_UpCont_DataTiff.tif"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      No netCDF exists (spec drift): CSV-zip 1.09 GB or GeoTIFF. Pinned: UpCont
+      4 km GeoTIFF (228 MB, full global coverage; SeaLevel variant has gaps).
+      2-arcmin, nT, version 20170530 unchanged.
+
+  globsed:
+    name: "GlobSed v3 total sediment thickness (NCEI)"
+    access: bulk_csv
+    base_url: "https://www.ncei.noaa.gov/data/oceans/archive/arc0231/0305030/1.1/data/0-data/GlobSed/GlobSed_package3/GlobSed-v3.nc"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      MOVED into NCEI accession 0305030 (legacy ngdc path 404). 5-arcmin netCDF,
+      10.8 MB, variable name 'z', meters, land NaN. v3 updates limited regions;
+      elsewhere inherits older compilations — uncertainty noted in card.
+
+  crust1:
+    name: "CRUST1.0 (Laske, UCSD)"
+    access: bulk_csv
+    base_url: "https://igppweb.ucsd.edu/~gabi/crust1/crust1.0.tar.gz"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      1° fixed-width ASCII: crust1.bnds 9th boundary = Moho depth (km, negative
+      down). Crustal TYPE lives in the separate addon tarball (CNtype1-1.txt +
+      key) — both fetched. Lon inner loop from 89.5N/179.5W.
+
+  etopo2022:
+    name: "ETOPO 2022 60-arcsec bedrock (NCEI)"
+    access: bulk_csv
+    base_url: "https://www.ngdc.noaa.gov/thredds/fileServer/global/ETOPO2022/60s/60s_bed_elev_netcdf/ETOPO_2022_v1_60s_N90W180_bed.nc"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      469 MB netCDF, exactly 3× the 0.05° target → 3×3 block-mean (defensible
+      vs striding). Chosen over GEBCO_2026 (15-arcsec only, 4 GB, subset API
+      async + area-capped). Meters positive-up, EGM2008.
+
+  ihfc_heatflow:
+    name: "IHFC Global Heat Flow Database R2024"
+    access: bulk_csv
+    base_url: "https://datapub.gfz.de/download/10.5880.FIDGEO.2024.014-VEueRf/GHFBD-R2024_v.2026-03.zip"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      Canonical = GFZ DOI copy v.2026.03 (ihfc-iugg.org XLSX is older). ZIP →
+      TAB-delimited txt, 12 preamble rows, 67 cols, 91,182 records; q in mW/m²,
+      lat_NS/long_EW. CC BY 4.0. Kriged→IDW with uncertainty surface per §6.
+
+  usgs_provinces:
+    name: "USGS World Geologic Provinces (WPA 2000)"
+    access: bulk_csv
+    base_url: "https://www.sciencebase.gov/catalog/file/get/60ad2fd7d34e4043c850edb3"
+    cadence: static
+    sla_days: 3650
+    verified_at: "2026-07-18"
+    notes: >-
+      ScienceBase item 60ad2fd7… (DOI 10.5066/P9RMSU2R): 13 MB shapefile zip,
+      1,023 polygons, 939 unique CODEs; fields CODE/NAME/TYPE/REG. Old
+      certmapper path is WAF-challenged — use ScienceBase only. Volume fields
+      use −9999 sentinels.

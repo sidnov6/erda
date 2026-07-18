@@ -6,7 +6,7 @@ from erda_contracts.registry import load_registry
 
 REGISTRY = Path(__file__).parents[3] / "data" / "curated" / "source_registry.yaml"
 
-EXPECTED_SOURCES = {
+P1_SOURCES = {
     "eia_v2",
     "fred",
     "yf_curve",
@@ -18,10 +18,26 @@ EXPECTED_SOURCES = {
     "gdelt",
 }
 
+P2_SOURCES = {
+    "sodir",
+    "nsta",
+    "nlog",
+    "boem_bsee",
+    "nopims",
+    "gem_goget",
+    "grav_sandwell",
+    "emag2",
+    "globsed",
+    "crust1",
+    "etopo2022",
+    "ihfc_heatflow",
+    "usgs_provinces",
+}
+
 
 def test_registry_loads_and_covers_p1_sources():
     reg = load_registry(REGISTRY)
-    assert set(reg) == EXPECTED_SOURCES
+    assert set(reg) == P1_SOURCES | P2_SOURCES
     for entry in reg.values():
         assert entry.sla_days > 0
         assert entry.verified_at == "2026-07-18"

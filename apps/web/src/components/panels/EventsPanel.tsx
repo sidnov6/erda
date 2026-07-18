@@ -18,7 +18,12 @@ export function EventsPanel() {
   if (!data || !data.available) {
     return (
       <div className="flex h-full flex-col pt-1">
-        <EmptyState feedNote={data?.reason ?? "GDELT — P1"} />
+        <EmptyState feedNote="GDELT — P1" />
+        {data?.reason && (
+          <p className="px-2 pt-1 font-mono text-[10px] leading-4 text-ink-faint/80">
+            {data.reason}
+          </p>
+        )}
       </div>
     );
   }

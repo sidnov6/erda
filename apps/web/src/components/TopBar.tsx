@@ -14,10 +14,13 @@ const PLACEHOLDER_INSTRUMENTS = ["BRENT", "WTI", "B–W", "3-2-1", "M1–M12", "
 function Delta({ delta }: { delta?: number | null }) {
   if (delta == null || delta === 0) return null;
   const up = delta > 0;
+  const abs = Math.abs(delta);
+  // Native precision: integer series (rig counts) never grow fake decimals.
+  const text = Number.isInteger(delta) ? abs.toFixed(0) : abs.toFixed(abs >= 10 ? 1 : 2);
   return (
     <span className={`numeric text-[11px] ${up ? "text-oil" : "text-gas"}`}>
       {up ? "▲" : "▼"}
-      {Math.abs(delta) >= 10 ? Math.abs(delta).toFixed(0) : Math.abs(delta).toFixed(2)}
+      {text}
     </span>
   );
 }
@@ -56,11 +59,11 @@ export function TopBar({ onOpenPalette }: { onOpenPalette: () => void }) {
               <span
                 key={inst.label}
                 className="flex items-baseline gap-1.5"
-                title={`${inst.unit} · as of ${inst.asof} · ${inst.provenance.source_id} · ${
-                  inst.provenance.source_url
-                }${inst.indicative ? " · indicative (unofficial source)" : ""}${
-                  inst.note ? ` · ${inst.note}` : ""
-                }`}
+                title={`${inst.unit} · as of ${inst.asof} · Δ vs prior print · ${
+                  inst.provenance.source_id
+                } · ${inst.provenance.source_url}${
+                  inst.indicative ? " · indicative (unofficial source)" : ""
+                }${inst.note ? ` · ${inst.note}` : ""}`}
               >
                 <span className="font-mono text-[11px] text-ink-dim">{inst.label}</span>
                 <span className="numeric text-[12px] text-ink">

@@ -215,7 +215,7 @@ function ReconSection({ rows }: { rows: ReconRow[] }) {
     <ReportPanel
       title="EIA ↔ JODI Reconciliation"
       mnemo="RCN"
-      caption="monthly production kb/d, both sources side by side"
+      caption="monthly production kb/d, both sources side by side · pass |Δ| ≤ 5% · warn ≤ 10% · fail > 10% (Δ vs JODI)"
       right={<span className="chip text-ink-faint">{rows.length} CHECKS</span>}
     >
       <table className="w-full border-collapse">
@@ -430,7 +430,7 @@ function SummaryStrip({
 }) {
   const tiles: { label: string; count: number; cls: string }[] = [
     { label: "PASS", count: summary.pass, cls: "text-oil" },
-    { label: "WARN", count: summary.warn, cls: "text-ink-dim" },
+    { label: "WARN", count: summary.warn, cls: "text-ink" },
     { label: "FAIL", count: summary.fail, cls: "text-warn" },
   ];
   return (

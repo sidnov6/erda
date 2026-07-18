@@ -65,49 +65,54 @@ body {
   scrollbar-color: var(--line) transparent;
 }
 
-/* ————— skill §2/§3 component classes ————— */
-.numeric {
-  font-family: var(--font-plex-mono), monospace;
-  font-variant-numeric: tabular-nums;
-}
+/* ————— skill §2/§3 component classes —————
+   In @layer components so Tailwind utilities (utilities layer, higher) can
+   modify them — e.g. `chip text-warn` on a STALE badge. Unlayered rules would
+   silently beat utilities (cascade: unlayered > layered). */
+@layer components {
+  .numeric {
+    font-family: var(--font-plex-mono), monospace;
+    font-variant-numeric: tabular-nums;
+  }
 
-.panel {
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: 0;
-  transition: border-color 120ms;
-}
+  .panel {
+    background: var(--bg1);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    transition: border-color 120ms;
+  }
 
-/* Active state (command focus) — gold is sanctioned for active states (§13.1). */
-.panel--active {
-  border-color: var(--gold);
-}
+  /* Active state (command focus) — gold is sanctioned for active states (§13.1). */
+  .panel--active {
+    border-color: var(--gold);
+  }
 
-.panel-title {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-}
+  .panel-title {
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
 
-.panel-mnemo {
-  font-family: var(--font-plex-mono), monospace;
-  color: var(--gold);
-}
+  .panel-mnemo {
+    font-family: var(--font-plex-mono), monospace;
+    color: var(--gold);
+  }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  height: 16px;
-  padding: 0 4px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  font-family: var(--font-plex-mono), monospace;
-  font-size: 11px;
-  line-height: 1;
-  color: var(--ink-dim);
-  white-space: nowrap;
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    height: 16px;
+    padding: 0 4px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
 }
 
 /* Command-line caret — the §13.1 signature. Steady: the idle prompt is an

@@ -99,6 +99,9 @@ function StocksChart({ series }: { series: InventorySeries }) {
     bars.current = c.addSeries(HistogramSeries, {
       color: "rgba(95, 179, 201, 0.5)", // --cyan, dimmed
       priceLineVisible: false,
+      // The chip row already states the latest level; the on-axis tag only
+      // collides with scale labels at panel height.
+      lastValueVisible: false,
       priceFormat: { type: "custom", formatter: fmtKbbl, minMove: 1 },
     });
     chart.current = c;

@@ -54,6 +54,14 @@ def test_normalize_empty_data_list_raises():
         eia_v2.normalize("PET.WCESTUS1.W", "crude_stocks_excl_spr_kbbl", payload)
 
 
+def test_normalize_drops_string_absence_markers():
+    # '--' live-hit in INTL monthly series on the first real fetch (2026-07-18)
+    payload = _payload()
+    payload["response"]["data"][0]["value"] = "--"
+    df = eia_v2.normalize("INTL.57-1-SAU-TBPD.M", "crude_production_kbd", payload)
+    assert len(df) == 1  # marker row dropped as absent, never zeroed
+
+
 def test_normalize_malformed_payload_raises():
     with pytest.raises(SourceUnavailable, match="malformed"):
         eia_v2.normalize("PET.WCESTUS1.W", "crude_stocks_excl_spr_kbbl", {"response": None})
@@ -87,6 +95,44 @@ def test_load_series_rejects_uncited_row(tmp_path):
     )
     with pytest.raises(ContractViolation, match="source_url"):
         eia_v2.load_series(uncited)
+
+
+def test_load_international_pins_are_cited():
+    pins = eia_v2.load_international()
+    assert len(pins) == 12
+    assert {p["iso3"] for p in pins} >= {"SAU", "RUS", "USA", "IRQ", "NOR"}
+    for pin in pins:
+        assert pin["series_id"] == f"INTL.57-1-{pin['iso3']}-TBPD.M"
+        assert pin["source_url"].startswith("https://api.eia.gov/v2/seriesid/")
+
+
+def test_load_international_rejects_uncited_row(tmp_path):
+    uncited = tmp_path / "eia_series.yaml"
+    uncited.write_text(
+        "international:\n  countries:\n    - iso3: SAU\n      series_id: INTL.57-1-SAU-TBPD.M\n"
+    )
+    with pytest.raises(ContractViolation, match="source_url"):
+        eia_v2.load_international(uncited)
+
+
+def test_international_frame_passes_intl_schema(tmp_path):
+    # reuse the synthetic seriesid payload shape with an INTL id + country column
+    df = eia_v2.normalize("INTL.57-1-SAU-TBPD.M", "crude_production_kbd", _payload())
+    df["country_iso3"] = "SAU"
+    df = df[["period", "series_id", "country_iso3", "metric", "value"]]
+
+    def fake_fetch() -> FetchResult:
+        return FetchResult(frame=df, source_url=eia_v2.API_URL)
+
+    entry = run_connector(
+        source_id=eia_v2.SOURCE_ID,
+        transform_version=eia_v2.TRANSFORM_VERSION,
+        schema=eia_v2.SCHEMA_INTL,
+        fetch=fake_fetch,
+        table=eia_v2.TABLE_INTL,
+        root=tmp_path,
+    )
+    assert entry.rows == 2
 
 
 def test_runner_full_path_writes_provenance_and_ledger(tmp_path):

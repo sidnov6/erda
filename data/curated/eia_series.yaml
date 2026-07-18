@@ -41,3 +41,26 @@ series:
     units: thousand_barrels_per_day
     source_url: "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WRPUPUS2&f=W"
     verified_at: "2026-07-18"
+
+# International monthly crude production (crude oil including lease condensate,
+# INTL.57-1-{ISO3}-TBPD.M) — powers the EIA↔JODI reconciliation (§8). Each
+# series was resolved live through the pinned translation route on 2026-07-18
+# (total counts 507–639 months, latest period 2026-03); the source_url is that
+# exact keyless-documented endpoint (key travels as a parameter, never stored).
+international:
+  product_name: "Crude oil including lease condensate"
+  units: thousand_barrels_per_day
+  verified_at: "2026-07-18"
+  countries:
+    - { iso3: SAU, series_id: "INTL.57-1-SAU-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-SAU-TBPD.M" }
+    - { iso3: RUS, series_id: "INTL.57-1-RUS-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-RUS-TBPD.M" }
+    - { iso3: USA, series_id: "INTL.57-1-USA-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-USA-TBPD.M" }
+    - { iso3: IRQ, series_id: "INTL.57-1-IRQ-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-IRQ-TBPD.M" }
+    - { iso3: ARE, series_id: "INTL.57-1-ARE-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-ARE-TBPD.M" }
+    - { iso3: KWT, series_id: "INTL.57-1-KWT-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-KWT-TBPD.M" }
+    - { iso3: KAZ, series_id: "INTL.57-1-KAZ-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-KAZ-TBPD.M" }
+    - { iso3: NGA, series_id: "INTL.57-1-NGA-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-NGA-TBPD.M" }
+    - { iso3: DZA, series_id: "INTL.57-1-DZA-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-DZA-TBPD.M" }
+    - { iso3: OMN, series_id: "INTL.57-1-OMN-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-OMN-TBPD.M" }
+    - { iso3: MEX, series_id: "INTL.57-1-MEX-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-MEX-TBPD.M" }
+    - { iso3: NOR, series_id: "INTL.57-1-NOR-TBPD.M", source_url: "https://api.eia.gov/v2/seriesid/INTL.57-1-NOR-TBPD.M" }

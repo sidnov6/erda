@@ -40,7 +40,10 @@ SCHEMA = pa.DataFrameSchema(
         "date": pa.Column(pa.DateTime, nullable=False),
         "series_id": pa.Column(str, pa.Check.isin(list(SERIES)), nullable=False),
         "metric": pa.Column(str, pa.Check.isin(list(SERIES.values())), nullable=False),
-        "value": pa.Column(float, pa.Check.gt(0), nullable=False),
+        # No positivity check: WTI settled at −36.98 on 2020-04-20 (live-hit on
+        # the first full-history fetch). Negative prices are market reality;
+        # rejecting them would falsify history.
+        "value": pa.Column(float, nullable=False),
     },
     unique=["date", "series_id"],
 )

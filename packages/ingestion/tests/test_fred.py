@@ -33,6 +33,26 @@ def test_normalize_error_body_raises_not_empty_frame():
         fred.normalize("DCOILBRENTEU", payload)
 
 
+def test_negative_prices_are_valid_history(tmp_path):
+    # WTI settled at −36.98 on 2020-04-20 — the contract must accept it
+    payload = _payload()
+    payload["observations"][0]["value"] = "-36.98"
+    frame = fred.normalize("DCOILWTICO", payload)
+
+    def fake_fetch() -> FetchResult:
+        return FetchResult(frame=frame, source_url=fred.API_URL)
+
+    entry = run_connector(
+        source_id=fred.SOURCE_ID,
+        transform_version=fred.TRANSFORM_VERSION,
+        schema=fred.SCHEMA,
+        fetch=fake_fetch,
+        table=fred.TABLE,
+        root=tmp_path,
+    )
+    assert entry.rows == 2
+
+
 def test_fetch_without_key_raises(monkeypatch):
     monkeypatch.delenv("FRED_API_KEY", raising=False)
     with pytest.raises(SourceUnavailable, match="FRED_API_KEY"):
@@ -64,7 +84,7 @@ def test_runner_full_path_writes_provenance_and_ledger(tmp_path):
 
 def test_runner_rejects_contract_violation(tmp_path):
     bad = fred.normalize("DCOILBRENTEU", _payload())
-    bad.loc[0, "value"] = -1.0  # negative price violates the contract
+    bad.loc[0, "metric"] = "not_a_pinned_metric"  # unknown metric violates the contract
 
     def fake_fetch() -> FetchResult:
         return FetchResult(frame=bad, source_url=fred.API_URL)

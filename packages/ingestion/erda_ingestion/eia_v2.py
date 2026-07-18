@@ -35,13 +35,17 @@ from erda_contracts.errors import ContractViolation, SourceUnavailable
 from erda_ingestion.base import FetchResult, http_get
 
 SOURCE_ID = "eia_v2"
-TRANSFORM_VERSION = "eia_v2:1.0.0"
+TRANSFORM_VERSION = "eia_v2:1.1.0"
 TABLE = "eia_v2_weekly"
+TABLE_INTL = "eia_intl_production"
 
 API_URL = "https://api.eia.gov/v2/seriesid"
 
 #: Spec §4: series IDs live in data/curated/eia_series.yaml, not in code.
 SERIES_PATH = Path(__file__).resolve().parents[3] / "data" / "curated" / "eia_series.yaml"
+
+#: String absence markers in v2 values (seen in INTL monthly series).
+EIA_ABSENCE_MARKERS = frozenset({"--", "NA", "W"})
 
 #: Units are encoded in metric names: kbbl = thousand barrels (stocks),
 #: kbd = thousand barrels per day (flows).
@@ -98,11 +102,59 @@ def normalize(series_id: str, metric: str, payload: dict) -> pd.DataFrame:
         )
     df = pd.DataFrame(rows, columns=["period", "value"])
     df = df[df["value"].notna()]  # null = missing datum, dropped, never imputed
+    # International series carry string absence markers ('--' live-hit
+    # 2026-07-18; 'NA'/'W' documented as not-available/withheld). Absence,
+    # never zero (§0 rule 4).
+    df = df[~df["value"].astype(str).isin(EIA_ABSENCE_MARKERS)]
     df["period"] = pd.to_datetime(df["period"])
     df["value"] = df["value"].astype(float)  # v2 serves numbers and strings both
     df["series_id"] = series_id
     df["metric"] = metric
     return df[["period", "series_id", "metric", "value"]]
+
+
+_INTL_SERIES_PATTERN = r"^INTL\.57-1-[A-Z]{3}-TBPD\.M$"
+
+SCHEMA_INTL = pa.DataFrameSchema(
+    {
+        "period": pa.Column(pa.DateTime, nullable=False),
+        "series_id": pa.Column(str, pa.Check.str_matches(_INTL_SERIES_PATTERN), nullable=False),
+        "country_iso3": pa.Column(str, pa.Check.str_matches(r"^[A-Z]{3}$"), nullable=False),
+        "metric": pa.Column(str, pa.Check.eq("crude_production_kbd"), nullable=False),
+        "value": pa.Column(float, pa.Check.ge(0), nullable=False),
+    },
+    unique=["period", "series_id"],
+)
+
+
+def load_international(path: Path = SERIES_PATH) -> list[dict]:
+    """Pinned INTL country series (EIA↔JODI reconciliation); §7 citation rule."""
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    intl = raw.get("international") if isinstance(raw, dict) else None
+    countries = (intl or {}).get("countries")
+    if not countries:
+        raise ContractViolation(SOURCE_ID, f"no international series pinned in {path}")
+    for pin in countries:
+        missing = [k for k in ("iso3", "series_id", "source_url") if not pin.get(k)]
+        if missing:
+            raise ContractViolation(SOURCE_ID, f"curated row {pin} missing {missing} (spec §7)")
+    return countries
+
+
+def fetch_international(series_path: Path = SERIES_PATH) -> FetchResult:
+    """Monthly crude production (incl. lease condensate, kb/d) for pinned countries."""
+    key = os.environ.get("EIA_API_KEY")
+    if not key:
+        raise SourceUnavailable(
+            SOURCE_ID, "EIA_API_KEY not set — register at eia.gov/opendata/register.php"
+        )
+    frames = []
+    for pin in load_international(series_path):
+        resp = http_get(f"{API_URL}/{pin['series_id']}", SOURCE_ID, params={"api_key": key})
+        df = normalize(pin["series_id"], "crude_production_kbd", resp.json())
+        df["country_iso3"] = pin["iso3"]
+        frames.append(df[["period", "series_id", "country_iso3", "metric", "value"]])
+    return FetchResult(frame=pd.concat(frames, ignore_index=True), source_url=API_URL)
 
 
 def fetch(series_path: Path = SERIES_PATH) -> FetchResult:

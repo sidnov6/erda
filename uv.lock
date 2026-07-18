@@ -262,13 +262,23 @@ name = "erda-api"
 version = "0.1.0"
 source = { editable = "apps/api" }
 dependencies = [
+    { name = "erda-contracts" },
+    { name = "erda-ingestion" },
+    { name = "erda-validation" },
     { name = "fastapi" },
+    { name = "pandas" },
+    { name = "pyarrow" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "erda-contracts", editable = "packages/contracts" },
+    { name = "erda-ingestion", editable = "packages/ingestion" },
+    { name = "erda-validation", editable = "packages/validation" },
     { name = "fastapi", specifier = ">=0.115" },
+    { name = "pandas", specifier = ">=2.2" },
+    { name = "pyarrow", specifier = ">=17" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32" },
 ]
 

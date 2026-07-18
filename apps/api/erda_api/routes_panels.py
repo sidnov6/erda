@@ -292,6 +292,58 @@ def opec() -> dict:
     }
 
 
+@router.get("/discovery")
+def discovery_monitor() -> dict:
+    """DISC (§8.7): wells/year + success rate + creaming curves, computed from
+    the harmonized label DB — never asserted from a news claim. Creaming curves
+    are count-based (volumes await the registration-gated GOGET XLSX)."""
+    import json
+
+    from erda_labels import discovery
+
+    primary_path = data.parquet_root() / "wells_primary.parquet"
+    summary_path = data.parquet_root() / "labels_summary.json"
+    if not primary_path.exists():
+        return _absent("wells_primary not built yet — run ops/build_labels.py")
+    primary = pd.read_parquet(primary_path)
+    summary = json.loads(summary_path.read_text()) if summary_path.exists() else {}
+
+    per_year = discovery.wells_per_year(primary)
+    per_year = per_year[per_year["spud_year"] >= 1950]
+
+    top_provinces = (
+        primary[primary["province_name"] != "(unassigned)"]
+        .groupby("province_name").size().sort_values(ascending=False).head(6).index.tolist()
+    )
+    creaming = discovery.creaming_curve(
+        primary[primary["province_name"].isin(top_provinces)].rename(
+            columns={"province_name": "province"}
+        )
+    )
+
+    prov = {
+        "source_id": "labels_harmonized",
+        "retrieved_at": summary.get("generated_at", ""),
+        "source_url": "sodir · nsta · nlog · boem_bsee · nopims (see dataset card)",
+        "transform_version": "harmonize:1.1.0",
+    }
+    return {
+        "available": True,
+        "provenance": prov,
+        "n_primary": int(len(primary)),
+        "success_rate": round(float(primary["label"].mean()), 4),
+        "boem_proxy_note": "BOEM outcomes are a lease→field proxy (see dataset card)",
+        "volumes": "count-based — per-discovery volumes await gated GOGET XLSX",
+        "per_year": per_year.to_dict(orient="records"),
+        "creaming": {
+            p: creaming[creaming["province"] == p].drop(columns=["province"]).to_dict(
+                orient="records"
+            )
+            for p in top_provinces
+        },
+    }
+
+
 @router.get("/events")
 def events() -> dict:
     """EVENTS: GDELT feed — honestly absent while the source is throttled."""

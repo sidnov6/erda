@@ -69,6 +69,7 @@ export const PANELS: PanelDef[] = [
     title: "Discovery monitor",
     feedNote: "LABEL DB · 5 REGULATORS — P2",
     feedDetail: "SODIR · NSTA · NLOG · BOEM/BSEE · NOPIMS",
+    sources: ["sodir", "nsta", "nlog", "boem_bsee", "nopims"],
     kind: "chart",
     layout: { x: 9, y: 0, w: 3, h: 6, minW: 2, minH: 3 },
   },

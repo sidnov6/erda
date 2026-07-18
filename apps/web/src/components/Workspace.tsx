@@ -7,6 +7,7 @@ import { EmptyState } from "./EmptyState";
 import { Panel } from "./Panel";
 import { PanelGhost } from "./PanelGhost";
 import { CurvePanel } from "./panels/CurvePanel";
+import { DiscoveryPanel } from "./panels/DiscoveryPanel";
 import { EventsPanel } from "./panels/EventsPanel";
 import { InventoriesPanel } from "./panels/InventoriesPanel";
 import { OpecPanel } from "./panels/OpecPanel";
@@ -26,6 +27,7 @@ const LIVE_PANELS: Partial<Record<PanelId, () => React.ReactNode>> = {
   inv: () => <InventoriesPanel />,
   opec: () => <OpecPanel />,
   events: () => <EventsPanel />,
+  disc: () => <DiscoveryPanel />,
 };
 
 function panelBody(p: PanelDef) {

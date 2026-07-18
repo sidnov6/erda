@@ -33,7 +33,9 @@ HARMONIZED_SCHEMA = pa.DataFrameSchema(
         "source_id": pa.Column(str, pa.Check.isin(SOURCE_IDS), nullable=False),
         "lat": pa.Column(float, pa.Check.in_range(-90, 90), nullable=False),
         "lon": pa.Column(float, pa.Check.in_range(-180, 180), nullable=False),
-        "spud_year": pa.Column(int, pa.Check.in_range(1900, 2100), nullable=False),
+        # 1800 floor: NLOG carries genuine 19th-century mining-era boreholes
+        # (hit live 2026-07-18) — real history, kept, mostly purpose=other.
+        "spud_year": pa.Column(int, pa.Check.in_range(1800, 2100), nullable=False),
         "purpose": pa.Column(str, pa.Check.isin(PURPOSES), nullable=False),
         "content_raw": pa.Column(str, nullable=False),
         "label": pa.Column(int, pa.Check.isin([0, 1]), nullable=False),
@@ -173,14 +175,17 @@ def primary_dataset(df: pd.DataFrame) -> pd.DataFrame:
 def sensitivity_variants(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """The documented sensitivity runs (§5): appraisal included; shows excluded."""
     labeled = df[~df["excluded"]]
+    primary = primary_dataset(df)
     return {
-        "primary": primary_dataset(df),
+        "primary": primary,
         "with_appraisal": labeled[labeled["purpose"].isin(["wildcat", "appraisal"])].reset_index(
             drop=True
         ),
-        "shows_excluded": primary_dataset(df)[~primary_dataset(df)["shows"]].reset_index(
-            drop=True
-        ),
+        "shows_excluded": primary[~primary["shows"]].reset_index(drop=True),
+        # BOEM outcomes are a lease→field PROXY (68% positive vs 36-47% for
+        # regulators with true per-well outcomes) — this variant isolates the
+        # true-outcome subset for P3 sensitivity runs.
+        "primary_ex_boem": primary[primary["source_id"] != "boem_bsee"].reset_index(drop=True),
     }
 
 

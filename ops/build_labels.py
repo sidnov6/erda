@@ -48,6 +48,32 @@ def fetch_sources() -> list[tuple[str, str]]:
     return failures
 
 
+def _assign_provinces(df: pd.DataFrame) -> pd.DataFrame:
+    """Well → USGS province via the stack channel: one global basin definition
+    across regulators (drives creaming curves and P3 spatial CV folds)."""
+    import geopandas as gpd
+
+    from erda_geo.grid import GridSpec
+    from erda_geo.stack import open_stack
+
+    store = REPO / "data" / "zarr" / "stack.zarr"
+    ds = open_stack(store)
+    codes = ds["province_code"].values
+    spec = GridSpec()
+    row, col = spec.latlon_to_rowcol(df["lat"].values, df["lon"].values)
+    df = df.copy()
+    df["province_code"] = codes[row, col].astype(int)
+
+    shp = next(
+        p for p in (REPO / "data" / "raw" / "usgs_provinces").rglob("*")
+        if p.suffix.lower() == ".shp"
+    )
+    names = gpd.read_file(shp)[["CODE", "NAME"]].drop_duplicates("CODE")
+    name_map = dict(zip(names["CODE"].astype(int), names["NAME"].str.strip(), strict=True))
+    df["province_name"] = df["province_code"].map(name_map).fillna("(unassigned)")
+    return df
+
+
 def harmonize_all() -> dict:
     from erda_contracts.errors import ContractViolation
     from erda_labels import harmonize
@@ -75,7 +101,6 @@ def harmonize_all() -> dict:
         # §5 rule 4: every well keeps spud_year; drop-and-count the rest.
         no_spud = df["spud_year"].isna()
         no_coord = df["lat"].isna() | df["lon"].isna()
-        dropped = df[no_spud | no_coord]
         kept = df[~(no_spud | no_coord)].copy()
         kept["spud_year"] = kept["spud_year"].astype(int)
 
@@ -98,6 +123,7 @@ def harmonize_all() -> dict:
     all_wells = all_wells[keep_cols]
     deduped = harmonize.dedupe_decision_points(all_wells)
     deduped = harmonize.validate_harmonized(deduped)
+    deduped = _assign_provinces(deduped)
     variants = harmonize.sensitivity_variants(deduped)
 
     deduped.to_parquet(PARQUET / "wells_harmonized.parquet", index=False)

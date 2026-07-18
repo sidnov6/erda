@@ -1,0 +1,82 @@
+# CURATED (ERDA §7): hand-maintained, every value cited to a source actually
+# accessed on retrieved_at. Do not edit without re-verifying against sources.
+iso3: NAM
+country: Namibia
+regime_type: tax_royalty
+royalty_rate: 0.05
+royalty_note: >-
+  "5% of gross revenue", valued at market value at the agreed off-take point;
+  levied under the Petroleum (Exploration and Production) Act 2 of 1991;
+  deductible in computing Petroleum Income Tax (NAMCOR fiscal regime document).
+  Chambers 2025 practice guide confirms 5% of market value of petroleum
+  produced, payable quarterly. Minister may in special circumstances defer,
+  remit or refund royalty.
+cit_rate: 0.35
+cit_note: >-
+  Petroleum Income Tax (PIT) under the Petroleum (Taxation) Act 3 of 1991:
+  "PIT is levied at the rate of 35% of taxable income", assessed separately
+  per licence area (NAMCOR; confirmed by Chambers 2025).
+special_petroleum_tax:
+  rate: 0.25
+  base_note: >-
+    Additional Profits Tax (APT), Petroleum (Taxation) Act 3 of 1991: "an
+    incremental three tiered APT is charged on the after-tax net cash flow
+    from petroleum operations in each License Area separately." Payable only
+    once the licence area earns an after-tax REAL (inflation-adjusted) rate of
+    return of 15%; second and third tiers trigger above 20% and 25% ROR
+    respectively. The first-tier rate is set in legislation (via formula) at
+    25%; second- and third-tier rates are biddable/negotiable per Petroleum
+    Agreement (so no single statutory rate exists for tiers 2-3). In the APT
+    cash-flow computation, exploration, development and operating expenditure
+    plus royalty and PIT are fully deductible in the year paid.
+psc_terms: null
+ringfencing:
+  ringfenced: true
+  note: >-
+    PIT and APT are levied separately for each licence area; "losses cannot be
+    offset against income from another licence area" and carry forward without
+    limit within the licence area. Exception: exploration expenditure incurred
+    after the Petroleum Laws Amendment Act 1998, in any licence area, may be
+    deducted against PIT taxable income of a producing licence area (NAMCOR).
+    Chambers 2025 confirms per-area evaluation with no cross-area loss offset.
+depreciation_note: >-
+  PIT base: exploration and operating expenditure written off immediately and
+  in full (100%); development expenditure depreciated straight-line over 3
+  years (33.33%/yr), deductible in three equal instalments commencing in the
+  first year of production; accumulated exploration costs written off in the
+  year of first production. APT base: pure cash-flow (all expenditure deducted
+  in year paid).
+engine_mapping:
+  suggested_royalty_rate: 0.05
+  suggested_cit_rate: 0.35
+  approximation_note: >-
+    Royalty 5% + PIT 35% maps directly onto the engine's royalty + CIT
+    structure. NOT representable: the APT layer — for projects earning
+    after-tax real ROR > 15% the engine UNDERSTATES government take (tier 1
+    adds 25% of incremental after-tax net cash flow above the threshold, with
+    further biddable tiers above 20%/25% ROR). Also omitted: NAMCOR's 10%
+    carried/participating interest customarily granted at exploration-licence
+    stage (practice, not statute — Chambers 2025), withholding taxes (25% on
+    nonresident service fees; petroleum dividends WHT-exempt), rentals and
+    training fees. For high-margin discoveries (the Orange Basin screening
+    case), treat engine output as a LOWER BOUND on state take.
+source_urls:
+  - https://www.namcor.com.na/wp-content/uploads/2020/02/namibia-fiscal-regime-august-2017.pdf
+  - https://practiceguides.chambers.com/practice-guides/oil-gas-and-the-transition-to-renewables-2025/namibia/trends-and-developments
+retrieved_at: "2026-07-19"
+caveats:
+  - >-
+    Official ministry/revenue-authority pages could not be accessed on
+    2026-07-19: PwC Namibia petroleum tax card PDF returned HTTP 403 and
+    mme.gov.na refused connections. Rates were instead verified from NAMCOR
+    (state oil company) "Namibian Fiscal Regime" document (August 2017) and
+    cross-checked for currency against the Chambers Oil & Gas 2025 Namibia
+    guide (published 2025-08-07), which states the same 5% royalty, 35% PIT,
+    three-tier APT and per-area ring-fencing.
+  - >-
+    APT tiers 2 and 3 have no fixed statutory rate (biddable per Petroleum
+    Agreement); the 0.25 recorded above is the legislated first-tier rate only.
+  - >-
+    The NAMCOR document predates the 2023-2025 Orange Basin discoveries; terms
+    of individual signed Petroleum Agreements may vary within the statutory
+    framework and were not compiled.

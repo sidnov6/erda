@@ -1,0 +1,80 @@
+# CURATED (ERDA §7): hand-maintained, every value cited to a source actually
+# accessed on retrieved_at. Do not edit without re-verifying against sources.
+iso3: USA
+country: United States — Gulf of Mexico / Gulf of America federal OCS
+regime_type: tax_royalty
+royalty_rate: 0.125
+royalty_note: >-
+  Rate for NEW leases. The three most recent federal offshore sales (One Big
+  Beautiful Bill Act Lease Sales BBG1, BBG2, BBG3; bids opened Dec 2025 - Aug
+  2026) all set: "The royalty rate is the minimum allowed by Section
+  50102(b)(1)(C) of the OBBBA: 12 1/2 percent for blocks in all water depths"
+  (Final Notices of Sale, Federal Register via GovInfo). OBBBA statutory band:
+  "not less than 12 1/2 percent and not more than 16 2/3 percent". EXISTING
+  lease vintages differ — see special_petroleum_tax.base_note and caveats.
+cit_rate: 0.21
+cit_note: >-
+  Federal corporate income tax. IRS Publication 542: "Corporations, including
+  qualified personal service corporations, figure their tax by multiplying
+  taxable income by 21% (0.21)."
+special_petroleum_tax:
+  rate: null
+  base_note: >-
+    No federal special petroleum profits tax identified in the sources
+    consulted; the federal take structure on the OCS is bonus bids + rentals +
+    royalty + corporate income tax. Royalty rate varies by lease vintage:
+    2017-2022-era sales used 12.5% for water depths < 200 m and 18.75% for
+    >= 200 m (e.g. Lease Sale 256, BOEM press release, Oct 2020); a 16 2/3%
+    all-depths rate was proposed for Lease Sale 262 in June 2025 ("the lowest
+    rate for deepwater since 2007", BOEM); OBBBA sales from Dec 2025 use 12.5%
+    at all depths. Producing deepwater leases issued 2008-2022 generally bear
+    18.75%.
+psc_terms: null
+ringfencing:
+  ringfenced: false
+  note: >-
+    Federal CIT is a general corporate tax on company-wide taxable income (IRS
+    Pub. 542); no petroleum-specific ring fence identified in sources
+    consulted. Royalty is levied lease by lease under the lease terms.
+depreciation_note: null
+depreciation_unverified: >-
+  US federal cost-recovery rules for petroleum (intangible drilling cost
+  expensing, depletion, MACRS lives) were NOT verified from an accessed source
+  in this compilation — deliberately omitted rather than approximated. See
+  README unverified list.
+engine_mapping:
+  suggested_royalty_rate: 0.125
+  suggested_cit_rate: 0.21
+  approximation_note: >-
+    The engine's royalty + CIT structure matches the actual federal OCS fiscal
+    structure, so the mapping is near-exact for screening. Use 0.125 for new
+    (OBBBA-era) leases; use 0.1875 when screening existing deepwater producing
+    assets on 2008-2022-vintage leases (Sale 256 terms). Omitted from the
+    mapping: bonus bids, rentals ($7/acre < 200 m, $11/acre >= 200 m per OBBBA
+    sale notices), royalty suspension volumes (30 CFR part 203), and CIT
+    cost-recovery detail.
+source_urls:
+  - https://www.govinfo.gov/content/pkg/FR-2026-07-08/html/2026-13779.htm
+  - https://www.govinfo.gov/content/pkg/FR-2025-11-10/html/2025-19828.htm
+  - https://www.govinfo.gov/content/pkg/FR-2026-02-05/html/2026-02289.htm
+  - https://www.federalregister.gov/api/v1/documents/2026-13779.json
+  - https://www.boem.gov/newsroom/press-releases/boem-announces-region-wide-oil-and-gas-lease-sale-gulf-mexico
+  - https://www.boem.gov/newsroom/press-releases/boem-proposes-oil-and-gas-lease-sale-gulf-america
+  - https://www.irs.gov/publications/p542
+retrieved_at: "2026-07-19"
+caveats:
+  - >-
+    Royalty is vintage-dependent. Verified points: Sale 256 (2020) 12.5% <200 m
+    / 18.75% >=200 m; Sale 262 proposal (Jun 2025) 16 2/3% all depths; OBBBA
+    Sales BBG1/BBG2/BBG3 (Dec 2025-Aug 2026) 12.5% all depths. The claim that
+    18.75% deepwater began with Sale 206 (2008) appeared only in search-result
+    summaries, not an accessed primary document — treated as unverified.
+  - >-
+    GovInfo URLs are mirrors of the canonical Federal Register documents
+    2026-13779 (Lease Sale BBG3), 2025-19828 (BBG1), 2026-02289 (BBG2);
+    federalregister.gov HTML pages were bot-blocked, so the GovInfo full texts
+    and the FR API metadata endpoint were accessed instead.
+  - >-
+    State taxes do not enter this row (federal OCS); no verification of
+    state-level applicability was attempted. Other federal levies (e.g.
+    inspection fees) not compiled.

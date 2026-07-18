@@ -1,0 +1,72 @@
+# CURATED (ERDA §7): hand-maintained, every value cited to a source actually
+# accessed on retrieved_at. Do not edit without re-verifying against sources.
+iso3: NOR
+country: Norway (Norwegian Continental Shelf)
+regime_type: tax_royalty
+royalty_rate: 0.0
+royalty_note: >-
+  No production royalty. norskpetroleum.no (official site of the Ministry of
+  Energy and the Norwegian Offshore Directorate): "Exemptions, such as
+  royalties, are no longer a part of the tax system."
+cit_rate: 0.22
+cit_note: >-
+  "The ordinary company tax rate is 22 %" (norskpetroleum.no petroleum-tax
+  page). In the ordinary 22% base, investments are depreciated straight-line
+  over six years.
+special_petroleum_tax:
+  rate: 0.718
+  base_note: >-
+    Special tax (technical rate 71.8%) applies to petroleum extraction income
+    in addition to the 22% company tax; "paid company tax is written off when
+    calculating the special tax base", so the combined marginal rate is 78%
+    (0.22 + 0.718 * (1 - 0.22) = 0.78). Since income year 2022 the special tax
+    is a cash-flow tax: investments are written off immediately in the special
+    tax base, and the special-tax value of a deficit is reimbursed the year
+    after accrual. No investment uplift applies under the current permanent
+    rules (temporary uplift provisions have expired).
+psc_terms: null
+ringfencing:
+  ringfenced: true
+  note: >-
+    Petroleum extraction on the Norwegian Continental Shelf (NCS) is taxed
+    under the dedicated Petroleum Taxation Act regime, separate from ordinary
+    onshore taxation. There is no field-by-field fence within the shelf:
+    "losses from one field ... can be written off against the company's income
+    from operations elsewhere on the Norwegian continental shelf"
+    (norskpetroleum.no).
+depreciation_note: >-
+  Ordinary company tax base (22%): investments written off straight-line over
+  six years starting from the year the expense is incurred. Special tax base
+  (71.8%): investments written off immediately (cash-flow model, effective
+  income year 2022); paid company tax deducted in computing the special tax
+  base; special-tax value of losses reimbursed.
+engine_mapping:
+  suggested_royalty_rate: 0.0
+  suggested_cit_rate: 0.78
+  approximation_note: >-
+    ERDA's screening engine models royalty + CIT only. Norway's 78% combined
+    marginal rate is honestly represented as cit_rate=0.78, royalty=0, BUT this
+    is conservative for marginal-project screening: the 71.8% special-tax layer
+    is (by design) approximately NPV-neutral — immediate expensing plus cash
+    refund of the special-tax value of losses means the State effectively
+    co-invests ~71.8% of capex. The effective distortionary burden on a
+    marginal investment is closer to the 22% ordinary layer alone (with 6-yr
+    depreciation). Using 0.78 understates NPV of high-capex projects; using
+    0.22 overstates government take on infra-marginal (profitable) barrels.
+    Screening default: 0.78 (conservative); sensitivity case: 0.22.
+source_urls:
+  - https://www.norskpetroleum.no/en/economy/petroleum-tax/
+retrieved_at: "2026-07-19"
+caveats:
+  - >-
+    All rates and mechanics taken from the official norskpetroleum.no
+    petroleum-tax page (Ministry of Energy / Norwegian Offshore Directorate),
+    accessed 2026-07-19. Statutory basis is the Petroleum Taxation Act (Act of
+    13 June 1975 No. 35); the Act text itself was not separately fetched.
+  - >-
+    Environmental levies (CO2 tax, NOx tax) and area fees exist on the NCS but
+    were not compiled or verified here; the engine mapping excludes them.
+  - >-
+    The 71.8% is the technical special-tax rate; quoting "56% special tax" (the
+    pre-2022 presentation) is outdated — the combined 78% marginal rate is
+    unchanged but the mechanics moved to CIT-deduction + cash-flow base in 2022.

@@ -45,6 +45,25 @@ def classify_dev_concept(
     }
 
 
+def get_price_deck(ctx: SnapshotContext) -> dict:
+    """§10.5 price deck: Layer-1 curve M1, flat-real beyond the strip.
+    Indicative source (yfinance) — labelled, per §4."""
+    strip = ctx.table("yf_curve_strip")
+    latest = strip[strip["asof_date"] == strip["asof_date"].max()]
+    m1 = latest[latest["month_index"] == 1]
+    if m1.empty:
+        raise ToolDataMissing("curve strip has no M1 row")
+    asof = str(latest["asof_date"].max())[:10]
+    return {
+        "m1_usd_bbl": round(float(m1["settle_usd_bbl"].iloc[0]), 2),
+        "asof": asof,
+        "indicative": True,
+        "provenance_note": f"curve M1 settle {asof}, flat-real (yf_curve, indicative)",
+        "scenarios_usd_bbl": [50.0, 70.0, 90.0],
+        "source_ids": ["yf_curve"],
+    }
+
+
 def run_economics(
     *,
     pg: float,

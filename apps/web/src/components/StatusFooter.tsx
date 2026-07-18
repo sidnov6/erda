@@ -25,12 +25,19 @@ export function StatusFooter({ status }: { status: string }) {
         Screening tool — ranks resemblance to historically successful acreage. Not seismic; never
         &ldquo;oil is here.&rdquo;
       </span>
+      <a
+        href="/validation"
+        className="chip shrink-0 text-warn"
+        title="§9.8 falsification gate failed — no prospectivity map ships; model card + CV table on /validation"
+      >
+        MODEL: NO-GO §9.8
+      </a>
       <span
         className={`chip shrink-0 ${mode?.mode === "LIVE" ? "text-oil" : "text-ink-faint"}`}
       >
         {modeText}
       </span>
-      <span className="chip shrink-0 text-ink-faint">P1</span>
+      <span className="chip shrink-0 text-ink-faint">P3</span>
     </footer>
   );
 }

@@ -449,9 +449,146 @@ function SummaryStrip({
 
 /* ————— page ————— */
 
+/* ————— §11.2 model validation: the falsification gate, as measured ————— */
+
+interface ModelFoldMetrics {
+  pr_auc?: number;
+  roc_auc?: number;
+  n?: number;
+  skipped?: string;
+}
+
+interface ModelFold {
+  fold: string;
+  n_test: number;
+  test_base_rate: number;
+  n_buffer_dropped: number;
+  gbm: ModelFoldMetrics;
+  baseline_distance: ModelFoldMetrics;
+  baseline_random: ModelFoldMetrics;
+  baseline_sediment: ModelFoldMetrics;
+}
+
+interface ModelPayload {
+  available: boolean;
+  reason?: string;
+  evaluation?: {
+    generated_at: string;
+    transform_version: string;
+    gate: {
+      definition: string;
+      primary_gbm: number;
+      primary_baseline_b: number;
+      ex_boem_gbm: number;
+      ex_boem_baseline_b: number;
+      passed: boolean;
+    };
+    primary: { folds: ModelFold[] };
+    ex_boem: { folds: ModelFold[] };
+    feature_importance_mean_abs_contrib: [string, number][];
+  };
+}
+
+const fmtPr = (v?: number) => (v == null ? "—" : v.toFixed(3));
+
+function ModelFoldTable({ folds }: { folds: ModelFold[] }) {
+  const TH = "sticky top-0 border-b border-line bg-bg1 py-1 font-mono text-[10px] font-normal uppercase tracking-wider text-ink-faint";
+  const TD = "numeric border-b border-line/50 py-[3px] text-right";
+  return (
+    <table className="w-full border-separate border-spacing-0 text-[11px]">
+      <thead>
+        <tr>
+          <th className={`${TH} pr-2 text-left`}>PROVINCE FOLD</th>
+          <th className={`${TH} pl-2 text-right`}>N</th>
+          <th className={`${TH} pl-2 text-right`}>BASE</th>
+          <th className={`${TH} pl-2 text-right`}>GBM</th>
+          <th className={`${TH} pl-2 text-right`}>DIST (b)</th>
+          <th className={`${TH} pl-2 text-right`}>RAND (a)</th>
+          <th className={`${TH} pl-2 text-right`}>SED (c)</th>
+          <th className={`${TH} pl-2 text-right`} title="training wells dropped by the 50 km buffer">BUF−</th>
+        </tr>
+      </thead>
+      <tbody>
+        {folds.map((f) => {
+          const gbmWins =
+            f.gbm.pr_auc != null &&
+            f.baseline_distance.pr_auc != null &&
+            f.gbm.pr_auc > f.baseline_distance.pr_auc;
+          return (
+            <tr key={f.fold}>
+              <td className="border-b border-line/50 py-[3px] pr-2 text-ink-dim">{f.fold}</td>
+              <td className={TD}>{f.n_test.toLocaleString()}</td>
+              <td className={TD}>{f.test_base_rate.toFixed(2)}</td>
+              <td className={`${TD} ${gbmWins ? "text-ink" : "text-ink-faint"}`}>
+                {fmtPr(f.gbm.pr_auc)}
+              </td>
+              <td className={`${TD} ${gbmWins ? "text-ink-faint" : "text-ink"}`}>
+                {fmtPr(f.baseline_distance.pr_auc)}
+              </td>
+              <td className={`${TD} text-ink-faint`}>{fmtPr(f.baseline_random.pr_auc)}</td>
+              <td className={`${TD} text-ink-faint`}>{fmtPr(f.baseline_sediment.pr_auc)}</td>
+              <td className={`${TD} text-ink-faint`}>{f.n_buffer_dropped.toLocaleString()}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+function ModelSection({ payload }: { payload: ModelPayload | null }) {
+  if (!payload || !payload.available || !payload.evaluation) {
+    return (
+      <ReportPanel title="Model validation" mnemo="MDL" caption="spatial CV vs baselines (§9)">
+        <span className="chip text-ink-faint">
+          {payload?.reason ?? "no model evaluation available"}
+        </span>
+      </ReportPanel>
+    );
+  }
+  const ev = payload.evaluation;
+  const g = ev.gate;
+  return (
+    <ReportPanel
+      title="Model validation — falsification gate"
+      mnemo="MDL"
+      caption="LOPO spatial CV, 50 km buffer · PR-AUC · pre-stated bar (§9.8)"
+      right={
+        <span className={`chip ${g.passed ? "text-oil" : "text-warn"}`}>
+          GATE {g.passed ? "PASSED" : "FAILED"}
+        </span>
+      }
+    >
+      <p className="max-w-[80ch] pb-2 text-[11px] leading-4 text-ink-dim">
+        {g.definition}. Measured: primary{" "}
+        <span className="numeric text-ink">{g.primary_gbm.toFixed(3)}</span> vs{" "}
+        <span className="numeric text-ink">{g.primary_baseline_b.toFixed(3)}</span> · ex-BOEM{" "}
+        <span className="numeric text-ink">{g.ex_boem_gbm.toFixed(3)}</span> vs{" "}
+        <span className="numeric text-ink">{g.ex_boem_baseline_b.toFixed(3)}</span>.{" "}
+        {!g.passed && (
+          <>
+            Per §9.8 <span className="text-ink">no prospectivity map ships</span>; the GBM
+            remains a diagnostic and memos take user-supplied Pg. Full write-up:
+            packages/models/cards/NEGATIVE_RESULT.md.
+          </>
+        )}
+      </p>
+      <div className="pb-1 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+        Primary (14 folds, incl. BOEM lease-proxy labels)
+      </div>
+      <ModelFoldTable folds={ev.primary.folds} />
+      <div className="pb-1 pt-3 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+        Ex-BOEM (true per-well outcomes)
+      </div>
+      <ModelFoldTable folds={ev.ex_boem.folds} />
+    </ReportPanel>
+  );
+}
+
 export default function ValidationPage() {
   const { data, error } = useErda<ValidationPayload>("validation", 120_000);
   const { data: sourcesData } = useErda<{ sources: SourceStatus[] }>("sources", 300_000);
+  const { data: modelData } = useErda<ModelPayload>("model", 300_000);
 
   const report = data?.available ? data.report : undefined;
   const overall = report?.summary.overall;
@@ -518,6 +655,7 @@ export default function ValidationPage() {
             <CurveSection rows={report.sections.curve_checks} />
           </>
         )}
+        <ModelSection payload={modelData} />
       </main>
     </div>
   );

@@ -50,6 +50,20 @@ def sources() -> dict:
     }
 
 
+@router.get("/model")
+def model_evaluation() -> dict:
+    """§11.2 model validation: the spatial-CV evaluation as measured — including
+    the §9.8 falsification-gate verdict. A failed gate is served, not hidden."""
+    import json
+
+    path = data.parquet_root() / "model_eval_gbm.json"
+    if not path.exists():
+        return {"available": False, "reason": "no model evaluation yet — run ops/train_gbm.py"}
+    report = json.loads(path.read_text(encoding="utf-8"))
+    report.pop("lgbm_params", None)  # params live in the repo; keep the payload lean
+    return {"available": True, "evaluation": report}
+
+
 @router.get("/mode")
 def mode() -> dict:
     """LIVE vs SNAPSHOT vs SHELL — the badge tells the truth (§15)."""

@@ -1,0 +1,104 @@
+{
+ "@odata.context": "https://services.neats.nopta.gov.au/odata/v1/public/nopims/well/$metadata#PublicNopimsWells(Well_ID,Well,Borehole_ID,Borehole,Kick_Off_Date,Borehole_Reason,Drillers_TD_m,Offshore,Basin)",
+ "value": [
+  {
+   "Well_ID": "ENO0595735",
+   "Well": "BDC 4 04",
+   "Borehole_ID": "ENO0603290",
+   "Borehole": "BDC 4 04 ST1 Phase 2",
+   "Kick_Off_Date": "2015-05-31",
+   "Basin": "Browse Basin",
+   "Offshore": "Yes",
+   "Borehole_Reason": "Development",
+   "Drillers_TD_m": 5927.0
+  },
+  {
+   "Well_ID": "ENO0007996",
+   "Well": "Barracouta 5",
+   "Borehole_ID": "ENO0007996",
+   "Borehole": "Barracouta 5",
+   "Kick_Off_Date": "1985-01-22",
+   "Basin": "Gippsland Basin",
+   "Offshore": "Yes",
+   "Borehole_Reason": "Appraisal",
+   "Drillers_TD_m": 1770.0
+  },
+  {
+   "Well_ID": "ENO0007999",
+   "Well": "Barracouta A 3",
+   "Borehole_ID": "ENO0007999",
+   "Borehole": "Barracouta A 3",
+   "Kick_Off_Date": "1968-04-20",
+   "Basin": "Gippsland Basin",
+   "Offshore": "Yes",
+   "Borehole_Reason": "Exploration",
+   "Drillers_TD_m": 3589.0
+  },
+  {
+   "Well_ID": "ENO0011753",
+   "Well": "Goodwyn 1",
+   "Borehole_ID": "ENO0011753",
+   "Borehole": "Goodwyn 1",
+   "Kick_Off_Date": "1971-10-22",
+   "Basin": "Carnarvon/Northern Carnarvon",
+   "Offshore": "Yes",
+   "Borehole_Reason": "Exploration",
+   "Drillers_TD_m": 3536.0
+  },
+  {
+   "Well_ID": "ENO0005755",
+   "Well": "Ammaroo 1",
+   "Borehole_ID": "ENO0005755",
+   "Borehole": "Ammaroo 1",
+   "Kick_Off_Date": "1963-01-12",
+   "Basin": "Georgina Basin",
+   "Offshore": "No",
+   "Borehole_Reason": null,
+   "Drillers_TD_m": 187.0
+  },
+  {
+   "Well_ID": "ENO0005807",
+   "Well": "Aramia 1",
+   "Borehole_ID": "ENO0005807",
+   "Borehole": "Aramia 1",
+   "Kick_Off_Date": "1955-09-06",
+   "Basin": "Papuan Basin",
+   "Offshore": "No",
+   "Borehole_Reason": "Exploration",
+   "Drillers_TD_m": null
+  },
+  {
+   "Well_ID": "ENO0005838",
+   "Well": "ARMRAYNALD 1",
+   "Borehole_ID": "ENO0005838",
+   "Borehole": "ARMRAYNALD 1",
+   "Kick_Off_Date": null,
+   "Basin": null,
+   "Offshore": "No",
+   "Borehole_Reason": null,
+   "Drillers_TD_m": null
+  },
+  {
+   "Well_ID": "ENO0005861",
+   "Well": "Ashmore Reef 1",
+   "Borehole_ID": "ENO0005861",
+   "Borehole": "Ashmore Reef 1",
+   "Kick_Off_Date": "1967-10-16",
+   "Basin": "Bonaparte/Browse",
+   "Offshore": "Yes",
+   "Borehole_Reason": "Stratigraphic Investigation",
+   "Drillers_TD_m": 3914.55
+  },
+  {
+   "Well_ID": "ENO0603892",
+   "Well": "Barrow Island B24A",
+   "Borehole_ID": "ENO0603892",
+   "Borehole": "Barrow Island B24A",
+   "Kick_Off_Date": null,
+   "Basin": "Carnarvon",
+   "Offshore": "No",
+   "Borehole_Reason": "Exploration",
+   "Drillers_TD_m": null
+  }
+ ]
+}

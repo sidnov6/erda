@@ -1,0 +1,2 @@
+source_id,content_raw,label,shows,notes,source_url,retrieved_at,excluded
+nopims,,0,false,"excluded-class: NOPIMS publishes NO hydrocarbon-outcome code anywhere open (verified 2026-07-18: NOPTA OData PublicNopimsWells; NOPTA ArcGIS Public/Petroleum_Wells; GA boreholes WFS bh:Boreholes whose STATUS is operational only) — every row carries content_raw """" and an unreported outcome is not a discovery; Australia contributes wells but no labels yet",https://services.neats.nopta.gov.au/odata/v1/public/nopims/well/PublicNopimsWells,2026-07-18,true

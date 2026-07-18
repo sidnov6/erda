@@ -164,7 +164,7 @@ def normalize(csv_text: str) -> pd.DataFrame:
       never a coerced-to-missing year.
     """
     # httpx decodes the body but keeps the UTF-8 BOM as a character.
-    df = pd.read_csv(io.StringIO(csv_text.lstrip("﻿")), dtype=str, keep_default_na=False)
+    df = pd.read_csv(io.StringIO(csv_text.lstrip("\ufeff")), dtype=str, keep_default_na=False)
 
     missing = [c for c in REQUIRED_SOURCE_COLUMNS if c not in df.columns]
     if missing:

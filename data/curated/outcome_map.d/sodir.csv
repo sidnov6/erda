@@ -1,0 +1,16 @@
+source_id,content_raw,label,shows,notes,source_url,retrieved_at,excluded
+sodir,OIL,1,false,oil discovery (n=546 in the 2197-row export),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,GAS,1,false,gas discovery (n=172),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,OIL/GAS,1,false,oil and gas discovery (n=337),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,GAS/CONDENSATE,1,false,gas/condensate discovery (n=171),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,OIL/GAS/CONDENSATE,1,false,oil+gas+condensate discovery (n=13; observed in data though absent from the documented exploration legal-value list),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,SHOWS,0,true,trace amounts of hydrocarbons per attribute docs (fluorescent cut / petroleum odour / stain / gas readings); n=165,https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,OIL SHOWS,0,true,oil traces only; not a discovery (n=79),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,GAS SHOWS,0,true,gas traces only; not a discovery (n=18),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,OIL/GAS SHOWS,0,true,oil and gas traces only; not a discovery (n=12),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,DRY,0,false,no hydrocarbons encountered (n=567),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,WATER,0,false,excluded-class: documented legal content for WILDCAT-CCS/APPRAISAL-CCS wells (CO2-storage aquifer result); water is not a petroleum discovery (n=2),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,false
+sodir,WATER/GAS,0,false,excluded-class: predominantly water with some gas; not one of the §5 oil/gas discovery families so it cannot be counted as a discovery (n=1; the one occurrence 35/11-30 S carries a Sodir discovery link but the content code itself is not a discovery family — flagged for the dataset card),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,true
+sodir,NOT APPLICABLE,0,false,excluded-class: outcome category does not apply to the wellbore (reclassified/technical); absence of a discovery claim is not a discovery (n=50),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,true
+sodir,NOT AVAILABLE,0,false,excluded-class: outcome not released or not recorded; an unknown outcome is not a discovery (n=1),https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,true
+sodir,,0,false,excluded-class: blank wlbContent (recent / CCS / not-yet-classified wellbores; n=63); no reported outcome — cannot be counted as a discovery,https://factpages.sodir.no/en/wellbore/Attributes,2026-07-18,true

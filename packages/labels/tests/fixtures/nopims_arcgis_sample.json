@@ -1,0 +1,101 @@
+{
+ "objectIdFieldName": "OBJECTID",
+ "features": [
+  {
+   "attributes": {
+    "Uwi": "ENO0595735",
+    "Ubhi": "ENO0603290",
+    "BHName": "BDC 4 04 ST1 Phase 2",
+    "Latitude": -13.9048358,
+    "Longitude": 123.1644242,
+    "Purpose": "Development",
+    "Type": "Petroleum",
+    "KickOffDate": 1433030400000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0007996",
+    "Ubhi": "ENO0007996",
+    "BHName": "Barracouta 5",
+    "Latitude": -38.299445,
+    "Longitude": 147.661288,
+    "Purpose": "Appraisal",
+    "Type": "Petroleum",
+    "KickOffDate": 475200000000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0007999",
+    "Ubhi": "ENO0007999",
+    "BHName": "Barracouta A 3",
+    "Latitude": -38.296798,
+    "Longitude": 147.677666,
+    "Purpose": "Exploration",
+    "Type": "Petroleum",
+    "KickOffDate": -53654400000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0011753",
+    "Ubhi": "ENO0011753",
+    "BHName": "Goodwyn 1",
+    "Latitude": -19.692259,
+    "Longitude": 115.896772,
+    "Purpose": "Exploration",
+    "Type": "Petroleum",
+    "KickOffDate": 56937600000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0005755",
+    "Ubhi": "ENO0005755",
+    "BHName": "Ammaroo 1",
+    "Latitude": -21.6304231,
+    "Longitude": 135.3974258,
+    "Purpose": null,
+    "Type": null,
+    "KickOffDate": -219974400000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0005807",
+    "Ubhi": "ENO0005807",
+    "BHName": "Aramia 1",
+    "Latitude": -7.829297,
+    "Longitude": 142.3,
+    "Purpose": "Exploration",
+    "Type": "Petroleum",
+    "KickOffDate": -451958400000
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0005838",
+    "Ubhi": "ENO0005838",
+    "BHName": "ARMRAYNALD 1",
+    "Latitude": -18.130725,
+    "Longitude": 139.7581028,
+    "Purpose": null,
+    "Type": null,
+    "KickOffDate": null
+   }
+  },
+  {
+   "attributes": {
+    "Uwi": "ENO0005861",
+    "Ubhi": "ENO0005861",
+    "BHName": "Ashmore Reef 1",
+    "Latitude": -12.1791005,
+    "Longitude": 123.0875425,
+    "Purpose": "Stratigraphic Investigation",
+    "Type": "Petroleum",
+    "KickOffDate": -69811200000
+   }
+  }
+ ]
+}

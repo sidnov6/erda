@@ -3,7 +3,14 @@ name = "erda-labels"
 version = "0.1.0"
 description = "Well-outcome harmonization across Sodir/NSTA/NLOG/BOEM/NOPIMS."
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+    "erda-contracts",
+    "erda-ingestion",
+    "pandas>=2.2",
+    "pandera>=0.20",
+    "pyarrow>=17",
+    "geopandas>=1.0",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -11,3 +18,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["erda_labels"]
+
+[tool.uv.sources]
+erda-contracts = { workspace = true }
+erda-ingestion = { workspace = true }

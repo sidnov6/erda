@@ -3,7 +3,15 @@ name = "erda-geo"
 version = "0.1.0"
 description = "Raster stack builder, co-registration, derived channels. DETERMINISTIC CORE."
 requires-python = ">=3.11,<3.12"
-dependencies = []
+# DETERMINISTIC CORE (§0 rule 2): numeric deps only — no network clients here.
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "xarray>=2024.6",
+    "zarr>=2.18",
+    "netcdf4>=1.7",
+    "pandas>=2.2",
+]
 
 [build-system]
 requires = ["hatchling"]

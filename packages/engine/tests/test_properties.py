@@ -26,7 +26,7 @@ def _npv(**overrides) -> float:
 
 def test_price_up_npv_up():
     npvs = [_npv(price_usd_bbl=p) for p in (40.0, 55.0, 70.0, 85.0, 100.0)]
-    assert all(a < b for a, b in zip(npvs, npvs[1:], strict=True))
+    assert all(a < b for a, b in zip(npvs, npvs[1:], strict=False))
 
 
 def test_royalty_up_take_up_and_npv_down():
@@ -35,8 +35,8 @@ def test_royalty_up_take_up_and_npv_down():
         case = dcf.evaluate_block(**{**BASE, "royalty_rate": roy})
         takes.append(case.government_take)
         npvs.append(case.npv_musd)
-    assert all(a < b for a, b in zip(takes, takes[1:], strict=True))
-    assert all(a > b for a, b in zip(npvs, npvs[1:], strict=True))
+    assert all(a < b for a, b in zip(takes, takes[1:], strict=False))
+    assert all(a > b for a, b in zip(npvs, npvs[1:], strict=False))
 
 
 def test_pg_up_emv_up():
@@ -45,7 +45,7 @@ def test_pg_up_emv_up():
         emv.expected_monetary_value(pg=pg, npv_success_musd=npv, well_cost_musd=80.0)
         for pg in (0.05, 0.15, 0.25, 0.5, 0.9)
     ]
-    assert all(a < b for a, b in zip(emvs, emvs[1:], strict=True))
+    assert all(a < b for a, b in zip(emvs, emvs[1:], strict=False))
 
 
 def test_emv_formula_exact():

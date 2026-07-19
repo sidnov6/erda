@@ -24,10 +24,10 @@ COPY apps/api/erda_api apps/api/erda_api
 
 RUN uv sync --frozen --no-dev --package erda-api
 
-# The frozen snapshot is the data plane. Bake it in for a self-contained image,
-# or mount it at run time and point ERDA_REPO_ROOT at the mount.
+# The frozen snapshot is the data plane — a self-contained mini repo-root that
+# already holds its own data/{parquet,curated,zarr,memos}. Bake it in, or mount
+# it at run time and point ERDA_REPO_ROOT at the mount.
 COPY data/snapshot ./data/snapshot
-COPY data/curated ./data/curated
 
 ENV ERDA_REPO_ROOT=/app/data/snapshot \
     PORT=7860

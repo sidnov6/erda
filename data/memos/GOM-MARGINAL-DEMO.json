@@ -1,0 +1,280 @@
+{
+  "memo": {
+    "block_id": "GOM-MARGINAL-DEMO",
+    "generated_at": "2026-07-19T07:07:58.702991+00:00",
+    "snapshot_note": "frozen local snapshot \u2014 no live internet at memo time (\u00a710.3)",
+    "verdict": "CONDITIONAL",
+    "verdict_basis": {
+      "emv_musd": 2.79,
+      "p_emv_positive": 0.5109,
+      "sanctions_flag": false,
+      "wdpa_overlap_pct": 0.0,
+      "pg": 0.18,
+      "pg_provenance": "user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships)"
+    },
+    "sections": [
+      {
+        "agent": "environment",
+        "narrative": "Based on the available data, there is no overlap between the proposed project area and protected areas within a 25-kilometer radius, as indicated by a 0.0% overlap percentage. The World Database on Protected Areas (WDPA) was consulted as the source for this information. No specific protected areas are listed as being within the area of interest. A data gap is not noted in this assessment, as the necessary information is present.",
+        "quant": {
+          "wdpa_overlap_pct": {
+            "value": 0.0,
+            "unit": "%",
+            "source_ids": [
+              "wdpa"
+            ]
+          },
+          "protected_areas_nearby": {
+            "value": 0,
+            "unit": "areas",
+            "source_ids": [
+              "wdpa"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "financeability",
+        "narrative": "All institutions checked have restrictions in place for upstream financing. The institutions, including banks and insurers, have publicly available policies outlining their approach to the oil and gas sector. A data gap exists regarding the specific impact of these restrictions on financing options. Financing may be shifting towards alternative arrangements, such as partnerships with national oil companies, trading-house prepay, or private equity, due to European bank and insurer restrictions.",
+        "quant": {
+          "institutions_checked": {
+            "value": 10,
+            "unit": "institutions",
+            "source_ids": [
+              "curated_exclusions"
+            ]
+          },
+          "restricting_upstream": {
+            "value": 10,
+            "unit": "institutions",
+            "source_ids": [
+              "curated_exclusions"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "fiscal",
+        "narrative": "The United States' Gulf of Mexico federal OCS regime operates under a tax-royalty system, with a royalty rate of 12.5% for new leases. The corporate income tax rate is 21%. A special petroleum profits tax is not identified in the sources consulted, and the federal take structure consists of bonus bids, rentals, royalty, and corporate income tax. Note that royalty rates vary by lease vintage, with existing deepwater leases potentially bearing different rates.",
+        "quant": {
+          "regime_type": {
+            "value": "tax_royalty",
+            "unit": null,
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          },
+          "cit_rate": {
+            "value": 0.21,
+            "unit": "fraction",
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          },
+          "royalty_rate": {
+            "value": 0.125,
+            "unit": "fraction",
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "geoscience",
+        "narrative": "The model status indicates a falsification gate failure, resulting in no model-generated data. The Pg data is instead user-supplied. The basin in question is the Gulf Cenozoic OCS, with a historical success rate of 0.684. A data gap exists regarding volume maturity, as it awaits gated GOGET XLSX data. Nearby wells have shown a success rate of 0.68 within a 100km radius.",
+        "quant": {
+          "model_status": {
+            "value": "NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model",
+            "unit": null,
+            "source_ids": [
+              "model_eval_gbm",
+              "usgs_provinces",
+              "globsed"
+            ]
+          },
+          "offset_wells_100km": {
+            "value": 444,
+            "unit": "wells",
+            "source_ids": [
+              "boem_bsee",
+              "labels_harmonized"
+            ]
+          },
+          "offset_success_rate": {
+            "value": 0.68,
+            "unit": null,
+            "source_ids": [
+              "boem_bsee",
+              "labels_harmonized"
+            ]
+          },
+          "basin": {
+            "value": "Gulf Cenozoic OCS",
+            "unit": null,
+            "source_ids": [
+              "labels_harmonized",
+              "usgs_provinces"
+            ]
+          },
+          "basin_wildcats": {
+            "value": 11874,
+            "unit": "wells",
+            "source_ids": [
+              "labels_harmonized",
+              "usgs_provinces"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "infrastructure",
+        "narrative": "The proposed concept is an fpso_standalone with a water depth of 1782.5 meters and a host distance of 110 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from a low to a high value, and operating expenditure per barrel ranging from a low to a high value. Well costs are also estimated to range from a low to a high value. A data gap exists for specific investment amounts, as only relative cost ranges are provided.",
+        "quant": {
+          "water_depth_m": {
+            "value": 1782.5,
+            "unit": "m",
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          },
+          "host_distance_km": {
+            "value": 110.0,
+            "unit": "km",
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          },
+          "dev_concept": {
+            "value": "fpso_standalone",
+            "unit": null,
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "political_risk",
+        "narrative": "The governance structure of the country, as indicated by the World Governance Indicators (WGI) estimates, suggests a stable environment with positive estimates for control of corruption, government effectiveness, and rule of law. However, the estimates also indicate a negative score for political violence. A data gap exists regarding the Fragile States Index (FSI) total, as the FSI table is absent from the snapshot. The country is not currently sanctioned, according to available information.",
+        "quant": {
+          "wgi_rule_of_law": {
+            "value": 0.962,
+            "unit": "estimate (\u22122.5\u20262.5)",
+            "source_ids": [
+              "wgi"
+            ]
+          },
+          "sanctioned": {
+            "value": false,
+            "unit": null,
+            "source_ids": [
+              "ofac_eu"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "economist",
+        "narrative": "The project's economic viability is supported by a positive Expected Monetary Value (EMV) and a relatively low breakeven price. The Government take is approximately 45%. A data gap exists regarding the Probability of Geology (Pg), which is marked as user-supplied due to a failed falsification gate. The project's Net Present Value (NPV) in the success case is substantial, with a payback period of 4 years. The economic assumptions are based on a discount rate and a price deck with an indicative price of around $82.49 per barrel as of 2026-07-18.",
+        "quant": {
+          "pg": {
+            "value": 0.18,
+            "unit": "probability",
+            "source_ids": [
+              "user_supplied"
+            ]
+          },
+          "price_m1": {
+            "value": 82.49,
+            "unit": "$/bbl",
+            "source_ids": [
+              "yf_curve"
+            ]
+          },
+          "npv_success": {
+            "value": 653.28,
+            "unit": "MUSD",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "emv": {
+            "value": 2.79,
+            "unit": "MUSD",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "breakeven": {
+            "value": 44.28,
+            "unit": "$/bbl",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "government_take": {
+            "value": 0.4497,
+            "unit": "fraction",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "p_emv_positive": {
+            "value": 0.5109,
+            "unit": "probability",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "mc_seed": {
+            "value": 7,
+            "unit": null,
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          }
+        }
+      }
+    ],
+    "redteam_narrative": "This tool JSON is flawed because it relies on user-supplied Pg (prospective gas) values due to a failed falsification gate, which may not be accurate. The proxy labels used for wells are also based on a limited dataset, with only 444 labeled wells out of an unknown total. Additionally, the cost midpoints and price volatility assumptions are simplified and may not reflect real-world variations. The data gaps in fiscal regime details, such as bonus bids and royalty suspension volumes, could also lead to incorrect calculations. Furthermore, the use of a single, indicative price curve (M1 settle 2026-07-18) may not account for potential price fluctuations, and the discount rate assumption of 0.1 may not be suitable for all scenarios.",
+    "citation_coverage": 1.0,
+    "quant_hash": "d9363febd704c4495a9d05870e03874e325e1e369613cab2bd777db2ea5dc7ae"
+  },
+  "markdown": "# Feasibility Memo \u2014 GOM-MARGINAL-DEMO\n\n**Verdict: CONDITIONAL** \u00b7 EMV **2.8 $MM** \u00b7 P(EMV>0) **51%** \u00b7 Pg **0.18** (user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships))\n\n_Generated 2026-07-19T07:07:58.702991+00:00 \u00b7 frozen local snapshot \u2014 no live internet at memo time (\u00a710.3) \u00b7 citation coverage 100% \u00b7 determinism hash `d9363febd704c449\u2026`_\n\n## Geoscience\n\nThe model status indicates a falsification gate failure, resulting in no model-generated data. The Pg data is instead user-supplied. The basin in question is the Gulf Cenozoic OCS, with a historical success rate of 0.684. A data gap exists regarding volume maturity, as it awaits gated GOGET XLSX data. Nearby wells have shown a success rate of 0.68 within a 100km radius.\n\n- **model_status**: NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model _[model_eval_gbm, usgs_provinces, globsed]_\n- **offset_wells_100km**: 444 wells _[boem_bsee, labels_harmonized]_\n- **offset_success_rate**: 0.68 _[boem_bsee, labels_harmonized]_\n- **basin**: Gulf Cenozoic OCS _[labels_harmonized, usgs_provinces]_\n- **basin_wildcats**: 11874 wells _[labels_harmonized, usgs_provinces]_\n\n## Fiscal\n\nThe United States' Gulf of Mexico federal OCS regime operates under a tax-royalty system, with a royalty rate of 12.5% for new leases. The corporate income tax rate is 21%. A special petroleum profits tax is not identified in the sources consulted, and the federal take structure consists of bonus bids, rentals, royalty, and corporate income tax. Note that royalty rates vary by lease vintage, with existing deepwater leases potentially bearing different rates.\n\n- **regime_type**: tax_royalty _[curated_fiscal]_\n- **cit_rate**: 0.21 fraction _[curated_fiscal]_\n- **royalty_rate**: 0.125 fraction _[curated_fiscal]_\n\n## Political Risk\n\nThe governance structure of the country, as indicated by the World Governance Indicators (WGI) estimates, suggests a stable environment with positive estimates for control of corruption, government effectiveness, and rule of law. However, the estimates also indicate a negative score for political violence. A data gap exists regarding the Fragile States Index (FSI) total, as the FSI table is absent from the snapshot. The country is not currently sanctioned, according to available information.\n\n- **wgi_rule_of_law**: 0.962 estimate (\u22122.5\u20262.5) _[wgi]_\n- **sanctioned**: False _[ofac_eu]_\n\n## Infrastructure & Development Concept\n\nThe proposed concept is an fpso_standalone with a water depth of 1782.5 meters and a host distance of 110 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from a low to a high value, and operating expenditure per barrel ranging from a low to a high value. Well costs are also estimated to range from a low to a high value. A data gap exists for specific investment amounts, as only relative cost ranges are provided.\n\n- **water_depth_m**: 1782.5 m _[etopo2022, curated_costs, erda_engine.concept]_\n- **host_distance_km**: 110.0 km _[etopo2022, curated_costs, erda_engine.concept]_\n- **dev_concept**: fpso_standalone _[etopo2022, curated_costs, erda_engine.concept]_\n\n## Environment\n\nBased on the available data, there is no overlap between the proposed project area and protected areas within a 25-kilometer radius, as indicated by a 0.0% overlap percentage. The World Database on Protected Areas (WDPA) was consulted as the source for this information. No specific protected areas are listed as being within the area of interest. A data gap is not noted in this assessment, as the necessary information is present.\n\n- **wdpa_overlap_pct**: 0.0 % _[wdpa]_\n- **protected_areas_nearby**: 0 areas _[wdpa]_\n\n## Financeability\n\nAll institutions checked have restrictions in place for upstream financing. The institutions, including banks and insurers, have publicly available policies outlining their approach to the oil and gas sector. A data gap exists regarding the specific impact of these restrictions on financing options. Financing may be shifting towards alternative arrangements, such as partnerships with national oil companies, trading-house prepay, or private equity, due to European bank and insurer restrictions.\n\n- **institutions_checked**: 10 institutions _[curated_exclusions]_\n- **restricting_upstream**: 10 institutions _[curated_exclusions]_\n\n## Economics\n\nThe project's economic viability is supported by a positive Expected Monetary Value (EMV) and a relatively low breakeven price. The Government take is approximately 45%. A data gap exists regarding the Probability of Geology (Pg), which is marked as user-supplied due to a failed falsification gate. The project's Net Present Value (NPV) in the success case is substantial, with a payback period of 4 years. The economic assumptions are based on a discount rate and a price deck with an indicative price of around $82.49 per barrel as of 2026-07-18.\n\n- **pg**: 0.18 probability _[user_supplied]_\n- **price_m1**: 82.49 $/bbl _[yf_curve]_\n- **npv_success**: 653.28 MUSD _[erda_engine, curated_fiscal, curated_costs]_\n- **emv**: 2.79 MUSD _[erda_engine, curated_fiscal, curated_costs]_\n- **breakeven**: 44.28 $/bbl _[erda_engine, curated_fiscal, curated_costs]_\n- **government_take**: 0.4497 fraction _[erda_engine, curated_fiscal, curated_costs]_\n- **p_emv_positive**: 0.5109 probability _[erda_engine, curated_fiscal, curated_costs]_\n- **mc_seed**: 7 _[erda_engine, curated_fiscal, curated_costs]_\n\n## Red Team \u2014 what would make this wrong\n\nThis tool JSON is flawed because it relies on user-supplied Pg (prospective gas) values due to a failed falsification gate, which may not be accurate. The proxy labels used for wells are also based on a limited dataset, with only 444 labeled wells out of an unknown total. Additionally, the cost midpoints and price volatility assumptions are simplified and may not reflect real-world variations. The data gaps in fiscal regime details, such as bonus bids and royalty suspension volumes, could also lead to incorrect calculations. Furthermore, the use of a single, indicative price curve (M1 settle 2026-07-18) may not account for potential price fluctuations, and the discount rate assumption of 0.1 may not be suitable for all scenarios.\n\n## Citation appendix\n\n- `boem_bsee` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `curated_costs` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive, infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `curated_exclusions` \u2190 financeability.institutions_checked, financeability.restricting_upstream\n- `curated_fiscal` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive, fiscal.cit_rate, fiscal.regime_type, fiscal.royalty_rate\n- `erda_engine` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive\n- `erda_engine.concept` \u2190 infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `etopo2022` \u2190 infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `globsed` \u2190 geoscience.model_status\n- `labels_harmonized` \u2190 geoscience.basin, geoscience.basin_wildcats, geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `model_eval_gbm` \u2190 geoscience.model_status\n- `ofac_eu` \u2190 political_risk.sanctioned\n- `user_supplied` \u2190 economist.pg\n- `usgs_provinces` \u2190 geoscience.basin, geoscience.basin_wildcats, geoscience.model_status\n- `wdpa` \u2190 environment.protected_areas_nearby, environment.wdpa_overlap_pct\n- `wgi` \u2190 political_risk.wgi_rule_of_law\n- `yf_curve` \u2190 economist.price_m1\n\n_Screening tool \u2014 ranks resemblance and economics at area level; not seismic; never \"oil is here.\"_",
+  "narrator": "GroqNarrator",
+  "request": {
+    "block_id": "GOM-MARGINAL-DEMO",
+    "lat": 27.0,
+    "lon": -90.5,
+    "iso3": "USA",
+    "country_name": "United States",
+    "host_distance_km": 110.0,
+    "pg": 0.18,
+    "resource_p90_p50_p10": [
+      25.0,
+      45.0,
+      81.0
+    ],
+    "well_cost_musd": 140.0,
+    "_assumptions": "Marginal deepwater accumulation: small resource (P50 45 MMbbl) against a high deepwater well cost \u2014 designed to land EMV>0 but P(EMV>0) below the 0.6 CONDITIONAL threshold under price/capex volatility. USER-SUPPLIED scenario."
+  }
+}

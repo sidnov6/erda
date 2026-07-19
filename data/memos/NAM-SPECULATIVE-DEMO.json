@@ -1,0 +1,288 @@
+{
+  "memo": {
+    "block_id": "NAM-SPECULATIVE-DEMO",
+    "generated_at": "2026-07-19T07:30:53.322917+00:00",
+    "snapshot_note": "frozen local snapshot \u2014 no live internet at memo time (\u00a710.3)",
+    "verdict": "NO_GO",
+    "verdict_basis": {
+      "emv_musd": -97.17,
+      "p_emv_positive": 0.1291,
+      "sanctions_flag": false,
+      "wdpa_overlap_pct": 0.0,
+      "pg": 0.05,
+      "pg_provenance": "user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships)"
+    },
+    "sections": [
+      {
+        "agent": "environment",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Environment member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'wdpa': {'radius_km': 25.0, 'overlap_pct': 0.0, 'areas': [], 'source_ids': ['wdpa']}}",
+        "quant": {
+          "wdpa_overlap_pct": {
+            "value": 0.0,
+            "unit": "%",
+            "source_ids": [
+              "wdpa"
+            ]
+          },
+          "protected_areas_nearby": {
+            "value": 0,
+            "unit": "areas",
+            "source_ids": [
+              "wdpa"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "financeability",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Financeability member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'institution': 'Societe Generale', 'type': 'bank', 'policy_url': 'https://www.societegenerale.com/site",
+        "quant": {
+          "institutions_checked": {
+            "value": 10,
+            "unit": "institutions",
+            "source_ids": [
+              "curated_exclusions"
+            ]
+          },
+          "restricting_upstream": {
+            "value": 10,
+            "unit": "institutions",
+            "source_ids": [
+              "curated_exclusions"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "fiscal",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Fiscal member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'regime': {'iso3': 'NAM', 'country': 'Namibia', 'regime_type': 'tax_royalty', 'royalty_rate': 0.05, 'royalty_note': '\"5% of gross revenue\", valued at market value at the agreed off-take point; levied under the Petroleum (Exploration and Production) Act 2 of 1991; deductible in computing Petroleum Income Tax (NAMCOR fiscal regime document). Chambers 2025 practice guide confirms 5% of ma",
+        "quant": {
+          "regime_type": {
+            "value": "tax_royalty",
+            "unit": null,
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          },
+          "cit_rate": {
+            "value": 0.35,
+            "unit": "fraction",
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          },
+          "royalty_rate": {
+            "value": 0.05,
+            "unit": "fraction",
+            "source_ids": [
+              "curated_fiscal"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "geoscience",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Geoscience member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'model': {'model_status': 'NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model', 'pg_source': 'user-supplied', 'in_scoreable_mask': True, 'gate_reference': 'packages/models/cards/NEGATIVE_RESULT.md', 'source_ids': ['model_eval_gbm', 'usgs_provinces', 'globsed']}, 'offsets': {'radius_km': 100.0, 'n_wells': 0, 'n_labeled': 0, 'n_discoveries': 0, 'offset_success_rate': None, 'ne",
+        "quant": {
+          "model_status": {
+            "value": "NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model",
+            "unit": null,
+            "source_ids": [
+              "model_eval_gbm",
+              "usgs_provinces",
+              "globsed"
+            ]
+          },
+          "offset_wells_100km": {
+            "value": 0,
+            "unit": "wells",
+            "source_ids": [
+              "sodir",
+              "nsta",
+              "nlog",
+              "boem_bsee",
+              "nopims",
+              "labels_harmonized"
+            ]
+          },
+          "offset_success_rate": {
+            "value": "no labeled offsets",
+            "unit": null,
+            "source_ids": [
+              "sodir",
+              "nsta",
+              "nlog",
+              "boem_bsee",
+              "nopims",
+              "labels_harmonized"
+            ]
+          },
+          "basin": {
+            "value": "Ocean",
+            "unit": null,
+            "source_ids": [
+              "labels_harmonized",
+              "usgs_provinces"
+            ]
+          },
+          "basin_wildcats": {
+            "value": 38,
+            "unit": "wells",
+            "source_ids": [
+              "labels_harmonized",
+              "usgs_provinces"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "infrastructure",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Infrastructure member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'concept': {'water_depth_m': 2707.0, 'host_distance_km': 300.0, 'concept': 'fpso_standalone', 'cost_benchmarks': {'concept': 'fpso_standalone', 'capex_usd_boe_low': '8', 'capex_usd_boe_high': '18', 'opex_usd_bbl_low': '6.28', 'opex_usd_bbl_high': '6.65', 'well_cost_musd_low': '60', 'well_cost_musd_high': '240', 'schedule_years_low': '2.5', 'schedule_years_high': '3.2'}, 'cost_notes': \"",
+        "quant": {
+          "water_depth_m": {
+            "value": 2707.0,
+            "unit": "m",
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          },
+          "host_distance_km": {
+            "value": 300.0,
+            "unit": "km",
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          },
+          "dev_concept": {
+            "value": "fpso_standalone",
+            "unit": null,
+            "source_ids": [
+              "etopo2022",
+              "curated_costs",
+              "erda_engine.concept"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "political_risk",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Political Risk member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'governance': {'iso3': 'NAM', 'wgi_year': 2024, 'wgi_estimates': {'CC.EST': 0.127, 'GE.EST': 0.099, 'PV.EST': 0.547, 'RQ.EST': 0.135, 'RL.EST': 0.328, 'VA.EST': 0.337}, 'source_ids': ['wgi'], 'fsi_total': None, 'fsi_note': 'FSI table absent from snapshot'}, 'sanctions': {'iso3': 'NAM', 'sanctioned': False, 'programs': [], 'lists': [], 'source_ids': ['ofac_eu']}}",
+        "quant": {
+          "wgi_rule_of_law": {
+            "value": 0.328,
+            "unit": "estimate (\u22122.5\u20262.5)",
+            "source_ids": [
+              "wgi"
+            ]
+          },
+          "sanctioned": {
+            "value": false,
+            "unit": null,
+            "source_ids": [
+              "ofac_eu"
+            ]
+          }
+        }
+      },
+      {
+        "agent": "economist",
+        "narrative": "[template narration \u2014 no LLM key configured] You are the Economist member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'economics': {'pg': 0.05, 'pg_provenance': 'user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships)', 'npv_success_musd': 1096.51, 'emv_musd': -97.17, 'breakeven_usd_bbl': 42.1, 'government_take': 0.5015, 'payback_year': 5, 'mc': {'emv_mean_musd': -78.28, 'emv_p10_musd': -153.49, 'emv_p50_musd': -97.33, 'emv_p90_musd': 20.62, 'p_emv_positive': 0.1291, 'n_draws': 10000, ",
+        "quant": {
+          "pg": {
+            "value": 0.05,
+            "unit": "probability",
+            "source_ids": [
+              "user_supplied"
+            ]
+          },
+          "price_m1": {
+            "value": 82.49,
+            "unit": "$/bbl",
+            "source_ids": [
+              "yf_curve"
+            ]
+          },
+          "npv_success": {
+            "value": 1096.51,
+            "unit": "MUSD",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "emv": {
+            "value": -97.17,
+            "unit": "MUSD",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "breakeven": {
+            "value": 42.1,
+            "unit": "$/bbl",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "government_take": {
+            "value": 0.5015,
+            "unit": "fraction",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "p_emv_positive": {
+            "value": 0.1291,
+            "unit": "probability",
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          },
+          "mc_seed": {
+            "value": 7,
+            "unit": null,
+            "source_ids": [
+              "erda_engine",
+              "curated_fiscal",
+              "curated_costs"
+            ]
+          }
+        }
+      }
+    ],
+    "redteam_narrative": "[template narration \u2014 no LLM key configured] You are the Red Team of an exploration screening committee. Facts as provided by tools: All tool JSON: {'environment': {'wdpa': {'radius_km': 25.0, 'overlap_pct': 0.0, 'areas': [], 'source_ids': ['wdpa']}}, 'financeability': {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector",
+    "citation_coverage": 1.0,
+    "quant_hash": "8d6a30aba50af022b14f37698ac845162ddc38ec2772fb0bb7fd376b34e80d09"
+  },
+  "markdown": "# Feasibility Memo \u2014 NAM-SPECULATIVE-DEMO\n\n**Verdict: NO_GO** \u00b7 EMV **-97.2 $MM** \u00b7 P(EMV>0) **13%** \u00b7 Pg **0.05** (user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships))\n\n_Generated 2026-07-19T07:30:53.322917+00:00 \u00b7 frozen local snapshot \u2014 no live internet at memo time (\u00a710.3) \u00b7 citation coverage 100% \u00b7 determinism hash `8d6a30aba50af022\u2026`_\n\n## Geoscience\n\n[template narration \u2014 no LLM key configured] You are the Geoscience member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'model': {'model_status': 'NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model', 'pg_source': 'user-supplied', 'in_scoreable_mask': True, 'gate_reference': 'packages/models/cards/NEGATIVE_RESULT.md', 'source_ids': ['model_eval_gbm', 'usgs_provinces', 'globsed']}, 'offsets': {'radius_km': 100.0, 'n_wells': 0, 'n_labeled': 0, 'n_discoveries': 0, 'offset_success_rate': None, 'ne\n\n- **model_status**: NO MODEL \u2014 \u00a79.8 falsification gate failed; no Pg from a model _[model_eval_gbm, usgs_provinces, globsed]_\n- **offset_wells_100km**: 0 wells _[sodir, nsta, nlog, boem_bsee, nopims, labels_harmonized]_\n- **offset_success_rate**: no labeled offsets _[sodir, nsta, nlog, boem_bsee, nopims, labels_harmonized]_\n- **basin**: Ocean _[labels_harmonized, usgs_provinces]_\n- **basin_wildcats**: 38 wells _[labels_harmonized, usgs_provinces]_\n\n## Fiscal\n\n[template narration \u2014 no LLM key configured] You are the Fiscal member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'regime': {'iso3': 'NAM', 'country': 'Namibia', 'regime_type': 'tax_royalty', 'royalty_rate': 0.05, 'royalty_note': '\"5% of gross revenue\", valued at market value at the agreed off-take point; levied under the Petroleum (Exploration and Production) Act 2 of 1991; deductible in computing Petroleum Income Tax (NAMCOR fiscal regime document). Chambers 2025 practice guide confirms 5% of ma\n\n- **regime_type**: tax_royalty _[curated_fiscal]_\n- **cit_rate**: 0.35 fraction _[curated_fiscal]_\n- **royalty_rate**: 0.05 fraction _[curated_fiscal]_\n\n## Political Risk\n\n[template narration \u2014 no LLM key configured] You are the Political Risk member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'governance': {'iso3': 'NAM', 'wgi_year': 2024, 'wgi_estimates': {'CC.EST': 0.127, 'GE.EST': 0.099, 'PV.EST': 0.547, 'RQ.EST': 0.135, 'RL.EST': 0.328, 'VA.EST': 0.337}, 'source_ids': ['wgi'], 'fsi_total': None, 'fsi_note': 'FSI table absent from snapshot'}, 'sanctions': {'iso3': 'NAM', 'sanctioned': False, 'programs': [], 'lists': [], 'source_ids': ['ofac_eu']}}\n\n- **wgi_rule_of_law**: 0.328 estimate (\u22122.5\u20262.5) _[wgi]_\n- **sanctioned**: False _[ofac_eu]_\n\n## Infrastructure & Development Concept\n\n[template narration \u2014 no LLM key configured] You are the Infrastructure member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'concept': {'water_depth_m': 2707.0, 'host_distance_km': 300.0, 'concept': 'fpso_standalone', 'cost_benchmarks': {'concept': 'fpso_standalone', 'capex_usd_boe_low': '8', 'capex_usd_boe_high': '18', 'opex_usd_bbl_low': '6.28', 'opex_usd_bbl_high': '6.65', 'well_cost_musd_low': '60', 'well_cost_musd_high': '240', 'schedule_years_low': '2.5', 'schedule_years_high': '3.2'}, 'cost_notes': \"\n\n- **water_depth_m**: 2707.0 m _[etopo2022, curated_costs, erda_engine.concept]_\n- **host_distance_km**: 300.0 km _[etopo2022, curated_costs, erda_engine.concept]_\n- **dev_concept**: fpso_standalone _[etopo2022, curated_costs, erda_engine.concept]_\n\n## Environment\n\n[template narration \u2014 no LLM key configured] You are the Environment member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'wdpa': {'radius_km': 25.0, 'overlap_pct': 0.0, 'areas': [], 'source_ids': ['wdpa']}}\n\n- **wdpa_overlap_pct**: 0.0 % _[wdpa]_\n- **protected_areas_nearby**: 0 areas _[wdpa]_\n\n## Financeability\n\n[template narration \u2014 no LLM key configured] You are the Financeability member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'institution': 'Societe Generale', 'type': 'bank', 'policy_url': 'https://www.societegenerale.com/site\n\n- **institutions_checked**: 10 institutions _[curated_exclusions]_\n- **restricting_upstream**: 10 institutions _[curated_exclusions]_\n\n## Economics\n\n[template narration \u2014 no LLM key configured] You are the Economist member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'economics': {'pg': 0.05, 'pg_provenance': 'user-supplied (\u00a79.8 \u2014 the falsification gate failed; no model Pg ships)', 'npv_success_musd': 1096.51, 'emv_musd': -97.17, 'breakeven_usd_bbl': 42.1, 'government_take': 0.5015, 'payback_year': 5, 'mc': {'emv_mean_musd': -78.28, 'emv_p10_musd': -153.49, 'emv_p50_musd': -97.33, 'emv_p90_musd': 20.62, 'p_emv_positive': 0.1291, 'n_draws': 10000,\n\n- **pg**: 0.05 probability _[user_supplied]_\n- **price_m1**: 82.49 $/bbl _[yf_curve]_\n- **npv_success**: 1096.51 MUSD _[erda_engine, curated_fiscal, curated_costs]_\n- **emv**: -97.17 MUSD _[erda_engine, curated_fiscal, curated_costs]_\n- **breakeven**: 42.1 $/bbl _[erda_engine, curated_fiscal, curated_costs]_\n- **government_take**: 0.5015 fraction _[erda_engine, curated_fiscal, curated_costs]_\n- **p_emv_positive**: 0.1291 probability _[erda_engine, curated_fiscal, curated_costs]_\n- **mc_seed**: 7 _[erda_engine, curated_fiscal, curated_costs]_\n\n## Red Team \u2014 what would make this wrong\n\n[template narration \u2014 no LLM key configured] You are the Red Team of an exploration screening committee. Facts as provided by tools: All tool JSON: {'environment': {'wdpa': {'radius_km': 25.0, 'overlap_pct': 0.0, 'areas': [], 'source_ids': ['wdpa']}}, 'financeability': {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector\n\n## Citation appendix\n\n- `boem_bsee` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `curated_costs` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive, infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `curated_exclusions` \u2190 financeability.institutions_checked, financeability.restricting_upstream\n- `curated_fiscal` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive, fiscal.cit_rate, fiscal.regime_type, fiscal.royalty_rate\n- `erda_engine` \u2190 economist.breakeven, economist.emv, economist.government_take, economist.mc_seed, economist.npv_success, economist.p_emv_positive\n- `erda_engine.concept` \u2190 infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `etopo2022` \u2190 infrastructure.dev_concept, infrastructure.host_distance_km, infrastructure.water_depth_m\n- `globsed` \u2190 geoscience.model_status\n- `labels_harmonized` \u2190 geoscience.basin, geoscience.basin_wildcats, geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `model_eval_gbm` \u2190 geoscience.model_status\n- `nlog` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `nopims` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `nsta` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `ofac_eu` \u2190 political_risk.sanctioned\n- `sodir` \u2190 geoscience.offset_success_rate, geoscience.offset_wells_100km\n- `user_supplied` \u2190 economist.pg\n- `usgs_provinces` \u2190 geoscience.basin, geoscience.basin_wildcats, geoscience.model_status\n- `wdpa` \u2190 environment.protected_areas_nearby, environment.wdpa_overlap_pct\n- `wgi` \u2190 political_risk.wgi_rule_of_law\n- `yf_curve` \u2190 economist.price_m1\n\n_Screening tool \u2014 ranks resemblance and economics at area level; not seismic; never \"oil is here.\"_",
+  "narrator": "TemplateNarrator",
+  "request": {
+    "block_id": "NAM-SPECULATIVE-DEMO",
+    "lat": -28.0,
+    "lon": 13.2,
+    "iso3": "NAM",
+    "country_name": "Namibia",
+    "host_distance_km": 300.0,
+    "pg": 0.05,
+    "resource_p90_p50_p10": [
+      40.0,
+      80.0,
+      160.0
+    ],
+    "well_cost_musd": 160.0,
+    "_assumptions": "Highly speculative frontier wildcat: Pg 0.05 against a 160 MUSD deepwater well \u2014 designed so the (1-Pg) dry-hole charge drives EMV negative \u2192 NO_GO. Demonstrates the deterministic verdict on an uneconomic prospect. USER-SUPPLIED scenario."
+  }
+}

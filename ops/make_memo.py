@@ -37,7 +37,18 @@ def run_one(spec: dict) -> dict:
         resource_p90_p50_p10=tuple(spec["resource_p90_p50_p10"]),
         well_cost_musd=spec["well_cost_musd"],
     )
-    memo, _ = run_committee(ctx, request, narrator)
+    try:
+        memo, _ = run_committee(ctx, request, narrator)
+    except RuntimeError as exc:
+        # LLM unavailable (e.g. Groq rate limit) → fall back to the labelled
+        # template narrator. The verdict + quant hash are narrator-independent
+        # (§11.3), so the memo's evidence is identical; only the prose differs,
+        # and the UI badge tells the truth about which narrator ran.
+        from erda_agents.narrators import TemplateNarrator
+
+        print(f"[warn] narrator failed ({exc}); using TemplateNarrator")
+        narrator = TemplateNarrator()
+        memo, _ = run_committee(ctx, request, narrator)
     record = {
         "memo": memo.model_dump(),
         "markdown": memo_markdown(memo),

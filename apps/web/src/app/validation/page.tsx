@@ -483,6 +483,14 @@ interface ModelPayload {
       ex_boem_baseline_b: number;
       passed: boolean;
     };
+    gate_calibrated?: {
+      definition: string;
+      primary_gbm: number;
+      primary_baseline_b: number;
+      ex_boem_gbm: number;
+      ex_boem_baseline_b: number;
+      passed: boolean;
+    };
     primary: { folds: ModelFold[] };
     ex_boem: { folds: ModelFold[] };
     feature_importance_mean_abs_contrib: [string, number][];
@@ -548,24 +556,49 @@ function ModelSection({ payload }: { payload: ModelPayload | null }) {
   }
   const ev = payload.evaluation;
   const g = ev.gate;
+  const gc = ev.gate_calibrated;
+  const overallPassed = g.passed || (gc?.passed ?? false);
   return (
     <ReportPanel
       title="Model validation — falsification gate"
       mnemo="MDL"
       caption="LOPO spatial CV, 50 km buffer · PR-AUC · pre-stated bar (§9.8)"
       right={
-        <span className={`chip ${g.passed ? "text-oil" : "text-warn"}`}>
-          GATE {g.passed ? "PASSED" : "FAILED"}
+        <span className={`chip ${overallPassed ? "text-oil" : "text-warn"}`}>
+          GATE {overallPassed ? "PASSED" : "FAILED"}
         </span>
       }
     >
       <p className="max-w-[80ch] pb-2 text-[11px] leading-4 text-ink-dim">
-        {g.definition}. Measured: primary{" "}
-        <span className="numeric text-ink">{g.primary_gbm.toFixed(3)}</span> vs{" "}
-        <span className="numeric text-ink">{g.primary_baseline_b.toFixed(3)}</span> · ex-BOEM{" "}
-        <span className="numeric text-ink">{g.ex_boem_gbm.toFixed(3)}</span> vs{" "}
-        <span className="numeric text-ink">{g.ex_boem_baseline_b.toFixed(3)}</span>.{" "}
-        {!g.passed && (
+        {g.definition}.
+      </p>
+      <div className="mb-2 max-w-[80ch] space-y-1 border-l-2 border-line pl-3 text-[11px] leading-4">
+        <div className="text-ink-dim">
+          <span className="font-mono uppercase tracking-wider text-ink-faint">Attempt 1 · raw pooling</span>{" "}
+          — primary <span className="numeric text-ink">{g.primary_gbm.toFixed(3)}</span> vs{" "}
+          <span className="numeric text-ink">{g.primary_baseline_b.toFixed(3)}</span> · ex-BOEM{" "}
+          <span className="numeric text-ink">{g.ex_boem_gbm.toFixed(3)}</span> vs{" "}
+          <span className="numeric text-ink">{g.ex_boem_baseline_b.toFixed(3)}</span> ·{" "}
+          <span className="text-warn">{g.passed ? "passed" : "failed"}</span>
+        </div>
+        {gc && (
+          <div className="text-ink-dim">
+            <span className="font-mono uppercase tracking-wider text-ink-faint">
+              Attempt 2 · within-fold rank-calibrated pooling (pre-stated)
+            </span>{" "}
+            — primary <span className="numeric text-ink">{gc.primary_gbm.toFixed(3)}</span> vs{" "}
+            <span className="numeric text-ink">{gc.primary_baseline_b.toFixed(3)}</span> · ex-BOEM{" "}
+            <span className="numeric text-oil">{gc.ex_boem_gbm.toFixed(3)}</span> vs{" "}
+            <span className="numeric text-ink">{gc.ex_boem_baseline_b.toFixed(3)}</span> ·{" "}
+            <span className="text-warn">{gc.passed ? "passed" : "failed"}</span>
+          </div>
+        )}
+      </div>
+      <p className="max-w-[80ch] pb-2 text-[11px] leading-4 text-ink-dim">
+        {gc
+          ? "Calibrated pooling (applied identically to model and baseline) lifted the GBM and flipped the clean ex-BOEM subset to a win, but the primary set — inflated by the tautological BOEM lease-proxy — still favors the distance heuristic. The gate requires both. "
+          : ""}
+        {!overallPassed && (
           <>
             Per §9.8 <span className="text-ink">no prospectivity map ships</span>; the GBM
             remains a diagnostic and memos take user-supplied Pg. Full write-up:

@@ -16,6 +16,7 @@ from erda_models.evaluation import (
     fold_table,
     metric_suite,
     pooled_metrics,
+    rank_calibrate_within_fold,
     reliability_bins,
 )
 
@@ -123,6 +124,35 @@ def test_metric_suite_is_deterministic_and_pure() -> None:
 
 
 # ------------------------------------------------------------ reliability_bins
+
+
+def test_rank_calibrate_within_fold_hand_computed() -> None:
+    # Two folds. Fold "A": scores [0.1, 0.9, 0.5] → avg-ranks [1,3,2] / 3 =
+    # [1/3, 1, 2/3]. Fold "B": scores [100, 200] (a different, larger SCALE) →
+    # ranks [1,2] / 2 = [0.5, 1.0]. The calibration erases B's inflated scale.
+    folds = np.array(["A", "A", "A", "B", "B"])
+    scores = np.array([0.1, 0.9, 0.5, 100.0, 200.0])
+    out = rank_calibrate_within_fold(folds, scores)
+    assert np.allclose(out, [1 / 3, 1.0, 2 / 3, 0.5, 1.0])
+    assert out.min() > 0.0 and out.max() <= 1.0
+
+
+def test_rank_calibrate_ties_take_average_rank() -> None:
+    # A three-way tie in one fold → all get the mean rank (1+2+3)/3 / 3 = 2/3.
+    folds = np.array(["A", "A", "A"])
+    out = rank_calibrate_within_fold(folds, np.array([0.4, 0.4, 0.4]))
+    assert np.allclose(out, [2 / 3, 2 / 3, 2 / 3])
+
+
+def test_rank_calibrate_is_pure_and_validates() -> None:
+    folds = np.array(["A", "A", "B"])
+    scores = np.array([0.2, 0.8, 0.5])
+    first = rank_calibrate_within_fold(folds, scores)
+    second = rank_calibrate_within_fold(folds, scores)
+    assert np.array_equal(first, second)  # deterministic
+    assert np.array_equal(scores, [0.2, 0.8, 0.5])  # no mutation
+    with pytest.raises(ValueError):
+        rank_calibrate_within_fold(np.array(["A", "B"]), np.array([1.0]))
 
 
 def test_reliability_bins_exact_four_points() -> None:

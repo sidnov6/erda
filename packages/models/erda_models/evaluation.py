@@ -110,6 +110,40 @@ def metric_suite(y_true: ArrayLike, y_score: ArrayLike) -> dict[str, float]:
     }
 
 
+def rank_calibrate_within_fold(fold_ids: ArrayLike, y_score: ArrayLike) -> np.ndarray:
+    """Percentile-rank each fold's scores to (0, 1] before they are pooled.
+
+    Pooling raw out-of-fold probabilities from independently-trained per-fold
+    models conflates two things: how well each model *ranks* within its fold,
+    and the arbitrary *scale* of its score distribution. Ranking metrics like
+    PR-AUC are then corrupted by the scale differences. Mapping each fold's
+    scores to within-fold percentiles removes the scale, leaving only the
+    ranking — which is what the metric is meant to measure.
+
+    This is the §9.8 attempt-2 refinement, pre-stated before the run and applied
+    identically to the model and every baseline (so it advantages neither). Ties
+    take the average rank (deterministic); output is in (0, 1].
+
+    Raises ``ValueError`` on shape mismatch or a fold with no rows.
+    """
+    from scipy.stats import rankdata
+
+    fids = np.asarray(fold_ids).ravel()
+    ys = np.asarray(y_score, dtype=float).ravel()
+    if fids.shape != ys.shape:
+        raise ValueError(f"fold_ids and y_score length mismatch: {fids.shape[0]} vs {ys.shape[0]}")
+    if fids.shape[0] == 0:
+        raise ValueError("fold_ids and y_score are empty")
+    out = np.empty_like(ys)
+    for f in pd.unique(fids):
+        mask = fids == f
+        n = int(mask.sum())
+        if n == 0:  # pragma: no cover - pd.unique never yields an absent value
+            raise ValueError(f"fold {f!r} has no rows")
+        out[mask] = rankdata(ys[mask], method="average") / n
+    return out
+
+
 def reliability_bins(y_true: ArrayLike, y_score: ArrayLike, n_bins: int = 10) -> pd.DataFrame:
     """Reliability-diagram table on uniform bins over [0, 1].
 

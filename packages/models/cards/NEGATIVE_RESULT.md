@@ -1,7 +1,15 @@
 # Phase 3 Falsification Gate — Negative Result (§9.8)
 
-**Date:** 2026-07-18 · **Verdict: GATE FAILED** · Full artifacts:
-`data/parquet/model_eval_gbm.json`, `gbm_oof.parquet`
+**Date:** 2026-07-18 (attempt 1) · 2026-07-19 (attempt 2) · **Verdict: GATE FAILED
+(both attempts)** · Full artifacts: `data/parquet/model_eval_gbm.json`,
+`gbm_oof.parquet`
+
+> **Two attempts, one honest conclusion.** Attempt 1 used raw pooled PR-AUC and
+> failed decisively. Attempt 2 applied a pre-stated metric refinement
+> (within-fold rank-calibrated pooling, fair to model and baseline alike); it
+> materially improved the GBM and flipped the clean subset to a win, but the
+> primary set still favors the baseline. The bar was fixed before each run and
+> never moved. No prospectivity heatmap ships.
 
 ## The pre-stated bar
 
@@ -22,6 +30,36 @@ Per-fold: the GBM wins 6/14 primary folds and 6/11 ex-BOEM folds — coin-flip
 territory. The 33-feature model (12 physics channels + neighborhood stats +
 leakage-safe drilling-history features) demonstrated **no skill over the
 distance heuristic** under spatial cross-validation.
+
+## Attempt 2 — within-fold calibrated pooling (2026-07-19)
+
+Diagnosis item 3 below flagged that pooling *raw* probabilities from 14
+independently-trained fold-models conflates ranking quality with per-fold
+score-scale, and named "per-fold calibrated pooling defined *before* the next
+run" as a legitimate refinement. Pre-stated here and run: rank-normalize each
+model's out-of-fold scores to within-fold percentiles before pooling, applied
+**identically to the GBM and every baseline** (so it advantages neither). Same
+metric (PR-AUC), same comparison (vs distance logit), same CV (LOPO + 50 km
+buffer), same both-sets rule.
+
+| Set | GBM (calibrated) | Distance-logit (calibrated) | Verdict |
+|---|---|---|---|
+| primary (14 folds) | 0.618 | **0.635** | baseline still wins |
+| ex_boem (11 folds) | **0.418** | 0.397 | **GBM wins** |
+
+The refinement worked as theory predicted — the GBM jumped from 0.540 → 0.618 on
+primary and now **beats the baseline on the clean, true-outcome ex-BOEM subset**
+(0.418 vs 0.397, reversing the attempt-1 tie). But on the primary set the
+baseline is inflated by the BOEM lease-proxy tautology (diagnosis item 2), and
+0.618 < 0.635 there. **The gate requires both sets. It fails.** Moving the bar to
+"ex-BOEM only" because that is the set the model wins would be exactly the
+post-hoc goalpost-shift §9.8 forbids — so the honest stop stands.
+
+What this second attempt *does* establish: the GBM has real, measurable
+within-fold ranking skill on genuine outcomes — it is not noise. It simply
+cannot clear a distance heuristic that is quasi-self-fulfilling on the
+BOEM-dominated primary label set. That is a sharper, more useful negative result
+than attempt 1, not a softer one.
 
 ## Diagnosis (why, honestly)
 

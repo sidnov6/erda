@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg0: #0C0A07; --bg1: #14110C; --line: #2A241C;
+    --ink: #E8E2D6; --dim: #9A9080; --faint: #6E6558;
+    --gold: #E8A33D; --oil: #3FA66A; --gas: #D64550; --cyan: #5FB3C9;
+  }
+  body {
+    width: 1600px; height: 720px; background: var(--bg0);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: var(--ink); overflow: hidden; position: relative;
+  }
+  .frame { position: absolute; inset: 24px; border: 1px solid var(--line); padding: 30px 38px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; }
+  .brand { font-size: 30px; letter-spacing: 2px; color: var(--gold); font-weight: 600; }
+  .brand span { color: var(--ink); }
+  .tag { font-size: 15px; color: var(--dim); font-style: italic; }
+  .sub { font-size: 15px; color: var(--dim); margin-top: 8px; }
+
+  .cols { display: flex; gap: 0; margin-top: 30px; align-items: stretch; }
+  .col { flex: 1; border: 1px solid var(--line); background: var(--bg1); padding: 20px 22px; position: relative; }
+  .layer-tag { font-size: 12px; letter-spacing: 2px; color: var(--faint); }
+  .layer-name { font-size: 21px; margin-top: 4px; letter-spacing: 1px; }
+  .plain { font-size: 14px; color: var(--gold); margin-top: 6px; font-style: italic; }
+  .divider { height: 1px; background: var(--line); margin: 14px 0; }
+  .item { font-size: 14.5px; color: var(--dim); line-height: 1.65; padding-left: 14px; position: relative; }
+  .item::before { content: "▪"; position: absolute; left: 0; color: var(--faint); font-size: 10px; top: 4px; }
+  .item b { color: var(--ink); font-weight: 600; }
+  .item .oil { color: var(--oil); } .item .gas { color: var(--gas); }
+  .item .cyan { color: var(--cyan); } .item .gold { color: var(--gold); }
+
+  .arrow { width: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .arrow .line { font-size: 26px; color: var(--gold); }
+  .arrow .lbl { font-size: 11.5px; color: var(--dim); text-align: center; line-height: 1.4; }
+
+  .gate {
+    margin-top: 26px; border: 1px solid #5a3d3d; background: #1a1210;
+    padding: 14px 20px; display: flex; align-items: center; gap: 18px;
+  }
+  .gate .badge { font-size: 13px; color: var(--gas); border: 1px solid var(--gas); padding: 3px 10px; letter-spacing: 1px; white-space: nowrap; }
+  .gate .txt { font-size: 14.5px; color: var(--dim); line-height: 1.55; }
+  .gate .txt b { color: var(--ink); }
+
+  footer { position: absolute; left: 38px; right: 38px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+  .prov { font-size: 13.5px; color: var(--faint); }
+  .prov b { color: var(--dim); }
+  .rule { font-size: 14.5px; color: var(--gold); letter-spacing: 0.5px; }
+  .verdicts { font-size: 13.5px; }
+  .verdicts .go { color: var(--oil); } .verdicts .cond { color: var(--gold); } .verdicts .nogo { color: var(--gas); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <header>
+    <div class="brand">ERDA<span> — upstream capital-allocation intelligence</span></div>
+    <div class="tag">"the earth keeps records"</div>
+  </header>
+  <div class="sub">Can public data alone tell you whether an offshore block is worth drilling? Three layers, each validating the next.</div>
+
+  <div class="cols">
+    <div class="col">
+      <div class="layer-tag">LAYER 1 · MARKET</div>
+      <div class="layer-name">The oil terminal</div>
+      <div class="plain">what is a barrel worth?</div>
+      <div class="divider"></div>
+      <div class="item"><b>15 public sources</b>, cross-reconciled — EIA, OPEC, FRED, futures strips, Baker Hughes, JODI</div>
+      <div class="item">futures curve → <b>DCF price deck</b></div>
+      <div class="item">inventories · OPEC+ compliance · <span class="cyan">Discovery Monitor</span></div>
+      <div class="item">every panel number carries a <b>provenance chip</b></div>
+    </div>
+
+    <div class="arrow">
+      <div class="line">──▶</div>
+      <div class="lbl">price deck<br>feeds the DCF</div>
+    </div>
+
+    <div class="col">
+      <div class="layer-tag">LAYER 2 · MODEL</div>
+      <div class="layer-name">The well record</div>
+      <div class="plain">where has drilling worked?</div>
+      <div class="divider"></div>
+      <div class="item"><b>32,595 wildcat outcomes</b> · 50+ yrs · 5 regulators (<span class="oil">oil</span> / <span class="gas">gas</span> / dry)</div>
+      <div class="item"><b>14-channel geophysical stack</b> — gravity, magnetics, sediment, heat flow</div>
+      <div class="item">GBM under <b>leave-one-province-out spatial CV</b>, 50 km leakage buffer</div>
+      <div class="item"><span class="gold">7,673 known fields worldwide</span> (GEM) on the map</div>
+    </div>
+
+    <div class="arrow">
+      <div class="line">──▶</div>
+      <div class="lbl">calibrated Pg<br>feeds the EMV</div>
+    </div>
+
+    <div class="col">
+      <div class="layer-tag">LAYER 3 · AGENTS</div>
+      <div class="layer-name">The committee</div>
+      <div class="plain">does this block pencil?</div>
+      <div class="divider"></div>
+      <div class="item"><b>9-agent LangGraph committee</b> — geoscience, engineering, fiscal, governance, economist, red-team, chair</div>
+      <div class="item">agents call <b>typed tools</b>; a pure engine computes DCF · EMV · seeded Monte Carlo</div>
+      <div class="item">cited memo, <b>100% citation coverage</b>, deterministic quant-hash</div>
+      <div class="item verdicts">verdict: <span class="go">GO</span> / <span class="cond">CONDITIONAL</span> / <span class="nogo">NO_GO</span></div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="badge">§9.8 FALSIFICATION GATE</div>
+    <div class="txt">Before any prospectivity heatmap ships, the model must beat a <b>"drill next to old wells"</b> baseline under spatial cross-validation.
+    It didn't — twice (0.618 vs 0.635 pooled PR-AUC on attempt 2). <b>So no heatmap ships</b>; memos state their Pg is user-supplied. The negative result is a first-class page, not a footnote.</div>
+  </div>
+
+  <footer>
+    <div class="rule">LLM narrates · code calculates</div>
+    <div class="prov"><b>live</b> sidnov6-erda.hf.space &nbsp;·&nbsp; <b>code</b> github.com/sidnov6/erda</div>
+  </footer>
+</div>
+</body>
+</html>

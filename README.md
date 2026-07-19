@@ -22,20 +22,7 @@ phase gates, `DEPLOY.md` to run it, and
 
 ## Architecture — the three-layer design
 
-```
-   LAYER 1 · MARKET            LAYER 2 · MODEL              LAYER 3 · AGENTS
-   ─────────────────           ───────────────              ────────────────
-   15 public sources,          50+ years of wildcat         9-agent LangGraph
-   cross-reconciled:           outcomes from open           committee over typed
-   futures curve → price       regulators, joined to a      tools; deterministic
-   deck; OPEC compliance;      14-channel geophysical       economics engine
-   inventories; the            raster stack; spatial-CV     (DCF/EMV/seeded
-   Discovery Monitor           against honest baselines     Monte Carlo)
-        │                            │                            │
-        └── futures strip ───────────┼──── calibrated Pg ─────────┘
-            becomes the DCF          │     feeds the EMV:
-            price deck               │     Pg·NPV − (1−Pg)·well cost
-```
+![ERDA architecture](docs/architecture.png)
 
 The design: each layer feeds and validates the next. The futures strip becomes
 the DCF price deck. The harmonized well record trains a prospectivity model

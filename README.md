@@ -20,29 +20,42 @@ ships; the map is wells + context only. See `ERDA_BUILD_SPEC.md` §14 for the
 phase gates, `DEPLOY.md` to run it, and
 `packages/models/cards/NEGATIVE_RESULT.md` for the gate write-up.
 
-## The three layers (and the causal chain between them)
+## Architecture — the three-layer design
 
 ```
    LAYER 1 · MARKET            LAYER 2 · MODEL              LAYER 3 · AGENTS
    ─────────────────           ───────────────              ────────────────
-   15 sources, reconciled      32,595 wildcat outcomes      9-agent LangGraph
-   futures curve → price       from 5 regulators + a        committee over typed
-   deck; OPEC compliance;      14-channel raster stack;     tools; deterministic
-   inventories; the            spatial-CV honesty gate      economics engine
-   Discovery Monitor           (§9.8) — no map ships        (EMV/NPV/Monte Carlo)
+   15 public sources,          50+ years of wildcat         9-agent LangGraph
+   cross-reconciled:           outcomes from open           committee over typed
+   futures curve → price       regulators, joined to a      tools; deterministic
+   deck; OPEC compliance;      14-channel geophysical       economics engine
+   inventories; the            raster stack; spatial-CV     (DCF/EMV/seeded
+   Discovery Monitor           against honest baselines     Monte Carlo)
         │                            │                            │
-        └─ curve → price deck ───────┼──── calibrated Pg would ───┘
-                                     │     have fed EMV; the gate
-                                     │     failed, so Pg is user-supplied
+        └── futures strip ───────────┼──── calibrated Pg ─────────┘
+            becomes the DCF          │     feeds the EMV:
+            price deck               │     Pg·NPV − (1−Pg)·well cost
 ```
 
-Each layer validates the next: the futures strip becomes the DCF price deck; the
-harmonized well DB powers the model, the Discovery Monitor, and the committee's
-offset-well tool. The model *would* have supplied the Pg inside
-`EMV = Pg·NPV(success) − (1−Pg)·well-cost` — but it failed its spatial-CV gate, so
-Pg is user-supplied and every memo says so. That honest break is the point:
-market says *whether* to explore, the well record says *where has worked*, the
-agents say *if it pencils* — with no fabricated confidence in between.
+The design: each layer feeds and validates the next. The futures strip becomes
+the DCF price deck. The harmonized well record trains a prospectivity model
+whose calibrated probability-of-success (Pg) drives the expected-monetary-value
+math. A committee of specialised agents — geoscience, engineering, fiscal,
+governance, economics, red-team — then assembles a cited investment memo, with
+every number computed by deterministic code and every claim carrying provenance.
+Market says *whether* to explore, the well record says *where has worked*, the
+agents say *if it pencils*.
+
+Two architectural rules hold throughout: **LLMs narrate, code calculates** (no
+model call ever performs arithmetic — agents call typed tools, tools return
+numbers), and **every persisted number carries provenance**
+`{source_id, retrieved_at, source_url, transform_version}`.
+
+A pre-registered falsification gate (§9.8) sits between Layer 2 and the map: the
+model must beat a "drill next to old wells" baseline under leave-one-province-out
+spatial cross-validation before any prospectivity surface ships. In the current
+build the model has not cleared that bar (two attempts, documented on
+/validation), so memos take user-supplied Pg — stated on every memo.
 
 ## Honest boundaries
 

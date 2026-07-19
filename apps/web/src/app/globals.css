@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "react-grid-layout/css/styles.css";
+@import "maplibre-gl/dist/maplibre-gl.css";
 
 /* ————— ERDA design tokens (.claude/skills/erda-design-system §1) ————— */
 :root {
@@ -144,4 +145,45 @@ body {
 .react-grid-item > .react-resizable-handle::after {
   border-right: 2px solid var(--dry);
   border-bottom: 2px solid var(--dry);
+}
+
+/* ————— map hero (§13.4) ————— */
+.erda-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: var(--line);
+  outline: none;
+}
+.erda-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  cursor: pointer;
+  border-radius: 0;
+}
+.erda-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  border: 0;
+  cursor: pointer;
+  border-radius: 0;
+}
+/* maplibre controls restyled to the terminal palette */
+.maplibregl-ctrl-group {
+  background: var(--bg1) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+}
+.maplibregl-ctrl-group button {
+  background: var(--bg1) !important;
+}
+.maplibregl-ctrl-group button + button {
+  border-top: 1px solid var(--line) !important;
+}
+.maplibregl-canvas:focus {
+  outline: none;
 }

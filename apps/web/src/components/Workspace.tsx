@@ -6,11 +6,23 @@ import GridLayout, { useContainerWidth } from "react-grid-layout";
 import { EmptyState } from "./EmptyState";
 import { Panel } from "./Panel";
 import { PanelGhost } from "./PanelGhost";
+import dynamic from "next/dynamic";
+
 import { CurvePanel } from "./panels/CurvePanel";
 import { DiscoveryPanel } from "./panels/DiscoveryPanel";
 import { EventsPanel } from "./panels/EventsPanel";
 import { InventoriesPanel } from "./panels/InventoriesPanel";
 import { OpecPanel } from "./panels/OpecPanel";
+
+// deck.gl + maplibre are browser-only and heavy — load client-side, no SSR.
+const MapHero = dynamic(() => import("./map/MapHero").then((m) => m.MapHero), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full items-center justify-center font-mono text-[11px] text-ink-faint">
+      LOADING MAP…
+    </div>
+  ),
+});
 import type { SourceStatus } from "@/lib/api";
 import { PANELS, type PanelDef, type PanelId } from "@/lib/registry";
 
@@ -28,6 +40,7 @@ const LIVE_PANELS: Partial<Record<PanelId, () => React.ReactNode>> = {
   opec: () => <OpecPanel />,
   events: () => <EventsPanel />,
   disc: () => <DiscoveryPanel />,
+  map: () => <MapHero />,
 };
 
 function panelBody(p: PanelDef) {

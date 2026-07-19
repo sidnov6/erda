@@ -105,6 +105,34 @@ export interface ValidationReport {
   sections: Record<string, Record<string, unknown>[]>;
 }
 
+/** One-shot fetch (no polling) — for large map payloads loaded on demand. */
+export function useErdaOnce<T>(path: string | null): { data: T | null; error: string | null } {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    if (path === null) return;
+    let alive = true;
+    fetch(`/api/erda/${path}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`${r.status}`);
+        return r.json();
+      })
+      .then((body) => {
+        if (alive) {
+          setData(body as T);
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        if (alive) setError(err instanceof Error ? err.message : "fetch failed");
+      });
+    return () => {
+      alive = false;
+    };
+  }, [path]);
+  return { data, error };
+}
+
 /** Poll an ERDA endpoint. Terminal cadence: default 60 s, no jitter theatrics. */
 export function useErda<T>(path: string, refreshMs = 60_000): {
   data: T | null;

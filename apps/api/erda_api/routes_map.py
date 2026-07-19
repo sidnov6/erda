@@ -20,15 +20,32 @@ from erda_api import data
 
 router = APIRouter(prefix="/api/map")
 
-#: outcome code: 1 discovery (oil/gas), 0 dry, -1 excluded/no-outcome
-_OUTCOME_DISCOVERY = 1
-_OUTCOME_DRY = 0
-_OUTCOME_UNKNOWN = -1
+#: outcome code (industry map convention, §13.1): 2 oil, 1 gas, 3 discovery
+#: (phase unrecorded), 0 dry, -1 excluded/no-outcome. Oil vs gas is split from
+#: the raw content string ONLY where it cleanly names the phase — the green-oil
+#: / red-gas convention experts expect, without fabricating a phase where the
+#: source has none (e.g. BOEM's lease-level proxy label, or a dedup cluster
+#: whose representative row is a dry sidetrack).
+_OIL, _GAS, _DISCOVERY, _DRY, _UNKNOWN = 2, 1, 3, 0, -1
 
 
 def _outcome_codes(df: pd.DataFrame) -> np.ndarray:
-    codes = np.where(df["label"].to_numpy() == 1, _OUTCOME_DISCOVERY, _OUTCOME_DRY)
-    return np.where(df["excluded"].to_numpy(), _OUTCOME_UNKNOWN, codes)
+    label = df["label"].to_numpy()
+    excluded = df["excluded"].to_numpy()
+    content = (
+        df["content_raw"].astype(str).str.upper()
+        if "content_raw" in df.columns
+        else pd.Series([""] * len(df))
+    )
+    has_oil = content.str.contains("OIL").to_numpy()
+    has_gas = content.str.contains("GAS").to_numpy()
+
+    codes = np.full(len(df), _DRY, dtype=int)
+    codes[label == 1] = _DISCOVERY  # discovered, phase not cleanly named
+    codes[(label == 1) & has_oil] = _OIL
+    codes[(label == 1) & has_gas & ~has_oil] = _GAS
+    codes[excluded] = _UNKNOWN
+    return codes
 
 
 @lru_cache(maxsize=4)

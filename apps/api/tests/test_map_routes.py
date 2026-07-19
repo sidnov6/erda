@@ -24,6 +24,7 @@ def _seed(tmp_path):
             "transform_version": ["v"] * 3,
             "lat": [60.0, 61.0, 62.0],
             "lon": [2.0, 3.0, 4.0],
+            "content_raw": ["OIL", "DRY", "GAS"],
             "label": [1, 0, 0],
             "excluded": [False, False, True],
             "spud_year": [1990, 2000, 2010],
@@ -57,7 +58,7 @@ def test_wells_payload_columnar_and_outcome_codes(monkeypatch, tmp_path):
     _wells_payload.cache_clear()
     body = client.get("/api/map/wells").json()
     assert body["available"] and body["n"] == 3
-    assert body["outcome"] == [1, 0, -1]  # discovery / dry / no-outcome
+    assert body["outcome"] == [2, 0, -1]  # oil / dry / no-outcome(excluded)
     assert len(body["lon"]) == len(body["lat"]) == 3
     assert body["provenance"]["source_id"] == "labels_harmonized"
     assert body["provenance"]["contributing_sources"] == ["sodir"]

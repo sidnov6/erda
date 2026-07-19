@@ -17,7 +17,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from erda_agents.committee import BlockRequest, build_graph
-from erda_agents.narrators import default_narrator
+from erda_agents.narrators import TemplateNarrator, default_narrator
 from erda_agents.render import memo_markdown
 from erda_agents.tools.base import SnapshotContext
 from erda_api import data
@@ -66,14 +66,32 @@ def generate_memo(req: MemoRequest) -> StreamingResponse:
                 resource_p90_p50_p10=(req.resource_p90, req.resource_p50, req.resource_p10),
                 well_cost_musd=req.well_cost_musd,
             )
-            app = build_graph(ctx, narrator)
-            state = {"request": request, "sections": [], "tool_payloads": {}, "memo": None}
+            def committee_events(narr):
+                app = build_graph(ctx, narr)
+                state = {"request": request, "sections": [], "tool_payloads": {}, "memo": None}
+                yield from app.stream(state)
+
             memo = None
-            for update in app.stream(state):
-                for node, payload in update.items():
-                    yield f"data: {json.dumps({'type': 'node', 'agent': node})}\n\n"
-                    if payload and payload.get("memo") is not None:
-                        memo = payload["memo"]
+            try:
+                for update in committee_events(narrator):
+                    for node, payload in update.items():
+                        yield f"data: {json.dumps({'type': 'node', 'agent': node})}\n\n"
+                        if payload and payload.get("memo") is not None:
+                            memo = payload["memo"]
+            except RuntimeError as exc:
+                # LLM narrator unavailable (e.g. Groq daily quota) → fall back to
+                # the labelled template narrator. Verdict + quant_hash are
+                # narrator-independent (§11.3); the record and UI badge state
+                # honestly which narrator produced the prose.
+                detail = f"LLM narrator unavailable; falling back to template ({exc})"
+                yield f"data: {json.dumps({'type': 'note', 'detail': detail[:300]})}\n\n"
+                narrator = TemplateNarrator()
+                memo = None
+                for update in committee_events(narrator):
+                    for node, payload in update.items():
+                        yield f"data: {json.dumps({'type': 'node', 'agent': node})}\n\n"
+                        if payload and payload.get("memo") is not None:
+                            memo = payload["memo"]
             if memo is None:
                 yield f"data: {json.dumps({'type': 'error', 'detail': 'no memo produced'})}\n\n"
                 return

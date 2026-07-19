@@ -10,112 +10,163 @@
     --gold: #E8A33D; --oil: #3FA66A; --gas: #D64550; --cyan: #5FB3C9;
   }
   body {
-    width: 1600px; height: 720px; background: var(--bg0);
+    width: 1600px; height: 820px; background: var(--bg0);
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     color: var(--ink); overflow: hidden; position: relative;
   }
-  .frame { position: absolute; inset: 24px; border: 1px solid var(--line); padding: 30px 38px; }
-  header { display: flex; align-items: baseline; justify-content: space-between; }
-  .brand { font-size: 30px; letter-spacing: 2px; color: var(--gold); font-weight: 600; }
-  .brand span { color: var(--ink); }
-  .tag { font-size: 15px; color: var(--dim); font-style: italic; }
-  .sub { font-size: 15px; color: var(--dim); margin-top: 8px; }
+  .title { position: absolute; left: 48px; top: 30px; font-size: 26px; letter-spacing: 1px; }
+  .title b { color: var(--gold); }
+  .subtitle { position: absolute; left: 48px; top: 66px; font-size: 14px; color: var(--dim); }
+  .laneLabel { position: absolute; font-size: 12px; letter-spacing: 2px; color: var(--faint); }
+  .laneQ { position: absolute; font-size: 13px; color: var(--gold); font-style: italic; }
 
-  .cols { display: flex; gap: 0; margin-top: 30px; align-items: stretch; }
-  .col { flex: 1; border: 1px solid var(--line); background: var(--bg1); padding: 20px 22px; position: relative; }
-  .layer-tag { font-size: 12px; letter-spacing: 2px; color: var(--faint); }
-  .layer-name { font-size: 21px; margin-top: 4px; letter-spacing: 1px; }
-  .plain { font-size: 14px; color: var(--gold); margin-top: 6px; font-style: italic; }
-  .divider { height: 1px; background: var(--line); margin: 14px 0; }
-  .item { font-size: 14.5px; color: var(--dim); line-height: 1.65; padding-left: 14px; position: relative; }
-  .item::before { content: "▪"; position: absolute; left: 0; color: var(--faint); font-size: 10px; top: 4px; }
-  .item b { color: var(--ink); font-weight: 600; }
-  .item .oil { color: var(--oil); } .item .gas { color: var(--gas); }
-  .item .cyan { color: var(--cyan); } .item .gold { color: var(--gold); }
-
-  .arrow { width: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
-  .arrow .line { font-size: 26px; color: var(--gold); }
-  .arrow .lbl { font-size: 11.5px; color: var(--dim); text-align: center; line-height: 1.4; }
-
+  .box { position: absolute; border: 1px solid var(--line); background: var(--bg1); padding: 10px 14px; }
+  .box .h { font-size: 14px; color: var(--ink); font-weight: 600; letter-spacing: 0.3px; }
+  .box .d { font-size: 12px; color: var(--dim); margin-top: 4px; line-height: 1.5; }
+  .box.stop { border-color: #5a3d3d; background: #1a1210; }
+  .box.stop .h { color: var(--gas); }
+  .box.verdict { border-color: var(--gold); }
+  .box.verdict .h { color: var(--gold); }
   .gate {
-    margin-top: 26px; border: 1px solid #5a3d3d; background: #1a1210;
-    padding: 14px 20px; display: flex; align-items: center; gap: 18px;
+    position: absolute; border: 1.5px solid var(--gas); background: #1a1210;
+    padding: 10px 16px; text-align: center;
   }
-  .gate .badge { font-size: 13px; color: var(--gas); border: 1px solid var(--gas); padding: 3px 10px; letter-spacing: 1px; white-space: nowrap; }
-  .gate .txt { font-size: 14.5px; color: var(--dim); line-height: 1.55; }
-  .gate .txt b { color: var(--ink); }
+  .gate .h { font-size: 13px; color: var(--gas); font-weight: 600; letter-spacing: 1px; }
+  .gate .d { font-size: 12px; color: var(--dim); margin-top: 3px; }
 
-  footer { position: absolute; left: 38px; right: 38px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
-  .prov { font-size: 13.5px; color: var(--faint); }
+  svg.wires { position: absolute; inset: 0; pointer-events: none; }
+  .wire { stroke: #6E6558; stroke-width: 1.4; fill: none; }
+  .wire.main { stroke: #E8A33D; }
+  .wire.dead { stroke: #6E6558; stroke-dasharray: 5 5; }
+  .wlabel { font-size: 11.5px; fill: #9A9080; }
+  .wlabel.gold { fill: #E8A33D; }
+  .wlabel.red { fill: #D64550; }
+
+  footer { position: absolute; left: 48px; right: 48px; bottom: 22px; display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 12px; }
+  .prov { font-size: 12.5px; color: var(--faint); }
   .prov b { color: var(--dim); }
-  .rule { font-size: 14.5px; color: var(--gold); letter-spacing: 0.5px; }
-  .verdicts { font-size: 13.5px; }
-  .verdicts .go { color: var(--oil); } .verdicts .cond { color: var(--gold); } .verdicts .nogo { color: var(--gas); }
+  .rule { font-size: 13.5px; color: var(--gold); }
 </style>
 </head>
 <body>
-<div class="frame">
-  <header>
-    <div class="brand">ERDA<span> — upstream capital-allocation intelligence</span></div>
-    <div class="tag">"the earth keeps records"</div>
-  </header>
-  <div class="sub">Can public data alone tell you whether an offshore block is worth drilling? Three layers, each validating the next.</div>
+  <div class="title"><b>ERDA</b> — how a public-data stack decides if an offshore block is worth drilling</div>
+  <div class="subtitle">three layers · every arrow is typed, cited, and deterministic — the LLM only writes prose</div>
 
-  <div class="cols">
-    <div class="col">
-      <div class="layer-tag">LAYER 1 · MARKET</div>
-      <div class="layer-name">The oil terminal</div>
-      <div class="plain">what is a barrel worth?</div>
-      <div class="divider"></div>
-      <div class="item"><b>15 public sources</b>, cross-reconciled — EIA, OPEC, FRED, futures strips, Baker Hughes, JODI</div>
-      <div class="item">futures curve → <b>DCF price deck</b></div>
-      <div class="item">inventories · OPEC+ compliance · <span class="cyan">Discovery Monitor</span></div>
-      <div class="item">every panel number carries a <b>provenance chip</b></div>
-    </div>
+  <!-- lane labels -->
+  <div class="laneLabel" style="left:90px;  top:112px;">LAYER 1 · MARKET</div>
+  <div class="laneQ"     style="left:90px;  top:130px;">what is a barrel worth?</div>
+  <div class="laneLabel" style="left:610px; top:112px;">LAYER 2 · MODEL</div>
+  <div class="laneQ"     style="left:610px; top:130px;">where has drilling worked?</div>
+  <div class="laneLabel" style="left:1130px;top:112px;">LAYER 3 · AGENTS</div>
+  <div class="laneQ"     style="left:1130px;top:130px;">does this block pencil?</div>
 
-    <div class="arrow">
-      <div class="line">──▶</div>
-      <div class="lbl">price deck<br>feeds the DCF</div>
-    </div>
-
-    <div class="col">
-      <div class="layer-tag">LAYER 2 · MODEL</div>
-      <div class="layer-name">The well record</div>
-      <div class="plain">where has drilling worked?</div>
-      <div class="divider"></div>
-      <div class="item"><b>32,595 wildcat outcomes</b> · 50+ yrs · 5 regulators (<span class="oil">oil</span> / <span class="gas">gas</span> / dry)</div>
-      <div class="item"><b>14-channel geophysical stack</b> — gravity, magnetics, sediment, heat flow</div>
-      <div class="item">GBM under <b>leave-one-province-out spatial CV</b>, 50 km leakage buffer</div>
-      <div class="item"><span class="gold">7,673 known fields worldwide</span> (GEM) on the map</div>
-    </div>
-
-    <div class="arrow">
-      <div class="line">──▶</div>
-      <div class="lbl">calibrated Pg<br>feeds the EMV</div>
-    </div>
-
-    <div class="col">
-      <div class="layer-tag">LAYER 3 · AGENTS</div>
-      <div class="layer-name">The committee</div>
-      <div class="plain">does this block pencil?</div>
-      <div class="divider"></div>
-      <div class="item"><b>9-agent LangGraph committee</b> — geoscience, engineering, fiscal, governance, economist, red-team, chair</div>
-      <div class="item">agents call <b>typed tools</b>; a pure engine computes DCF · EMV · seeded Monte Carlo</div>
-      <div class="item">cited memo, <b>100% citation coverage</b>, deterministic quant-hash</div>
-      <div class="item verdicts">verdict: <span class="go">GO</span> / <span class="cond">CONDITIONAL</span> / <span class="nogo">NO_GO</span></div>
-    </div>
+  <!-- LAYER 1 -->
+  <div class="box" style="left:90px; top:158px; width:380px;">
+    <div class="h">15 public sources</div>
+    <div class="d">EIA · OPEC · FRED · futures strips · Baker&nbsp;Hughes rigs · JODI</div>
+  </div>
+  <div class="box" style="left:90px; top:292px; width:380px;">
+    <div class="h">contracts + provenance gate</div>
+    <div class="d">pandera schemas; a number without a source is rejected</div>
+  </div>
+  <div class="box" style="left:90px; top:426px; width:380px;">
+    <div class="h">market terminal</div>
+    <div class="d">futures curve → price deck · inventories · OPEC+ compliance · Discovery Monitor</div>
   </div>
 
-  <div class="gate">
-    <div class="badge">§9.8 FALSIFICATION GATE</div>
-    <div class="txt">Before any prospectivity heatmap ships, the model must beat a <b>"drill next to old wells"</b> baseline under spatial cross-validation.
-    It didn't — twice (0.618 vs 0.635 pooled PR-AUC on attempt 2). <b>So no heatmap ships</b>; memos state their Pg is user-supplied. The negative result is a first-class page, not a footnote.</div>
+  <!-- LAYER 2 -->
+  <div class="box" style="left:610px; top:158px; width:400px;">
+    <div class="h">32,595 wildcat outcomes</div>
+    <div class="d">5 regulators · 50+ years · oil / gas / dry</div>
   </div>
+  <div class="box" style="left:610px; top:270px; width:400px;">
+    <div class="h">14-channel geophysical stack</div>
+    <div class="d">gravity · magnetics · sediment thickness · heat flow (0.05° grid)</div>
+  </div>
+  <div class="box" style="left:610px; top:384px; width:400px;">
+    <div class="h">GBM + spatial cross-validation</div>
+    <div class="d">leave-one-province-out folds · 50&nbsp;km leakage buffer</div>
+  </div>
+  <div class="gate" style="left:640px; top:510px; width:340px;">
+    <div class="h">§9.8 FALSIFICATION GATE</div>
+    <div class="d">must beat "drill next to old wells"</div>
+  </div>
+  <div class="box stop" style="left:610px; top:636px; width:400px;">
+    <div class="h">FAILED ×2 → no heatmap ships</div>
+    <div class="d">0.618 vs 0.635 pooled PR-AUC · negative result published on /validation</div>
+  </div>
+
+  <!-- LAYER 3 -->
+  <div class="box" style="left:1130px; top:158px; width:380px;">
+    <div class="h">block pick (map click)</div>
+    <div class="d">lat·lon + user-supplied Pg · resource range · well cost</div>
+  </div>
+  <div class="box" style="left:1130px; top:280px; width:380px;">
+    <div class="h">9-agent committee · LangGraph</div>
+    <div class="d">geoscience · engineering · fiscal · governance · economist · red-team · chair</div>
+  </div>
+  <div class="box" style="left:1130px; top:412px; width:380px;">
+    <div class="h">typed tools → deterministic engine</div>
+    <div class="d">DCF · EMV · seeded Monte Carlo — pure python, no LLM arithmetic</div>
+  </div>
+  <div class="box verdict" style="left:1130px; top:544px; width:380px;">
+    <div class="h">cited memo · 100% coverage</div>
+    <div class="d">verdict: <span style="color:var(--oil)">GO</span> · <span style="color:var(--gold)">CONDITIONAL</span> · <span style="color:var(--gas)">NO_GO</span> — reproducible quant-hash</div>
+  </div>
+
+  <!-- wires -->
+  <svg class="wires" width="1600" height="820">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#6E6558"/>
+      </marker>
+      <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#E8A33D"/>
+      </marker>
+      <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#D64550"/>
+      </marker>
+    </defs>
+
+    <!-- L1 vertical flow -->
+    <line class="wire" x1="280" y1="224" x2="280" y2="288" marker-end="url(#arr)"/>
+    <line class="wire" x1="280" y1="352" x2="280" y2="422" marker-end="url(#arr)"/>
+    <!-- price deck: terminal → engine -->
+    <path class="wire main" d="M 470 466 C 570 466, 1050 462, 1126 462" marker-end="url(#arrG)"/>
+    <text class="wlabel gold" x="560" y="452">futures strip → DCF price deck</text>
+
+    <!-- L2: wells+stack → CV → gate → stop -->
+    <line class="wire" x1="810" y1="222" x2="810" y2="266" marker-end="url(#arr)"/>
+    <line class="wire" x1="810" y1="334" x2="810" y2="380" marker-end="url(#arr)"/>
+    <line class="wire" x1="810" y1="448" x2="810" y2="506" marker-end="url(#arr)"/>
+    <line class="wire" x1="810" y1="568" x2="810" y2="632" stroke="#D64550" stroke-width="1.4" marker-end="url(#arrR)"/>
+    <text class="wlabel red" x="826" y="600">no — twice</text>
+
+    <!-- the arrow that never fired: gate → committee (calibrated Pg) -->
+    <path class="wire dead" d="M 980 540 C 1060 540, 1080 320, 1126 316"/>
+    <text class="wlabel" x="1000" y="522">calibrated Pg — never earned</text>
+
+    <!-- honest consequence: stop → block pick -->
+    <path class="wire" d="M 1010 676 C 1090 676, 1100 200, 1126 196" marker-end="url(#arr)"/>
+    <text class="wlabel" x="1030" y="660">so Pg is user-supplied,</text>
+    <text class="wlabel" x="1030" y="676">stated on every memo</text>
+
+    <!-- L3 flow -->
+    <line class="wire" x1="1320" y1="224" x2="1320" y2="276" marker-end="url(#arr)"/>
+    <line class="wire" x1="1300" y1="366" x2="1300" y2="408" marker-end="url(#arr)"/>
+    <line class="wire" x1="1340" y1="408" x2="1340" y2="366" marker-end="url(#arr)"/>
+    <text class="wlabel" x="1352" y="392">tools return numbers</text>
+    <line class="wire main" x1="1320" y1="498" x2="1320" y2="540" marker-end="url(#arrG)"/>
+    <!-- wells DB also feeds the committee's offset-well tool -->
+    <path class="wire" d="M 1010 190 C 1070 190, 1080 448, 1126 448"/>
+    <text class="wlabel" x="1032" y="238">offset-well +</text>
+    <text class="wlabel" x="1032" y="254">basin-stats tools</text>
+  </svg>
 
   <footer>
+    <div class="prov">every number → <b>{source_id · retrieved_at · source_url · transform_version}</b></div>
     <div class="rule">LLM narrates · code calculates</div>
-    <div class="prov"><b>live</b> sidnov6-erda.hf.space &nbsp;·&nbsp; <b>code</b> github.com/sidnov6/erda</div>
+    <div class="prov"><b>live</b> sidnov6-erda.hf.space · <b>code</b> github.com/sidnov6/erda</div>
   </footer>
-</div>
 </body>
 </html>

@@ -22,7 +22,50 @@ phase gates, `DEPLOY.md` to run it, and
 
 ## Architecture — the three-layer design
 
-![ERDA architecture](docs/architecture.png)
+```mermaid
+flowchart TB
+    subgraph L1["LAYER 1 · MARKET — what is a barrel worth?"]
+        direction TB
+        SRC["15 public sources<br/>EIA · OPEC · FRED · futures · rigs · JODI"]
+        ING["contracts + provenance gate<br/>a number without a source is rejected"]
+        TERM["market terminal<br/>price deck · inventories · OPEC+ · Discovery Monitor"]
+        SRC --> ING --> TERM
+    end
+
+    subgraph L2["LAYER 2 · MODEL — where has drilling worked?"]
+        direction TB
+        REG["32,595 wildcat outcomes<br/>5 regulators · 50+ years · oil/gas/dry"]
+        GEO["14-channel geophysical stack<br/>gravity · magnetics · sediment · heat flow"]
+        CV["GBM + spatial cross-validation<br/>leave-one-province-out · 50 km buffer"]
+        REG --> CV
+        GEO --> CV
+    end
+
+    GATE{"§9.8 falsification gate:<br/>beat 'drill next to old wells'?"}
+    STOP["no heatmap ships<br/>negative result published on /validation"]
+    CV --> GATE
+    GATE -- "no — twice<br/>(0.618 vs 0.635 PR-AUC)" --> STOP
+    GATE -. "calibrated Pg — never earned" .-> COMM
+
+    subgraph L3["LAYER 3 · AGENTS — does this block pencil?"]
+        direction TB
+        BLOCK["block pick (map click)<br/>+ user-supplied Pg · resource · well cost"]
+        COMM["9-agent committee · LangGraph<br/>geoscience · engineering · fiscal · governance<br/>economist · red-team · chair"]
+        ENGINE["typed tools → deterministic engine<br/>DCF · EMV · seeded Monte Carlo — no LLM math"]
+        MEMO["cited memo · 100% coverage<br/>GO / CONDITIONAL / NO_GO · reproducible quant-hash"]
+        BLOCK --> COMM
+        COMM <--> ENGINE
+        COMM --> MEMO
+    end
+
+    TERM -- "futures strip → DCF price deck" --> ENGINE
+    REG -- "offset-well + basin-stats tools" --> ENGINE
+    STOP -- "so Pg is user-supplied,<br/>stated on every memo" --> BLOCK
+
+    style GATE stroke:#D64550,stroke-width:2px
+    style STOP stroke:#D64550
+    style MEMO stroke:#E8A33D,stroke-width:2px
+```
 
 The design: each layer feeds and validates the next. The futures strip becomes
 the DCF price deck. The harmonized well record trains a prospectivity model

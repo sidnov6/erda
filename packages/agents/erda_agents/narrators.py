@@ -66,6 +66,9 @@ class GroqNarrator:
             raise RuntimeError("GROQ_API_KEY not set — narration unavailable")
         self._key = key
         self._model = model or os.environ.get("GROQ_MODEL", self.DEFAULT_MODEL)
+        # reasoning models spend completion budget on thinking before prose;
+        # allow more headroom without changing the default for chat models
+        self._max_tokens = int(os.environ.get("GROQ_MAX_TOKENS", "700"))
 
     def __call__(self, system: str, user: str) -> str:
         import time
@@ -80,7 +83,7 @@ class GroqNarrator:
                 json={
                     "model": self._model,
                     "temperature": 0.0,
-                    "max_tokens": 700,
+                    "max_tokens": self._max_tokens,
                     "messages": [
                         {"role": "system", "content": system},
                         {"role": "user", "content": user},

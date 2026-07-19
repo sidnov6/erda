@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<export xmlns="http://eu.europa.ec/fpi/fsd/export" generationDate="2026-06-05T15:51:25.849+02:00" globalFileId="182848">
+    <sanctionEntity designationDetails="" unitedNationId="" euReferenceNumber="EU.1954.33" logicalId="5762">
+        <regulation regulationType="repealing" organisationType="commission" publicationDate="2012-03-24" entryIntoForceDate="2012-03-23" numberTitle="267/2012 (OJ L88)" programme="IRN" logicalId="300">
+            <publicationUrl>http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2012:088:0001:0112:EN:PDF</publicationUrl>
+        </regulation>
+        <subjectType code="enterprise" classificationCode="E" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Naserin Vahid" function="" title="" nameLanguage="" strong="true" regulationLanguage="en" logicalId="8190">
+            <regulationSummary regulationType="amendment" publicationDate="2010-07-27" numberTitle="668/2010 (OJ L195)" publicationUrl="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:195:0025:0036:EN:PDF" />
+        </nameAlias>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2009-07-16" designationDetails="" unitedNationId="" euReferenceNumber="EU.4011.64" logicalId="5463">
+        <regulation regulationType="repealing" organisationType="council" publicationDate="2017-08-31" entryIntoForceDate="2017-09-01" numberTitle="2017/1509 (OJ L224)" programme="PRK" logicalId="107441">
+            <publicationUrl>http://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32017R1509&amp;from=EN</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="Yu-ro" middleName="" lastName="Han" wholeName="Yu-ro Han" function="Director of Korea Ryongaksan General Trading Corporation" title="" nameLanguage="" strong="true" regulationLanguage="en" logicalId="7105">
+            <regulationSummary regulationType="amendment" publicationDate="2009-07-31" numberTitle="689/2009 (OJ L199)" publicationUrl="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2009:199:0003:0005:EN:PDF" />
+        </nameAlias>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2014-06-24" designationDetails="" unitedNationId="" euReferenceNumber="EU.3792.82" logicalId="7359">
+        <remark>Date of listing: 24.6.2014</remark>
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2020-05-29" entryIntoForceDate="2020-05-30" numberTitle="2020/716 (OJ L168)" programme="SYR" logicalId="126881">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32020R0716&amp;from=EN</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Suleiman AL ABBAS" function="Former Oil and Mineral Resources Minister in power after May 2011." gender="M" title="" nameLanguage="" strong="true" regulationLanguage="en" logicalId="17828">
+            <regulationSummary regulationType="amendment" publicationDate="2020-05-29" numberTitle="2020/716 (OJ L168)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32020R0716&amp;from=EN" />
+        </nameAlias>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2025-05-20" designationDetails="" unitedNationId="" euReferenceNumber="EU.13183.47" logicalId="175950">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-05-20" entryIntoForceDate="2025-05-20" numberTitle="2025/958 (OJ L202500958)" programme="RUS" logicalId="213821">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500958</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Дмитрий Алексеевич МИХАЙЛОВ" function="" gender="M" title="" nameLanguage="RU" strong="true" regulationLanguage="en" logicalId="175952">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/958 (OJ L202500958)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500958" />
+        </nameAlias>
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Dmitry Alekseyevich MIHAILOV" function="As judge of the Supreme Court of Republic of Karelia in Petrozavodsk, Dmitry Mihailov sentenced Sergey Drugov, blogger and activist, to 2 years of forced labour on politically-motivated charges for so-called “rehabilitation of Nazism”." gender="M" title="Judge of the Supreme Court of the Republic of Karelia" nameLanguage="EN" strong="true" regulationLanguage="en" logicalId="175953">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/958 (OJ L202500958)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500958" />
+        </nameAlias>
+        <citizenship region="" countryIso2Code="RU" countryDescription="RUSSIAN FEDERATION" regulationLanguage="en" logicalId="175951">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/958 (OJ L202500958)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500958" />
+        </citizenship>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2025-05-20" designationDetails="" unitedNationId="" euReferenceNumber="EU.13139.2" logicalId="175675">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-05-20" entryIntoForceDate="2025-05-20" numberTitle="2025/965 (OJ L202500965)" programme="RUSDA" logicalId="213604">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500965</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="Alina" middleName="" lastName="LIPP" wholeName="Alina LIPP" function="war correspondent" gender="F" title="" nameLanguage="EN" strong="true" regulationLanguage="en" logicalId="175678">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/965 (OJ L202500965)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500965" />
+        </nameAlias>
+        <citizenship region="" countryIso2Code="DE" countryDescription="GERMANY" regulationLanguage="en" logicalId="175677">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/965 (OJ L202500965)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500965" />
+        </citizenship>
+        <birthdate circa="false" calendarType="GREGORIAN" city="Hamburg" zipCode="" birthdate="1993-09-17" dayOfMonth="17" monthOfYear="9" year="1993" region="" place="" countryIso2Code="DE" countryDescription="GERMANY" regulationLanguage="en" logicalId="175676">
+            <regulationSummary regulationType="amendment" publicationDate="2025-05-20" numberTitle="2025/965 (OJ L202500965)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500965" />
+        </birthdate>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2021-12-02" designationDetails="" unitedNationId="" euReferenceNumber="EU.6719.37" logicalId="132140">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2022-02-25" entryIntoForceDate="2022-02-26" numberTitle="2022/300 (OJ L46)" programme="BLR" logicalId="146376">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv%3AOJ.L_.2022.046.01.0003.01.ENG&amp;toc=OJ%3AL%3A2022%3A046%3ATOC</publicationUrl>
+        </regulation>
+        <subjectType code="enterprise" classificationCode="E" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="VIP Grub" function="" title="" nameLanguage="" strong="true" regulationLanguage="en" logicalId="132143">
+            <remark>VIP Grub is a passport and visa service based in 
+Istanbul, Turkey</remark>
+            <regulationSummary regulationType="amendment" publicationDate="2021-12-02" numberTitle="2021/2124 (OJ L430I)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv%3AOJ.LI.2021.430.01.0001.01.ENG&amp;toc=OJ%3AL%3A2021%3A430I%3ATOC" />
+        </nameAlias>
+        <address city="Istanbul" street="Büyükdere Cad.,  No:201" poBox="" zipCode="" region="" place="" asAtListingTime="false" countryIso2Code="TR" countryDescription="TURKEY" regulationLanguage="en" logicalId="132141">
+            <regulationSummary regulationType="amendment" publicationDate="2021-12-02" numberTitle="2021/2124 (OJ L430I)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv%3AOJ.LI.2021.430.01.0001.01.ENG&amp;toc=OJ%3AL%3A2021%3A430I%3ATOC" />
+        </address>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2018-06-25" designationDetails="" unitedNationId="" euReferenceNumber="EU.4639.87" logicalId="117548">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-01-10" entryIntoForceDate="2025-01-11" numberTitle="2025/42 (OJ L10012025)" programme="VEN" logicalId="207520">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500042</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Xavier Antonio MORENO REYES" function="Secretary-General of the National Electoral &#10;Council (CNE) from 2009 until June 2020." gender="M" title="" nameLanguage="" strong="true" regulationLanguage="en" logicalId="117549">
+            <regulationSummary regulationType="amendment" publicationDate="2021-11-12" numberTitle="2021/1959 (OJ L400)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv%3AOJ.L_.2021.400.01.0001.01.ENG&amp;toc=OJ%3AL%3A2021%3A400%3ATOC" />
+        </nameAlias>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2026-04-23" designationDetails="" unitedNationId="" euReferenceNumber="EU.14072.58" logicalId="181131">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2026-04-23" entryIntoForceDate="2026-04-23" numberTitle="2026/509 (OJ L202600509)" programme="UKR" logicalId="221340">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202600509</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Li XINYANG" function="Director of Beijing Xichao International Technology and Trade" title="" nameLanguage="ZH" strong="true" regulationLanguage="en" logicalId="181132">
+            <remark>Associated entities: JSC IEMZ Kupol; Beijing Xichao International Technology and Trade</remark>
+            <regulationSummary regulationType="amendment" publicationDate="2026-04-23" numberTitle="2026/509 (OJ L202600509)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202600509" />
+        </nameAlias>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2025-07-18" designationDetails="" unitedNationId="" euReferenceNumber="EU.13472.9" logicalId="177924">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-07-18" entryIntoForceDate="2025-07-18" numberTitle="2025/1480 (OJ L202501480)" programme="SDNZ" logicalId="216582">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501480</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Abu Aqla Mohamed Ahmed  KAIKAL" function="Commander of a SAF-affiliated militia" gender="M" title="" nameLanguage="SU" strong="true" regulationLanguage="en" logicalId="177926">
+            <remark>Associated entities: SAF</remark>
+            <regulationSummary regulationType="amendment" publicationDate="2025-07-18" numberTitle="2025/1480 (OJ L202501480)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501480" />
+        </nameAlias>
+        <citizenship region="" countryIso2Code="SD" countryDescription="SUDAN" regulationLanguage="en" logicalId="177925">
+            <regulationSummary regulationType="amendment" publicationDate="2025-07-18" numberTitle="2025/1480 (OJ L202501480)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501480" />
+        </citizenship>
+    </sanctionEntity>
+    <sanctionEntity designationDetails="" unitedNationId="" euReferenceNumber="EU.3500.19" logicalId="6619">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-01-31" entryIntoForceDate="2025-02-01" numberTitle="2025/206 (L 202500206)" programme="TERR" logicalId="207667">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202500206</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="Ali Gholam" middleName="" lastName="SHAKURI" wholeName="Ali Gholam SHAKURI" function="" gender="M" title="" nameLanguage="EN" strong="true" regulationLanguage="en" logicalId="14750">
+            <regulationSummary regulationType="amendment" publicationDate="2024-01-16" numberTitle="2024/329 (OJ L16012024)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202400329" />
+        </nameAlias>
+        <birthdate circa="true" calendarType="GREGORIAN" city="Tehran" zipCode="" year="1965" region="" place="" countryIso2Code="IR" countryDescription="IRAN (ISLAMIC REPUBLIC OF)" regulationLanguage="en" logicalId="1679">
+            <regulationSummary regulationType="amendment" publicationDate="2011-10-22" numberTitle="1063/2011 (OJ L277)" publicationUrl="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2011:277:0001:0002:EN:PDF" />
+        </birthdate>
+    </sanctionEntity>
+    <sanctionEntity designationDate="2025-07-15" designationDetails="" unitedNationId="" euReferenceNumber="EU.13434.34" logicalId="177606">
+        <regulation regulationType="amendment" organisationType="council" publicationDate="2025-07-15" entryIntoForceDate="2025-07-15" numberTitle="2025/1434 (OJ L202501434)" programme="MDA" logicalId="215977">
+            <publicationUrl>https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501434</publicationUrl>
+        </regulation>
+        <subjectType code="person" classificationCode="P" />
+        <nameAlias firstName="" middleName="" lastName="" wholeName="Alexei LUNGU" function="" gender="M" title="Journalist, President of “Șansă” (Chance) Political Party" nameLanguage="EN" strong="true" regulationLanguage="en" logicalId="177609">
+            <regulationSummary regulationType="amendment" publicationDate="2025-07-15" numberTitle="2025/1434 (OJ L202501434)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501434" />
+        </nameAlias>
+        <citizenship region="" countryIso2Code="MD" countryDescription="MOLDOVA, REPUBLIC OF" regulationLanguage="en" logicalId="177608">
+            <regulationSummary regulationType="amendment" publicationDate="2025-07-15" numberTitle="2025/1434 (OJ L202501434)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501434" />
+        </citizenship>
+        <birthdate circa="false" calendarType="GREGORIAN" city="" zipCode="" region="" place="" countryIso2Code="MD" countryDescription="MOLDOVA, REPUBLIC OF" regulationLanguage="en" logicalId="177607">
+            <regulationSummary regulationType="amendment" publicationDate="2025-07-15" numberTitle="2025/1434 (OJ L202501434)" publicationUrl="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L_202501434" />
+        </birthdate>
+    </sanctionEntity>
+</export>

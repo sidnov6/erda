@@ -34,13 +34,21 @@ P2_SOURCES = {
     "usgs_provinces",
 }
 
+P5_SOURCES = {
+    "wgi",
+    "ofac_eu",
+    "gem_infra",
+    "wdpa",
+}
 
-def test_registry_loads_and_covers_p1_sources():
+
+def test_registry_loads_and_covers_all_sources():
     reg = load_registry(REGISTRY)
-    assert set(reg) == P1_SOURCES | P2_SOURCES
+    assert set(reg) == P1_SOURCES | P2_SOURCES | P5_SOURCES
     for entry in reg.values():
         assert entry.sla_days > 0
-        assert entry.verified_at == "2026-07-18"
+        # every source records the live-verify date it was pinned on
+        assert entry.verified_at in {"2026-07-18", "2026-07-19"}
 
 
 def test_keyed_sources_declare_env_var():

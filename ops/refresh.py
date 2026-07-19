@@ -44,9 +44,12 @@ def connector_jobs() -> list[dict]:
         eia_v2,
         fred,
         gdelt,
+        gem_infra,
         jodi,
+        ofac_eu,
         opec,
         wb_pinksheet,
+        wgi,
         yf_curve,
     )
 
@@ -76,6 +79,14 @@ def connector_jobs() -> list[dict]:
          "fetch": comtrade.fetch, "version": comtrade.TRANSFORM_VERSION},
         {"source": "gdelt", "table": gdelt.TABLE, "schema": gdelt.SCHEMA, "fetch": gdelt.fetch,
          "version": gdelt.TRANSFORM_VERSION},
+        {"source": "wgi", "table": wgi.TABLE, "schema": wgi.SCHEMA, "fetch": wgi.fetch,
+         "version": wgi.TRANSFORM_VERSION},
+        {"source": "ofac_eu", "table": ofac_eu.TABLE, "schema": ofac_eu.SCHEMA,
+         "fetch": ofac_eu.fetch, "version": ofac_eu.TRANSFORM_VERSION},
+        {"source": "gem_infra", "table": gem_infra.TABLE, "schema": gem_infra.SCHEMA,
+         "fetch": gem_infra.fetch, "version": gem_infra.TRANSFORM_VERSION},
+        # wdpa is a monthly 1.75 GB download that writes a geoparquet directly
+        # (two-file design); it is refreshed on its own cadence, not nightly.
     ]
 
 

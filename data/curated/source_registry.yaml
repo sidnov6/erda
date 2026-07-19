@@ -311,6 +311,40 @@ sources:
       certmapper path is WAF-challenged — use ScienceBase only. Volume fields
       use −9999 sentinels.
 
+  # ————— Phase 3 offshore-overlap source (§12.3) — sweep 2026-07-19 —————
+
+  wdpa:
+    name: "World Database on Protected Areas (WDPA)"
+    access: bulk_gdb
+    base_url: "https://d1gam3xoknrgr2.cloudfront.net/current/"
+    cadence: monthly
+    sla_days: 45
+    requires_key: false
+    license: "non_commercial_attribution"
+    attribution: >-
+      UNEP-WCMC and IUCN (2026), Protected Planet: The World Database on
+      Protected Areas (WDPA), July 2026, Cambridge, UK: UNEP-WCMC and IUCN.
+      www.protectedplanet.net — cite release month/year; non-commercial use only.
+    verified_at: "2026-07-19"
+    notes: >-
+      Open CloudFront bulk, no key: WDPA_<Mon><YYYY>_Public.zip (GDB, 1.75 GB;
+      live 2026-07-19 Jul2026 = 200, Jun2026 = 404 → only the current release is
+      served, so the connector tries current month then previous). The CSV variant
+      (…_csv.zip, 23.8 MB) has the attributes but NO geometry — unusable for
+      offshore-block overlap, so the connector reads the GDB directly. SCHEMA
+      DRIFT: no MARINE/WDPAID columns this release; sites key on SITE_ID/SITE_PID
+      with a REALM column (Terrestrial 297,335 / Coastal 10,551 / Marine 6,856).
+      Connector keeps REALM in {Marine,Coastal} polygons (17,027 parcels: 6,476
+      marine + 10,551 coastal), simplifies geometry (shapely tol ~0.005° ≈ 500 m,
+      documented) and writes TWO artefacts — data/parquet/wdpa_areas.parquet
+      (GeoParquet: geometry + attrs) and data/parquet/wdpa_attributes.parquet
+      (attribute-only via run_connector: provenance + ledger + freshness; its
+      ledger row provenances the sibling GeoParquet, which carries the same
+      provenance columns). Grain = one polygon parcel (SITE_PID unique; SITE_ID
+      repeats across multi-parcel sites). STATUS_YR 0 = "year unknown" → NA, never
+      a real year. Transboundary ISO3 is ';'-joined (e.g. MOZ;ZAF). Reads GDB via
+      geopandas/pyogrio (/vsizip); layer WDPA_poly_<Mon><YYYY>.
+
   gem_infra:
     name: "GEM oil/gas pipelines + LNG terminals (GOIT + GGIT-LNG)"
     access: rest
@@ -332,3 +366,45 @@ sources:
       queries. start-year quirks: 5 phased ranges ("2013-2017" → first year)
       and one "Before 2024" (→ missing). SLA 400 d: releases are per-tracker
       annual-ish (ggit-lng release already 8 months old at verification).
+
+  ofac_eu:
+    name: "OFAC SDN/Consolidated + EU FSF sanctions programs (jurisdiction-level)"
+    access: bulk_csv
+    base_url: "https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/"
+    cadence: weekly
+    sla_days: 30
+    verified_at: "2026-07-19"
+    notes: >-
+      Jurisdiction-level screening signal ONLY (licence-security notes) — NOT
+      entity-level compliance screening. OFAC: anonymous GET (HEAD unsupported,
+      chunked responses, content-type unreliable) for SDN.CSV (19,168 entries
+      2026-07-19) + CONS_PRIM.CSV (480; SSI/NS-CMIC/HKAA); headerless 12-col
+      CSV, "-0-" null sentinel, "] ["-joined multi-program cells, lone 0x1A
+      EOF line; ADD.CSV deliberately unused (address countries are not
+      program signals). Country rows derive from explicit program-token dicts;
+      unknown tokens raise. OFAC's comprehensive SYRIA program revoked
+      mid-2025 — SYR now derives via PAARSSR-EO13894/HRIT-SY. EU FSF:
+      xmlFullSanctionsList_1_1 needs static public token dG9rZW4tMjAxNw as
+      token param (403 without; worked 2026-07-19); export is POINT-IN-TIME —
+      generationDate was 2026-06-05 (~6 weeks stale) at pull, recorded per
+      row as list_generated_at; EU freshness bounds on it, not retrieved_at.
+      Floor check: CUB/IRN/PRK/SYR/RUS/BLR/VEN must always be present.
+
+  # ————— Phase 5 Layer-3 committee sources (§10) — sweep 2026-07-18/19 —————
+
+  wgi:
+    name: "World Bank Worldwide Governance Indicators"
+    access: rest
+    base_url: "https://api.worldbank.org/v2/country/all/indicator"
+    cadence: annual
+    sla_days: 425          # annual ~Sep release + slack (release verified 2024-latest)
+    verified_at: "2026-07-19"
+    notes: >-
+      Source-3 indicator ids carry a GOV_WGI_ prefix (GOV_WGI_CC.EST … VA.EST);
+      queries MUST pass source=3 — multi-indicator queries without it return an
+      HTTP-200 message body, never data. Latest year 2024; 216 economies × 5
+      years = 1080 rows/indicator at per_page=2000. Some responses carry a
+      UTF-8 BOM (decode utf-8-sig); intermittent timeouts and multi-minute 502
+      bursts observed live — retry with backoff. PV.EST breaches the nominal
+      ±2.5 scale (YEM 2024 = −2.7506). Nine territories (incl. Taiwan, China)
+      return empty countryiso3code — dropped, documented in the connector.

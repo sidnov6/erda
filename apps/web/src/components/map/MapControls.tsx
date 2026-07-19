@@ -10,21 +10,27 @@ export function MapControls({
   yearMin,
   yearMax,
   onYear,
+  showFields,
+  onToggleFields,
   showInfra,
   onToggleInfra,
   showProtected,
   onToggleProtected,
   wellCount,
+  fieldCount,
 }: {
   year: number;
   yearMin: number;
   yearMax: number;
   onYear: (y: number) => void;
+  showFields: boolean;
+  onToggleFields: () => void;
   showInfra: boolean;
   onToggleInfra: () => void;
   showProtected: boolean;
   onToggleProtected: () => void;
   wellCount: number;
+  fieldCount: number;
 }) {
   return (
     <>
@@ -37,19 +43,29 @@ export function MapControls({
           <LegendDot color="rgb(90,120,105)" label="disc" />
           <LegendDot color="var(--dry)" label="dry" />
           <span className="numeric text-[11px] text-ink-faint">
-            {wellCount.toLocaleString()} wells
+            {wellCount.toLocaleString()} wildcats
           </span>
         </div>
+        {fieldCount > 0 && (
+          <div className="pointer-events-auto flex items-center gap-2 border border-line bg-bg1 pl-3 pr-2 py-1">
+            <LegendDot color="var(--gold)" label="field" />
+            <span className="numeric text-[11px] text-ink-faint">
+              {fieldCount.toLocaleString()} global fields · GOGET
+            </span>
+          </div>
+        )}
         <span
-          className="pointer-events-auto max-w-[260px] border border-line bg-bg1 px-2 py-1 font-mono text-[11px] leading-4 text-ink-faint"
+          className="pointer-events-auto max-w-[280px] border border-line bg-bg1 px-2 py-1 font-mono text-[11px] leading-4 text-ink-faint"
           title="/validation → model validation"
         >
-          NO PROSPECTIVITY HEATMAP — §9.8 gate failed. Wells + context only.
+          Gold = known fields worldwide (GEM). Green/red/grey = wildcat outcomes
+          (5 open regulators). NO prospectivity heatmap — §9.8 gate failed.
         </span>
       </div>
 
       {/* layer toggles, top-right — below the maplibre zoom control, z above it */}
       <div className="absolute right-2 top-20 z-20 flex flex-col gap-1">
+        <ToggleChip active={showFields} onClick={onToggleFields} label="FIELDS" />
         <ToggleChip active={showInfra} onClick={onToggleInfra} label="INFRA" />
         <ToggleChip active={showProtected} onClick={onToggleProtected} label="WDPA" />
       </div>

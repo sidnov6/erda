@@ -43,6 +43,7 @@ const OUTCOME_COLOR: Record<number, [number, number, number]> = {
   [-1]: [59, 45, 35], // no recorded outcome → near-bg, dim
 };
 const CYAN: [number, number, number] = [95, 179, 201]; // --cyan infra/water
+const GOLD: [number, number, number] = [232, 163, 61]; // --gold: known global fields (GOGET)
 
 interface WellsPayload {
   available: boolean;
@@ -62,6 +63,13 @@ interface ProtectedPayload {
   n: number;
   geojson: GeoJSON.FeatureCollection;
 }
+interface FieldsPayload {
+  available: boolean;
+  n: number;
+  lon: number[];
+  lat: number[];
+  phase: string[];
+}
 interface MapMeta {
   well_time_range: { min: number | null; max: number | null };
 }
@@ -77,6 +85,7 @@ export function MapHero() {
   const holder = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
+  const fittedRef = useRef(false);
 
   const { data: wells } = useErdaOnce<WellsPayload>("map/wells");
   const { data: meta } = useErdaOnce<MapMeta>("map/meta");
@@ -87,8 +96,10 @@ export function MapHero() {
       .then((g: GeoJSON.FeatureCollection) => setLand(g))
       .catch(() => setLand(null));
   }, []);
+  const [showFields, setShowFields] = useState(true); // global GOGET fields on by default
   const [showInfra, setShowInfra] = useState(false);
   const [showProtected, setShowProtected] = useState(false);
+  const { data: fields } = useErdaOnce<FieldsPayload>(showFields ? "map/fields" : null);
   const { data: infra } = useErdaOnce<InfraPayload>(showInfra ? "map/infra" : null);
   const { data: protectedAreas } = useErdaOnce<ProtectedPayload>(
     showProtected ? "map/protected" : null
@@ -110,8 +121,12 @@ export function MapHero() {
     const map = new maplibregl.Map({
       container: el,
       style: BLANK_STYLE,
-      center: [2, 58], // North Sea — the densest label region
-      zoom: 3.2,
+      // Global pre-load view. The open wildcat-outcome record spans three
+      // regulator theatres — US Gulf of Mexico, NW Europe, and Australia — so
+      // the camera must open on the world, not one basin. fitBounds() below
+      // snaps it to the actual data extent once wells arrive.
+      center: [18, 25],
+      zoom: 1,
       attributionControl: false,
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
@@ -129,6 +144,37 @@ export function MapHero() {
       overlayRef.current = null;
     };
   }, []);
+
+  // Snap the camera to the real data extent, once, when the first layer loads.
+  // Wells span three regulator theatres (GoM / NW Europe / Australia) and the
+  // GOGET fields are global — so fitting to their union opens the whole world
+  // instead of one basin.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || fittedRef.current) return;
+    let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+    const scan = (lon?: number[], lat?: number[]) => {
+      if (!lon || !lat) return;
+      for (let i = 0; i < lon.length; i++) {
+        if (lon[i] < minLon) minLon = lon[i];
+        if (lon[i] > maxLon) maxLon = lon[i];
+        if (lat[i] < minLat) minLat = lat[i];
+        if (lat[i] > maxLat) maxLat = lat[i];
+      }
+    };
+    if (wells?.available) scan(wells.lon, wells.lat);
+    if (showFields && fields?.available) scan(fields.lon, fields.lat);
+    if (Number.isFinite(minLon) && maxLon > minLon) {
+      map.fitBounds(
+        [
+          [minLon, minLat],
+          [maxLon, maxLat],
+        ],
+        { padding: 36, duration: 0, maxZoom: 4 }
+      );
+      fittedRef.current = true;
+    }
+  }, [wells, fields, showFields]);
 
   // rebuild deck layers when data / filters change
   useEffect(() => {
@@ -162,6 +208,29 @@ export function MapHero() {
           getFillColor: [20, 17, 12], // --bg1
           getLineColor: [74, 66, 54], // a warm grey above --line so coasts register
           lineWidthMinPixels: 0.8,
+          pickable: false,
+        })
+      );
+    }
+
+    // Global oil & gas fields (GEM GOGET) — gold, drawn beneath the regulator
+    // wildcat wells so the two layers stay visually distinct. Gold = a known
+    // field somewhere on Earth; green/red/grey = a wildcat outcome from an open
+    // regulator. Not a model, not a heatmap.
+    if (showFields && fields?.available) {
+      const fieldData = fields.lon.map((lon, i) => ({
+        position: [lon, fields.lat[i]] as [number, number],
+      }));
+      layers.push(
+        new ScatterplotLayer({
+          id: "fields",
+          data: fieldData,
+          getPosition: (d: { position: [number, number] }) => d.position,
+          getFillColor: [...GOLD, 205] as [number, number, number, number],
+          getRadius: 2,
+          radiusMinPixels: 1.3,
+          radiusMaxPixels: 3.5,
+          stroked: false,
           pickable: false,
         })
       );
@@ -229,7 +298,7 @@ export function MapHero() {
     );
 
     overlay.setProps({ layers });
-  }, [wells, infra, protectedAreas, land, showInfra, showProtected, year]);
+  }, [wells, fields, infra, protectedAreas, land, showFields, showInfra, showProtected, year]);
 
   // Block pick: in overlay mode maplibre owns interaction, so its click event
   // is the reliable source of a lon/lat — the whole basin is pickable acreage.
@@ -253,11 +322,14 @@ export function MapHero() {
         yearMin={yearMin}
         yearMax={yearMax}
         onYear={setYear}
+        showFields={showFields}
+        onToggleFields={() => setShowFields((v) => !v)}
         showInfra={showInfra}
         onToggleInfra={() => setShowInfra((v) => !v)}
         showProtected={showProtected}
         onToggleProtected={() => setShowProtected((v) => !v)}
         wellCount={wells?.available ? wells.n : 0}
+        fieldCount={showFields && fields?.available ? fields.n : 0}
       />
       {picked && <BlockCard block={picked} onClose={() => setPicked(null)} />}
     </div>

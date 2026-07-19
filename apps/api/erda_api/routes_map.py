@@ -81,6 +81,44 @@ def wells() -> dict:
     return _wells_payload(str(data.parquet_root()))
 
 
+@lru_cache(maxsize=4)
+def _fields_payload(root: str) -> dict:
+    """GEM GOGET — discovered/producing oil & gas fields, worldwide.
+
+    Distinct from `wells`: those are *wildcat exploration outcomes* from five
+    open regulators (US GoM / NW Europe / Australia). GOGET is a global tracker
+    of known fields — the honest "where oil & gas is, worldwide" layer — so it
+    covers the Middle East, Russia, Africa, S. America etc. that publish no open
+    wildcat record. Phase (oil vs gas) is parsed only where the field name names
+    it (§ never fabricate a phase the source doesn't state).
+    """
+    df = data.read_table("goget_fields")
+    if df is None:
+        return {"available": False, "reason": "goget_fields not in snapshot"}
+    df = df.dropna(subset=["lat", "lon"])
+    name = df["name"].astype(str).str.upper() if "name" in df.columns else pd.Series([""] * len(df))
+    has_oil = name.str.contains("OIL").to_numpy()
+    has_gas = name.str.contains("GAS").to_numpy()
+    phase = np.where(has_oil & has_gas, "both", np.where(has_gas, "gas", np.where(has_oil, "oil", "und")))
+    return {
+        "available": True,
+        "n": int(len(df)),
+        "lon": [round(float(v), 3) for v in df["lon"]],
+        "lat": [round(float(v), 3) for v in df["lat"]],
+        "phase": phase.tolist(),
+        "provenance": data.provenance_of(df),
+        "note": (
+            "GEM Global Oil & Gas Extraction Tracker — discovered/producing fields "
+            "worldwide; NOT wildcat outcomes and NOT a prospectivity model"
+        ),
+    }
+
+
+@router.get("/fields")
+def fields() -> dict:
+    return _fields_payload(str(data.parquet_root()))
+
+
 #: keep the map light: sample every Nth pipeline vertex is already done upstream
 #: (gem_infra rows are decimated vertices); we further cap to the busiest set.
 @lru_cache(maxsize=4)
@@ -173,7 +211,7 @@ def protected() -> dict:
 def meta() -> dict:
     """What the map layers are — and, honestly, what is absent (§9.8)."""
     return {
-        "layers": ["wells", "infrastructure", "protected_areas"],
+        "layers": ["wells", "global_fields", "infrastructure", "protected_areas"],
         "prospectivity_raster": {
             "present": False,
             "reason": "§9.8 falsification gate failed — no model raster ships",

@@ -5,6 +5,7 @@ from shapely.geometry import Polygon
 
 from erda_api.main import app
 from erda_api.routes_map import (
+    _fields_payload,
     _infra_payload,
     _protected_payload,
     _wells_payload,
@@ -44,6 +45,24 @@ def _seed(tmp_path):
         }
     )
     infra.to_parquet(tmp_path / "gem_infra.parquet")
+    fields = pd.DataFrame(
+        {
+            "source_id": ["gem_goget"] * 4,
+            "retrieved_at": pd.to_datetime(["2026-07-19"] * 4, utc=True),
+            "source_url": ["https://example.com"] * 4,
+            "transform_version": ["v"] * 4,
+            "name": [
+                "Rumaila Oil Field (Iraq)",
+                "Groningen Gas Field (Netherlands)",
+                "Shaybah Oil and Gas Field",
+                "Unnamed Prospect",
+            ],
+            "status": ["operating", "operating", "operating", "discovered"],
+            "lat": [30.0, 53.0, 22.0, -20.0],
+            "lon": [47.0, 6.0, 51.0, 15.0],
+        }
+    )
+    fields.to_parquet(tmp_path / "goget_fields.parquet")
     gdf = gpd.GeoDataFrame(
         {"name": ["Reserve A"], "marine": [True]},
         geometry=[Polygon([(1, 59), (5, 59), (5, 63), (1, 63)])],
@@ -75,6 +94,27 @@ def test_infra_and_time_range(monkeypatch, tmp_path):
     meta = client.get("/api/map/meta").json()
     assert meta["prospectivity_raster"]["present"] is False  # §9.8
     assert meta["well_time_range"] == {"min": 1990, "max": 2010}
+
+
+def test_fields_payload_global_and_phase_parse(monkeypatch, tmp_path):
+    monkeypatch.setenv("ERDA_DATA_ROOT", str(tmp_path))
+    _seed(tmp_path)
+    _fields_payload.cache_clear()
+    body = client.get("/api/map/fields").json()
+    assert body["available"] and body["n"] == 4
+    # phase parsed only where the field name states it; never fabricated
+    assert body["phase"] == ["oil", "gas", "both", "und"]
+    assert len(body["lon"]) == len(body["lat"]) == 4
+    assert body["provenance"]["source_id"] == "gem_goget"
+    # the global fields layer is advertised on the map manifest
+    assert "global_fields" in client.get("/api/map/meta").json()["layers"]
+
+
+def test_fields_absent_is_honest(monkeypatch, tmp_path):
+    monkeypatch.setenv("ERDA_DATA_ROOT", str(tmp_path / "empty2"))
+    (tmp_path / "empty2").mkdir()
+    _fields_payload.cache_clear()
+    assert client.get("/api/map/fields").json()["available"] is False
 
 
 def test_protected_geojson(monkeypatch, tmp_path):

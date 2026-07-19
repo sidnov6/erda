@@ -2,11 +2,11 @@
 
 **Verdict: GO** · EMV **556.8 $MM** · P(EMV>0) **86%** · Pg **0.15** (user-supplied (§9.8 — the falsification gate failed; no model Pg ships))
 
-_Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `37862c44cd1e5d3d…`_
+_Generated 2026-07-19T05:19:13.936489+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `2cea7d2f6d770297…`_
 
 ## Geoscience
 
-[template narration — no LLM key configured] You are the Geoscience member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'model': {'model_status': 'NO MODEL — §9.8 falsification gate failed; no Pg from a model', 'pg_source': 'user-supplied', 'in_scoreable_mask': True, 'gate_reference': 'packages/models/cards/NEGATIVE_RESULT.md', 'source_ids': ['model_eval_gbm', 'usgs_provinces', 'globsed']}, 'offsets': {'radius_km': 100.0, 'n_wells': 0, 'n_labeled': 0, 'n_discoveries': 0, 'offset_success_rate': None, 'ne
+The geoscience evaluation is hindered by a lack of model output due to a failed falsification gate. Available data indicates that the nearest wells are located at significant distances, with the closest wells resulting in dry holes. The basin's success rate is reported, but key volume data is currently unavailable due to a data gap. The basin has seen exploration activity since 1980, with a notable number of wildcats and discoveries. Further evaluation is limited by the absence of certain critical information.
 
 - **model_status**: NO MODEL — §9.8 falsification gate failed; no Pg from a model _[model_eval_gbm, usgs_provinces, globsed]_
 - **offset_wells_100km**: 0 wells _[sodir, nsta, nlog, boem_bsee, nopims, labels_harmonized]_
@@ -16,7 +16,7 @@ _Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live
 
 ## Fiscal
 
-[template narration — no LLM key configured] You are the Fiscal member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'regime': {'iso3': 'NAM', 'country': 'Namibia', 'regime_type': 'tax_royalty', 'royalty_rate': 0.05, 'royalty_note': '"5% of gross revenue", valued at market value at the agreed off-take point; levied under the Petroleum (Exploration and Production) Act 2 of 1991; deductible in computing Petroleum Income Tax (NAMCOR fiscal regime document). Chambers 2025 practice guide confirms 5% of ma
+The fiscal regime in Namibia is characterized by a tax and royalty system, with a royalty rate of 5% of gross revenue. The corporate income tax rate is 35%, and an additional profits tax is levied on after-tax net cash flow from petroleum operations, with a first-tier rate of 25%. A data gap exists regarding the rates for the second and third tiers of the additional profits tax, as these are biddable per Petroleum Agreement. The regime also features ringfencing, where losses cannot be offset against income from another licence area.
 
 - **regime_type**: tax_royalty _[curated_fiscal]_
 - **cit_rate**: 0.35 fraction _[curated_fiscal]_
@@ -24,14 +24,14 @@ _Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live
 
 ## Political Risk
 
-[template narration — no LLM key configured] You are the Political Risk member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'governance': {'data_gap': 'snapshot table missing: wgi_governance'}, 'sanctions': {'data_gap': 'snapshot table missing: sanctions_programs'}}
+The governance landscape of NAM is characterized by World Governance Indicators (WGI) estimates, which provide insight into various aspects of governance. The WGI estimates include Control of Corruption, Government Effectiveness, Political Stability and Absence of Violence, Regulatory Quality, Rule of Law, and Voice and Accountability. A data gap exists regarding the Fragile States Index (FSI) total, as the FSI table is absent from the snapshot. Meanwhile, NAM is not currently sanctioned, according to available information.
 
-- **governance_gap**: snapshot table missing: wgi_governance _[snapshot]_
-- **sanctions_gap**: snapshot table missing: sanctions_programs _[snapshot]_
+- **wgi_rule_of_law**: 0.328 estimate (−2.5…2.5) _[wgi]_
+- **sanctioned**: False _[ofac_eu]_
 
 ## Infrastructure & Development Concept
 
-[template narration — no LLM key configured] You are the Infrastructure member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'concept': {'water_depth_m': 3317.4, 'host_distance_km': 250.0, 'concept': 'fpso_standalone', 'cost_benchmarks': {'concept': 'fpso_standalone', 'capex_usd_boe_low': '8', 'capex_usd_boe_high': '18', 'opex_usd_bbl_low': '6.28', 'opex_usd_bbl_high': '6.65', 'well_cost_musd_low': '60', 'well_cost_musd_high': '240', 'schedule_years_low': '2.5', 'schedule_years_high': '3.2'}, 'cost_notes': "
+The proposed concept is an fpso_standalone with a water depth of 3317.4 meters and a host distance of 250 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from $8 to $18 and operating expenditure per barrel ranging from $6.28 to $6.65. Well costs are estimated to be between $60 million and $240 million, and the project schedule is expected to be between 2.5 and 3.2 years. The provided cost notes and source information support these estimates, citing industry examples and reports from reputable sources.
 
 - **water_depth_m**: 3317.4 m _[etopo2022, curated_costs, erda_engine.concept]_
 - **host_distance_km**: 250.0 km _[etopo2022, curated_costs, erda_engine.concept]_
@@ -39,20 +39,21 @@ _Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live
 
 ## Environment
 
-[template narration — no LLM key configured] You are the environment member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'data_gap': 'wdpa_areas.parquet missing from snapshot'}. The snapshot lacks this data — say so and what it means.
+Based on the available data, there is no overlap between the area of interest and protected areas within a 25-kilometer radius. The data indicates a 0.0% overlap, suggesting no intersection with designated conservation zones. The source of this information is the World Database on Protected Areas (WDPA). A data gap is noted as no specific protected areas are listed.
 
-- **data_gap**: wdpa_areas.parquet missing from snapshot _[snapshot]_
+- **wdpa_overlap_pct**: 0.0 % _[wdpa]_
+- **protected_areas_nearby**: 0 areas _[wdpa]_
 
 ## Financeability
 
-[template narration — no LLM key configured] You are the Financeability member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'institution': 'Societe Generale', 'type': 'bank', 'policy_url': 'https://www.societegenerale.com/site
+All institutions checked have restrictions in place for upstream financing. The institutions, including banks and insurers, have publicly available policies outlining their approach to the oil and gas sector. A data gap exists regarding the specific impact of these restrictions on financing costs and availability. Financing options may be shifting towards alternative sources, such as national oil company partnerships, trading-house prepay, or private equity, due to European bank and insurer restrictions.
 
 - **institutions_checked**: 10 institutions _[curated_exclusions]_
 - **restricting_upstream**: 10 institutions _[curated_exclusions]_
 
 ## Economics
 
-[template narration — no LLM key configured] You are the Economist member of an upstream exploration screening committee. Facts as provided by tools: Tool JSON: {'economics': {'pg': 0.15, 'pg_provenance': 'user-supplied (§9.8 — the falsification gate failed; no model Pg ships)', 'npv_success_musd': 4561.92, 'emv_musd': 556.79, 'breakeven_usd_bbl': 37.69, 'government_take': 0.4755, 'payback_year': 4, 'mc': {'emv_mean_musd': 769.34, 'emv_p10_musd': -76.79, 'emv_p50_musd': 554.98, 'emv_p90_musd': 1881.99, 'p_emv_positive': 0.8567, 'n_draws': 10000
+The project's economic viability is supported by a positive Expected Monetary Value (EMV) and a relatively low breakeven price. The EMV is estimated to be $556.79 million, with a probability of being positive at 85.67%. A data gap is noted for the Probability of Geologic Success (Pg), which is user-supplied due to a failed falsification gate. The project's economics are also influenced by a government take of 47.55% and a discount rate of 10%.
 
 - **pg**: 0.15 probability _[user_supplied]_
 - **price_m1**: 82.49 $/bbl _[yf_curve]_
@@ -65,7 +66,7 @@ _Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live
 
 ## Red Team — what would make this wrong
 
-[template narration — no LLM key configured] You are the Red Team of an exploration screening committee. Facts as provided by tools: All tool JSON: {'environment': {'data_gap': 'wdpa_areas.parquet missing from snapshot'}, 'financeability': {'financing': {'n_institutions_checked': 10, 'n_restricting_upstream': 10, 'restricting': [{'institution': 'BNP Paribas', 'type': 'bank', 'policy_url': 'https://web.archive.org/web/20260513095044/https://cdn-group.bnpparibas.com/uploads/file/bnpparibas_csr_sector_policy_oil_gas.pdf'}, {'insti
+This tool JSON is flawed because it relies on user-supplied Pg (prospective gas) values due to a failed falsification gate, which may not accurately represent the actual gas prospects. Additionally, the proxy labels used for wells are based on limited data, with only a few wells considered and a high distance from the area of interest (over 8,900 km). The cost midpoints are also questionable, as they are derived from a limited number of projects (e.g., Liza Ph1 and Ph2) and may not be representative of the costs for this specific project. Furthermore, the price volatility assumption of 0.25 (25%) may be overly simplistic, and the use of a flat-real price curve may not account for potential fluctuations in the market. Lastly, there are significant data gaps, including the lack of official ministry or revenue authority pages, and the use of outdated documents (e.g., the 2017 NAMCOR fiscal regime document) to verify rates.
 
 ## Citation appendix
 
@@ -82,10 +83,12 @@ _Generated 2026-07-18T19:16:12.823535+00:00 · frozen local snapshot — no live
 - `nlog` ← geoscience.offset_success_rate, geoscience.offset_wells_100km
 - `nopims` ← geoscience.offset_success_rate, geoscience.offset_wells_100km
 - `nsta` ← geoscience.offset_success_rate, geoscience.offset_wells_100km
-- `snapshot` ← environment.data_gap, political_risk.governance_gap, political_risk.sanctions_gap
+- `ofac_eu` ← political_risk.sanctioned
 - `sodir` ← geoscience.offset_success_rate, geoscience.offset_wells_100km
 - `user_supplied` ← economist.pg
 - `usgs_provinces` ← geoscience.basin, geoscience.basin_wildcats, geoscience.model_status
+- `wdpa` ← environment.protected_areas_nearby, environment.wdpa_overlap_pct
+- `wgi` ← political_risk.wgi_rule_of_law
 - `yf_curve` ← economist.price_m1
 
 _Screening tool — ranks resemblance and economics at area level; not seismic; never "oil is here."_

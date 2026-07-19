@@ -95,9 +95,17 @@ function MemoView({ blockId }: { blockId: string }) {
         >
           CITED {(m.citation_coverage * 100).toFixed(0)}%
         </span>
-        {data.narrator !== "ClaudeNarrator" && (
+        {data.narrator === "TemplateNarrator" && (
           <span className="chip text-warn" title="no LLM key configured at generation time">
             TEMPLATE NARRATION
+          </span>
+        )}
+        {data.narrator === "GroqNarrator" && (
+          <span
+            className="chip text-ink-faint"
+            title="owner-authorized stack deviation: Groq (llama-3.3-70b) at temperature 0 in place of the Claude API. The quant hash excludes prose."
+          >
+            GROQ NARRATION
           </span>
         )}
       </div>

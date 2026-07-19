@@ -118,3 +118,39 @@ def get_memo(block_id: str) -> dict:
     if not path.exists() or "/" in block_id or ".." in block_id:
         raise HTTPException(404, f"no memo for {block_id}")
     return json.loads(path.read_text())
+
+
+@router.get("/memo-validation")
+def memo_validation() -> dict:
+    """§11.3 engine & agent validation: per-memo citation coverage, red-team
+    presence, verdict, and the quantitative-core determinism hash. Rendered on
+    /validation as a first-class pillar."""
+    from erda_agents.memo_schema import MIN_CITATION_COVERAGE
+
+    rows = []
+    for path in sorted(memos_dir().glob("*.json")):
+        record = json.loads(path.read_text())
+        memo = record["memo"]
+        coverage = memo["citation_coverage"]
+        redteam_present = bool(memo.get("redteam_narrative", "").strip())
+        rows.append(
+            {
+                "block_id": memo["block_id"],
+                "verdict": memo["verdict"],
+                "citation_coverage": coverage,
+                "coverage_pass": coverage >= MIN_CITATION_COVERAGE,
+                "redteam_present": redteam_present,
+                "quant_hash": memo["quant_hash"],
+                "narrator": record.get("narrator"),
+                "pg_provenance": memo["verdict_basis"]["pg_provenance"],
+            }
+        )
+    overall = "pass" if rows and all(
+        r["coverage_pass"] and r["redteam_present"] for r in rows
+    ) else ("fail" if rows else "empty")
+    return {
+        "available": bool(rows),
+        "min_coverage": MIN_CITATION_COVERAGE,
+        "overall": overall,
+        "memos": rows,
+    }

@@ -2,11 +2,11 @@
 
 **Verdict: GO** · EMV **461.7 $MM** · P(EMV>0) **88%** · Pg **0.22** (user-supplied (§9.8 — the falsification gate failed; no model Pg ships))
 
-_Generated 2026-07-18T19:25:20.035360+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `bf1e496245916f4b…`_
+_Generated 2026-07-19T05:16:30.326159+00:00 · frozen local snapshot — no live internet at memo time (§10.3) · citation coverage 100% · determinism hash `f58c9f101ced228b…`_
 
 ## Geoscience
 
-The geoscience evaluation is hindered by a failed model status, with no predictive model output available due to a falsification gate failure. The basin in question is the Gulf Cenozoic OCS, with a historical success rate and significant exploration history. A data gap exists regarding volumetric maturity, as only count-based maturity is currently available. The nearest wells all have a 'NO_FIELD_LEASE' outcome, indicating a lack of nearby discoveries. Further evaluation is needed to fully assess the prospect.
+The model status indicates a falsification gate failure, resulting in no model-generated data. The Pg data is instead user-supplied. A data gap exists regarding volumetric maturity, as it awaits gated GOGET XLSX. The basin in question has a high success rate, with a significant number of discoveries made. There is a notable presence of nearby wells, all of which have a 'NO_FIELD_LEASE' outcome.
 
 - **model_status**: NO MODEL — §9.8 falsification gate failed; no Pg from a model _[model_eval_gbm, usgs_provinces, globsed]_
 - **offset_wells_100km**: 210 wells _[boem_bsee, labels_harmonized]_
@@ -16,7 +16,7 @@ The geoscience evaluation is hindered by a failed model status, with no predicti
 
 ## Fiscal
 
-The fiscal regime in the United States — Gulf of Mexico / Gulf of America federal OCS is a tax-royalty system. The royalty rate for new leases is 12.5%, as set by the One Big Beautiful Bill Act Lease Sales. The federal corporate income tax rate is 21%. A data gap exists regarding special petroleum taxes, as no federal special petroleum profits tax has been identified. Additionally, cost-recovery rules for petroleum, such as depreciation, have not been verified from accessed sources.
+The fiscal regime in the United States — Gulf of Mexico / Gulf of America federal OCS is a tax-royalty system. The royalty rate for new leases is 12.5%, as per the One Big Beautiful Bill Act. The federal corporate income tax rate is 21%. A special petroleum profits tax is not identified in the sources consulted, with the federal take structure consisting of bonus bids, rentals, royalty, and corporate income tax. Royalty rates vary by lease vintage, with existing deepwater leases potentially bearing different rates.
 
 - **regime_type**: tax_royalty _[curated_fiscal]_
 - **cit_rate**: 0.21 fraction _[curated_fiscal]_
@@ -24,14 +24,14 @@ The fiscal regime in the United States — Gulf of Mexico / Gulf of America fede
 
 ## Political Risk
 
-The governance and sanctions landscape of the potential investment location is unclear due to a lack of available data. A data gap exists in the World Governance Indicators (WGI) table, which would typically provide insight into the country's governance structure. Additionally, information on sanctions programs is also unavailable due to a missing snapshot table. As a result, the committee cannot fully assess the political risk associated with this investment. Further research is needed to fill these data gaps.
+The governance structure of the investment location is characterized by estimates from the World Governance Indicators (WGI), which provide insights into various aspects of governance. The WGI estimates for 2024 indicate a range of scores, including Control of Corruption, Government Effectiveness, and Regulatory Quality. A data gap is noted for the Fragile States Index (FSI) total, as the FSI table is absent from the snapshot. The country is not currently sanctioned, according to available information.
 
-- **governance_gap**: snapshot table missing: wgi_governance _[snapshot]_
-- **sanctions_gap**: snapshot table missing: sanctions_programs _[snapshot]_
+- **wgi_rule_of_law**: 0.962 estimate (−2.5…2.5) _[wgi]_
+- **sanctioned**: False _[ofac_eu]_
 
 ## Infrastructure & Development Concept
 
-The concept under consideration is an fpso_standalone, with a water depth of 2097.6 meters and a host distance of 95 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from a low to a high value, and operating expenditure per barrel ranging from a low to a high value. Well costs are also estimated to fall within a specified range, while the project schedule is expected to span several years, derived from cited dates of similar projects. A data gap is not explicitly noted in the provided information.
+The proposed concept is an fpso_standalone with a water depth of 2097.6 meters and a host distance of 95 kilometers. Cost benchmarks for this concept are available, with capital expenditure per barrel of oil equivalent ranging from $8 to $18 and operating expenditure per barrel ranging from $6.28 to $6.65. The project schedule is estimated to be between 2.5 and 3.2 years, derived from cited project timelines. Well costs are estimated to range from $60 to $240 million.
 
 - **water_depth_m**: 2097.6 m _[etopo2022, curated_costs, erda_engine.concept]_
 - **host_distance_km**: 95.0 km _[etopo2022, curated_costs, erda_engine.concept]_
@@ -39,20 +39,21 @@ The concept under consideration is an fpso_standalone, with a water depth of 209
 
 ## Environment
 
-The environmental screening process is hindered by a data gap, as the 'wdpa_areas.parquet' file is missing from the snapshot. This omission means that we lack access to protected area data, which is a crucial component in assessing potential environmental impacts. As a result, our evaluation is incomplete, and we cannot fully consider the potential risks and consequences of investment. The absence of this data limits our ability to conduct a thorough environmental assessment.
+Based on the available data, there is no overlap between the area of interest and protected areas within a 25-kilometer radius. The data indicates that the percentage of overlap is zero. The source of this information is the World Database on Protected Areas (WDPA). A data gap is present as the specific protected areas are not listed.
 
-- **data_gap**: wdpa_areas.parquet missing from snapshot _[snapshot]_
+- **wdpa_overlap_pct**: 0.0 % _[wdpa]_
+- **protected_areas_nearby**: 0 areas _[wdpa]_
 
 ## Financeability
 
-All institutions checked have restrictions in place for upstream financing. The institutions, including banks and insurers, have publicly available policies outlining their approach to the oil and gas sector. A data gap exists regarding the specific impact of these restrictions on financing options. Financing may be shifting towards alternative arrangements, such as partnerships with national oil companies, trading-house prepay, or private equity, due to European bank and insurer restrictions.
+All institutions checked have restrictions in place for upstream financing. The list of restricting institutions includes multiple banks and insurers, with publicly available policies accessible via provided URLs. A data gap exists regarding the specific details of these restrictions, but it is noted that European bank and insurer restrictions are driving financing towards alternative options. The capital note suggests that these restrictions are pushing financing towards partnerships with national oil companies, trading-house prepay, or private equity.
 
 - **institutions_checked**: 10 institutions _[curated_exclusions]_
 - **restricting_upstream**: 10 institutions _[curated_exclusions]_
 
 ## Economics
 
-The project's economics indicate a positive Expected Monetary Value (EMV) with a mean of $607.37 million and a probability of being positive at 87.97%. The project is expected to break even at a price of $38.2 per barrel and has a payback period of 4 years. The Government take is approximately 41.35%. A data gap is noted for the Pg value, which is user-supplied due to the falsification gate failing and no model Pg being available.
+The project's economics indicate a positive Expected Monetary Value (EMV) of $461.74 million, with a probability of 87.97% that the EMV will be positive. The Government take is 41.35%, and the breakeven price is $38.2 per barrel. A data gap exists regarding the geological chance of success (Pg), which is marked as user-supplied due to a failed falsification gate, with no modelled Pg available. The project's Net Present Value (NPV) in the success case is $2,524.26 million.
 
 - **pg**: 0.22 probability _[user_supplied]_
 - **price_m1**: 82.49 $/bbl _[yf_curve]_
@@ -65,7 +66,7 @@ The project's economics indicate a positive Expected Monetary Value (EMV) with a
 
 ## Red Team — what would make this wrong
 
-This assessment is flawed because it relies on a user-supplied Pg value of 0.22, which lacks a robust provenance due to the failure of the §9.8 falsification gate. Additionally, the cost benchmarks for the fpso_standalone concept are based on limited examples (Liza Ph1 and Ph2) and may not be representative of the entire industry. The opex range is also narrow, citing only Petrobras pre-salt lifting costs, which may not be applicable to all operators. Furthermore, the fiscal model simplifies depreciation and does not account for loss carryforward, which could impact the accuracy of the government take and breakeven price calculations. The price deck is also based on a single indicative curve (M1 settle 2026-07-18) and may not capture potential price volatility. Lastly, data gaps in governance and sanctions information introduce uncertainty into the political risk assessment.
+This tool JSON has several potential issues. The Pg (prospective gas) value of 0.22 is user-supplied, as the model failed the falsification gate, which may not be reliable. The proxy labels used for the geoscience model may not accurately represent the actual data. The cost midpoints, such as the capex and opex values, are based on benchmarks and may not reflect the actual costs of the project. The price volatility assumption of 0.25 may not capture the full range of potential price fluctuations. Additionally, there are data gaps, such as the lack of verification of state-level applicability of taxes and the omission of federal levies like inspection fees, which could impact the accuracy of the results. The use of a flat-real price curve and straight-line depreciation may also oversimplify the actual fiscal model.
 
 ## Citation appendix
 
@@ -79,9 +80,11 @@ This assessment is flawed because it relies on a user-supplied Pg value of 0.22,
 - `globsed` ← geoscience.model_status
 - `labels_harmonized` ← geoscience.basin, geoscience.basin_wildcats, geoscience.offset_success_rate, geoscience.offset_wells_100km
 - `model_eval_gbm` ← geoscience.model_status
-- `snapshot` ← environment.data_gap, political_risk.governance_gap, political_risk.sanctions_gap
+- `ofac_eu` ← political_risk.sanctioned
 - `user_supplied` ← economist.pg
 - `usgs_provinces` ← geoscience.basin, geoscience.basin_wildcats, geoscience.model_status
+- `wdpa` ← environment.protected_areas_nearby, environment.wdpa_overlap_pct
+- `wgi` ← political_risk.wgi_rule_of_law
 - `yf_curve` ← economist.price_m1
 
 _Screening tool — ranks resemblance and economics at area level; not seismic; never "oil is here."_

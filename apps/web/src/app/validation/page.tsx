@@ -585,10 +585,93 @@ function ModelSection({ payload }: { payload: ModelPayload | null }) {
   );
 }
 
+/* ————— §11.3 engine & agent validation: memo coverage, red-team, determinism ————— */
+
+interface MemoValidationRow {
+  block_id: string;
+  verdict: string;
+  citation_coverage: number;
+  coverage_pass: boolean;
+  redteam_present: boolean;
+  quant_hash: string;
+  narrator: string | null;
+  pg_provenance: string;
+}
+
+interface MemoValidationPayload {
+  available: boolean;
+  min_coverage: number;
+  overall: string;
+  memos: MemoValidationRow[];
+}
+
+function MemoValidationSection({ payload }: { payload: MemoValidationPayload | null }) {
+  if (!payload || !payload.available) {
+    return (
+      <ReportPanel title="Memo validation" mnemo="MEM" caption="citation coverage · red-team · determinism (§11.3)">
+        <span className="chip text-ink-faint">no showcase memos generated yet</span>
+      </ReportPanel>
+    );
+  }
+  const TH = "sticky top-0 border-b border-line bg-bg1 py-1 font-mono text-[10px] font-normal uppercase tracking-wider text-ink-faint";
+  const TD = "border-b border-line/50 py-[3px]";
+  return (
+    <ReportPanel
+      title="Memo validation"
+      mnemo="MEM"
+      caption={`citation coverage ≥ ${(payload.min_coverage * 100).toFixed(0)}% · red-team present · deterministic re-run hash (§11.3)`}
+      right={
+        <span className={`chip ${payload.overall === "pass" ? "text-oil" : "text-warn"}`}>
+          {payload.overall.toUpperCase()}
+        </span>
+      }
+    >
+      <table className="w-full border-separate border-spacing-0 text-[11px]">
+        <thead>
+          <tr>
+            <th className={`${TH} pr-2 text-left`}>BLOCK</th>
+            <th className={`${TH} pl-2 text-left`}>VERDICT</th>
+            <th className={`${TH} pl-2 text-right`}>COVERAGE</th>
+            <th className={`${TH} pl-2 text-center`}>RED TEAM</th>
+            <th className={`${TH} pl-2 text-left`}>QUANT HASH</th>
+            <th className={`${TH} pl-2 text-left`}>NARRATOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payload.memos.map((m) => (
+            <tr key={m.block_id}>
+              <td className={`${TD} pr-2 font-mono text-ink-dim`}>{m.block_id}</td>
+              <td className={`${TD} pl-2 font-mono text-ink`}>{m.verdict.replace("_", "-")}</td>
+              <td
+                className={`${TD} numeric pl-2 text-right ${m.coverage_pass ? "text-oil" : "text-warn"}`}
+              >
+                {(m.citation_coverage * 100).toFixed(0)}%
+              </td>
+              <td className={`${TD} pl-2 text-center ${m.redteam_present ? "text-oil" : "text-warn"}`}>
+                {m.redteam_present ? "✓" : "✗"}
+              </td>
+              <td className={`${TD} numeric pl-2 text-ink-faint`} title={m.quant_hash}>
+                {m.quant_hash.slice(0, 16)}…
+              </td>
+              <td className={`${TD} pl-2 font-mono text-ink-faint`}>{m.narrator}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="max-w-[80ch] pt-2 text-[11px] leading-4 text-ink-faint">
+        Pg is user-supplied for every memo (§9.8 — no model Pg ships). The quant hash covers tool
+        outputs + verdict + basis and excludes LLM prose, so a re-run on the same frozen snapshot
+        reproduces it byte-for-byte regardless of narration.
+      </p>
+    </ReportPanel>
+  );
+}
+
 export default function ValidationPage() {
   const { data, error } = useErda<ValidationPayload>("validation", 120_000);
   const { data: sourcesData } = useErda<{ sources: SourceStatus[] }>("sources", 300_000);
   const { data: modelData } = useErda<ModelPayload>("model", 300_000);
+  const { data: memoData } = useErda<MemoValidationPayload>("memo-validation", 300_000);
 
   const report = data?.available ? data.report : undefined;
   const overall = report?.summary.overall;
@@ -656,6 +739,7 @@ export default function ValidationPage() {
           </>
         )}
         <ModelSection payload={modelData} />
+        <MemoValidationSection payload={memoData ?? null} />
       </main>
     </div>
   );

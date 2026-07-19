@@ -99,7 +99,9 @@ def _fields_payload(root: str) -> dict:
     name = df["name"].astype(str).str.upper() if "name" in df.columns else pd.Series([""] * len(df))
     has_oil = name.str.contains("OIL").to_numpy()
     has_gas = name.str.contains("GAS").to_numpy()
-    phase = np.where(has_oil & has_gas, "both", np.where(has_gas, "gas", np.where(has_oil, "oil", "und")))
+    phase = np.where(
+        has_oil & has_gas, "both", np.where(has_gas, "gas", np.where(has_oil, "oil", "und"))
+    )
     return {
         "available": True,
         "n": int(len(df)),

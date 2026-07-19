@@ -7,13 +7,21 @@ import { useErda } from "@/lib/api";
  * chip reports what the data plane actually holds, never an aspiration.
  */
 export function StatusFooter({ status }: { status: string }) {
-  const { data: mode } = useErda<{ mode: string; tables?: number }>("mode", 120_000);
+  const { data: mode } = useErda<{ mode: string; tables?: number; frozen_at?: string }>(
+    "mode",
+    120_000
+  );
 
   const modeText = mode
     ? mode.mode === "LIVE"
       ? `LIVE · ${mode.tables} TABLES`
-      : `${mode.mode} · NO DATA`
+      : mode.mode === "SNAPSHOT"
+        ? `SNAPSHOT · ${mode.tables} TABLES`
+        : `${mode.mode} · NO DATA`
     : "SHELL · NO DATA";
+  // SNAPSHOT is a truthful state, not an error — cyan, not warn (§15).
+  const modeCls =
+    mode?.mode === "LIVE" ? "text-oil" : mode?.mode === "SNAPSHOT" ? "text-cyan" : "text-ink-faint";
 
   return (
     <footer className="flex h-8 shrink-0 items-center gap-3 border-t border-line bg-bg0 px-2">
@@ -33,11 +41,12 @@ export function StatusFooter({ status }: { status: string }) {
         MODEL: NO-GO §9.8
       </a>
       <span
-        className={`chip shrink-0 ${mode?.mode === "LIVE" ? "text-oil" : "text-ink-faint"}`}
+        className={`chip shrink-0 ${modeCls}`}
+        title={mode?.frozen_at ? `frozen ${mode.frozen_at.slice(0, 19)}Z` : undefined}
       >
         {modeText}
       </span>
-      <span className="chip shrink-0 text-ink-faint">P3</span>
+      <span className="chip shrink-0 text-ink-faint">P6</span>
     </footer>
   );
 }

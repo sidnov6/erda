@@ -66,8 +66,24 @@ def model_evaluation() -> dict:
 
 @router.get("/mode")
 def mode() -> dict:
-    """LIVE vs SNAPSHOT vs SHELL — the badge tells the truth (§15)."""
+    """LIVE vs SNAPSHOT vs SHELL — the badge tells the truth (§15).
+
+    SNAPSHOT when the data root carries a demo-freeze manifest (the public app
+    boots from a frozen snapshot so it never breaks mid-demo). LIVE when tables
+    exist without one; SHELL when there is no data at all.
+    """
+    import json
+
     latest = data.ledger_latest()
+    manifest_path = data.parquet_root() / "_snapshot_manifest.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text())
+        return {
+            "mode": "SNAPSHOT",
+            "tables": len(latest),
+            "frozen_at": manifest.get("frozen_at"),
+            "note": "public demo boots from a frozen snapshot (§15)",
+        }
     if not latest:
         return {"mode": "SHELL", "tables": 0}
     newest = max(e.retrieved_at for e in latest.values())

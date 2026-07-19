@@ -10,8 +10,14 @@ block into a cited, EMV-based investment memo.
 > In Wagner's Ring, Erda is the primordial goddess who knows everything that lies
 > beneath the earth. Petroleum in German is literally "Erdöl" — earth oil.
 
-**Status:** Phase 1 — live market terminal (11 sources, validation report, nightly refresh). See `ERDA_BUILD_SPEC.md` §14 for the
-phase plan and gates.
+**Status:** Phase 6 — full terminal UI: 15 live data sources, deck.gl map hero
+(offline basemap, 32k wells, block-pick → feasibility memo), a nine-agent
+committee over a deterministic economics engine, and a first-class /validation
+page. The prospectivity model was **honestly stopped at the §9.8 falsification
+gate** — it did not beat the distance-to-discovery baseline under spatial CV, so
+no heatmap ships; the map is wells + context only. See `ERDA_BUILD_SPEC.md` §14
+for the phase plan and gates, and `packages/models/cards/NEGATIVE_RESULT.md` for
+the gate write-up.
 
 ## Honest boundaries
 

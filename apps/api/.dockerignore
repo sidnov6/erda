@@ -1,0 +1,13 @@
+# keep the image lean: only the snapshot data plane goes in (see Dockerfile)
+data/raw
+data/parquet
+data/zarr
+data/memos
+!data/snapshot
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+.venv
+apps/web
+notebooks
+docs

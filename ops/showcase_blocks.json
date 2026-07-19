@@ -1,5 +1,5 @@
 {
-  "_note": "Showcase memo requests (§14 P5). Pg, resource triples and well cost are USER-SUPPLIED SCENARIO ASSUMPTIONS (§9.8 — no model Pg exists); each carries its rationale and is printed as such in the memo. Coordinates are open-water points chosen so the §10.4 classifier honestly yields fpso_standalone (the one concept with a complete cited cost row — see cost_benchmarks.csv gaps).",
+  "_note": "Showcase memo requests (\u00a714 P5). Pg, resource triples and well cost are USER-SUPPLIED SCENARIO ASSUMPTIONS (\u00a79.8 \u2014 no model Pg exists); each carries its rationale and is printed as such in the memo. Coordinates are open-water points chosen so the \u00a710.4 classifier honestly yields fpso_standalone (the one concept with a complete cited cost row \u2014 see cost_benchmarks.csv gaps).",
   "blocks": [
     {
       "block_id": "GOM-WR-DEMO",
@@ -9,9 +9,13 @@
       "country_name": "United States",
       "host_distance_km": 95.0,
       "pg": 0.22,
-      "resource_p90_p50_p10": [80.0, 150.0, 281.0],
+      "resource_p90_p50_p10": [
+        80.0,
+        150.0,
+        281.0
+      ],
       "well_cost_musd": 120.0,
-      "_assumptions": "Pg 0.22 ≈ mature-deepwater wildcat scenario; resource triple lognormal-consistent around 150 MMbbl; deepwater GoM well cost mid-range of cited benchmarks. USER-SUPPLIED."
+      "_assumptions": "Pg 0.22 \u2248 mature-deepwater wildcat scenario; resource triple lognormal-consistent around 150 MMbbl; deepwater GoM well cost mid-range of cited benchmarks. USER-SUPPLIED."
     },
     {
       "block_id": "NOR-VORING-DEMO",
@@ -21,9 +25,13 @@
       "country_name": "Norway",
       "host_distance_km": 130.0,
       "pg": 0.25,
-      "resource_p90_p50_p10": [60.0, 110.0, 202.0],
+      "resource_p90_p50_p10": [
+        60.0,
+        110.0,
+        202.0
+      ],
       "well_cost_musd": 90.0,
-      "_assumptions": "Pg 0.25 ≈ NCS technical-success neighbourhood (label DB shows 45.6% incl. non-commercial; commercial-scale scenario set lower); Vøring deepwater FPSO case. USER-SUPPLIED."
+      "_assumptions": "Pg 0.25 \u2248 NCS technical-success neighbourhood (label DB shows 45.6% incl. non-commercial; commercial-scale scenario set lower); V\u00f8ring deepwater FPSO case. USER-SUPPLIED."
     },
     {
       "block_id": "NAM-ORANGE-DEMO",
@@ -33,9 +41,45 @@
       "country_name": "Namibia",
       "host_distance_km": 250.0,
       "pg": 0.15,
-      "resource_p90_p50_p10": [150.0, 300.0, 600.0],
+      "resource_p90_p50_p10": [
+        150.0,
+        300.0,
+        600.0
+      ],
       "well_cost_musd": 150.0,
       "_assumptions": "Frontier scenario: Pg 0.15 pre-drill frontier wildcat; large lognormal-consistent resource range reflecting Orange Basin scale stories; high deepwater frontier well cost. USER-SUPPLIED."
+    },
+    {
+      "block_id": "GOM-MARGINAL-DEMO",
+      "lat": 27.0,
+      "lon": -90.5,
+      "iso3": "USA",
+      "country_name": "United States",
+      "host_distance_km": 110.0,
+      "pg": 0.18,
+      "resource_p90_p50_p10": [
+        25.0,
+        45.0,
+        81.0
+      ],
+      "well_cost_musd": 140.0,
+      "_assumptions": "Marginal deepwater accumulation: small resource (P50 45 MMbbl) against a high deepwater well cost \u2014 designed to land EMV>0 but P(EMV>0) below the 0.6 CONDITIONAL threshold under price/capex volatility. USER-SUPPLIED scenario."
+    },
+    {
+      "block_id": "NAM-SPECULATIVE-DEMO",
+      "lat": -28.0,
+      "lon": 13.2,
+      "iso3": "NAM",
+      "country_name": "Namibia",
+      "host_distance_km": 300.0,
+      "pg": 0.05,
+      "resource_p90_p50_p10": [
+        40.0,
+        80.0,
+        160.0
+      ],
+      "well_cost_musd": 160.0,
+      "_assumptions": "Highly speculative frontier wildcat: Pg 0.05 against a 160 MUSD deepwater well \u2014 designed so the (1-Pg) dry-hole charge drives EMV negative \u2192 NO_GO. Demonstrates the deterministic verdict on an uneconomic prospect. USER-SUPPLIED scenario."
     }
   ]
 }

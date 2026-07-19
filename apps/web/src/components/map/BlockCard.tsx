@@ -12,6 +12,8 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 
+import { SeismicDivider } from "@/components/SeismicDivider";
+
 export interface PickedBlock {
   lon: number;
   lat: number;
@@ -94,16 +96,21 @@ export function BlockCard({ block, onClose }: { block: PickedBlock; onClose: () 
   }
 
   return (
-    <div className="absolute right-2 top-2 z-10 flex w-64 flex-col gap-2 border border-line bg-bg1/95 p-2">
-      <div className="flex items-center justify-between">
-        <span className="panel-title text-ink">BLOCK PICK</span>
-        <button type="button" onClick={onClose} className="chip text-ink-faint hover:text-ink">
-          ✕
-        </button>
+    <div className="absolute right-2 top-2 z-30 flex w-64 flex-col border border-line bg-bg1 p-0">
+      <div className="flex items-center justify-between px-2 pt-1.5">
+        <span className="panel-title text-ink">Block pick</span>
+        <div className="flex items-center gap-2">
+          <span className="panel-mnemo text-[11px]">BLK</span>
+          <button type="button" onClick={onClose} className="chip text-ink-faint hover:text-ink">
+            ✕
+          </button>
+        </div>
       </div>
-      <div className="numeric text-[11px] text-ink-dim">
-        {block.lat.toFixed(3)}, {block.lon.toFixed(3)}
-      </div>
+      <SeismicDivider />
+      <div className="flex flex-col gap-2 p-2">
+        <div className="numeric text-[11px] text-ink-dim">
+          {block.lat.toFixed(3)}, {block.lon.toFixed(3)}
+        </div>
 
       {phase === "form" && (
         <>
@@ -112,7 +119,7 @@ export function BlockCard({ block, onClose }: { block: PickedBlock; onClose: () 
             <input
               value={iso3}
               onChange={(e) => setIso3(e.target.value.toUpperCase().slice(0, 3))}
-              className="numeric w-14 border border-line bg-bg0 px-1 text-ink"
+              className="erda-num numeric w-14 border border-line bg-bg0 px-1 text-ink"
             />
           </label>
           <label className="flex items-center justify-between text-[11px] text-ink-dim">
@@ -124,7 +131,7 @@ export function BlockCard({ block, onClose }: { block: PickedBlock; onClose: () 
               max="0.99"
               value={pg}
               onChange={(e) => setPg(Number(e.target.value))}
-              className="numeric w-14 border border-line bg-bg0 px-1 text-ink"
+              className="erda-num numeric w-14 border border-line bg-bg0 px-1 text-ink"
             />
           </label>
           <label className="flex items-center justify-between text-[11px] text-ink-dim">
@@ -134,10 +141,10 @@ export function BlockCard({ block, onClose }: { block: PickedBlock; onClose: () 
               step="10"
               value={wellCost}
               onChange={(e) => setWellCost(Number(e.target.value))}
-              className="numeric w-14 border border-line bg-bg0 px-1 text-ink"
+              className="erda-num numeric w-14 border border-line bg-bg0 px-1 text-ink"
             />
           </label>
-          <p className="font-mono text-[9px] leading-3 text-ink-faint">
+          <p className="font-mono text-[10px] leading-4 text-ink-faint">
             Pg is a scenario input — no model Pg ships (§9.8). Resource P90/P50/P10 use a demo triple.
           </p>
           <button
@@ -175,11 +182,12 @@ export function BlockCard({ block, onClose }: { block: PickedBlock; onClose: () 
         </Link>
       )}
 
-      {phase === "error" && (
-        <p className="border border-warn/40 px-2 py-1 font-mono text-[10px] text-warn">
-          {error}
-        </p>
-      )}
+        {phase === "error" && (
+          <p className="border border-warn/40 px-2 py-1 font-mono text-[10px] text-warn">
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

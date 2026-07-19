@@ -160,8 +160,8 @@ export function MapHero() {
           stroked: true,
           filled: true,
           getFillColor: [20, 17, 12], // --bg1
-          getLineColor: [38, 32, 25], // --line
-          lineWidthMinPixels: 0.5,
+          getLineColor: [74, 66, 54], // a warm grey above --line so coasts register
+          lineWidthMinPixels: 0.8,
           pickable: false,
         })
       );

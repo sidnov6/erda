@@ -187,3 +187,14 @@ body {
 .maplibregl-canvas:focus {
   outline: none;
 }
+
+/* number inputs on the block card — no native spinners (no light-mode chrome, §13.5) */
+input[type="number"].erda-num::-webkit-inner-spin-button,
+input[type="number"].erda-num::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"].erda-num {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

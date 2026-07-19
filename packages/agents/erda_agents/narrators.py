@@ -72,6 +72,7 @@ class GroqNarrator:
 
         import httpx
 
+        last_detail = ""
         for attempt in range(6):
             resp = httpx.post(
                 self.API_URL,
@@ -88,12 +89,18 @@ class GroqNarrator:
                 timeout=60.0,
             )
             if resp.status_code == 429:  # free-tier rate limit — honor Retry-After
-                wait = float(resp.headers.get("retry-after", 2 ** (attempt + 1)))
+                retry_after = resp.headers.get("retry-after")
+                last_detail = f"retry-after={retry_after} body={resp.text[:300]}"
+                wait = float(retry_after or 2 ** (attempt + 1))
+                if wait > 300.0:
+                    # daily-quota-style limit: waiting inside this call is
+                    # pointless — surface it so the caller can fall back honestly
+                    break
                 time.sleep(min(wait + 0.5, 60.0))
                 continue
             resp.raise_for_status()
             return resp.json()["choices"][0]["message"]["content"].strip()
-        raise RuntimeError("Groq rate limit persisted through 6 backoff attempts")
+        raise RuntimeError(f"Groq rate limit persisted through backoff ({last_detail})")
 
 
 def default_narrator():
